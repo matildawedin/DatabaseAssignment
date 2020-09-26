@@ -1,0 +1,136 @@
+package application;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+public class DALS {
+	
+	private DbConnection dbc = new DbConnection();
+	private Connection con;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
+	public ObservableList<Student> selectAllStudent() throws SQLException{
+		
+		con = dbc.getConnection();
+		ObservableList<Student> oblistS = FXCollections.observableArrayList();
+		
+		try {
+			
+			String selectAll = "SELECT * FROM Student";
+			rs = con.createStatement().executeQuery(selectAll);
+
+			while(rs.next()) {
+				oblistS.add(new Student(rs.getString(1), rs.getString(2)));
+			}
+			return oblistS;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+		
+	}
+	// get all courses in studies class from a selected student
+	public ObservableList<Course> selectStudies(String studentID) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<Course> oblistC = FXCollections.observableArrayList();
+		
+		try {
+			String selectC = "SELECT * FROM Course WHERE courseID IN (SELECT courseID FROM Studies WHERE studentID = '" + studentID + "')";
+				
+			rs = con.createStatement().executeQuery(selectC);
+
+			while(rs.next()) {
+				oblistC.add(new Course(rs.getString(1), rs.getString(2),rs.getString(3)));
+			}
+			return oblistC;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+	}
+	
+	// get all courses in Hasstudied class from a selected student
+	public ObservableList<Course> selectHasStudied(String studentID) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<Course> oblistC = FXCollections.observableArrayList();
+		
+		try {
+			String selectC = "SELECT * FROM Course WHERE courseID IN (SELECT courseID FROM HasStudied WHERE studentID = '" + studentID + "')";
+				
+			rs = con.createStatement().executeQuery(selectC);
+
+			while(rs.next()) {
+				oblistC.add(new Course(rs.getString(1), rs.getString(2),rs.getString(3)));
+			}
+			return oblistC;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+		
+	}
+	
+	// get grade for selected HasStudied course
+	public ObservableList<HasStudied> selectGrade(String studentID) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
+		
+		try {
+			String selectG = "SELECT grade FROM HasStudied WHERE studentID = '" + studentID + "'";
+			rs = con.createStatement().executeQuery(selectG);
+			while(rs.next()) {
+				oblistHs.add(new HasStudied(rs.getString(1)));
+			}
+			return oblistHs;
+			
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	
+	// insert student values 
+	public void insertStudent(String studentID, String name) throws SQLException {
+		con = dbc.getConnection();
+
+		String insert = "INSERT INTO Student VALUES(?,?)";
+
+		ps = con.prepareStatement(insert);
+		ps.setString(1,studentID);
+		ps.setString(2,name);
+		ps.executeUpdate();
+		con.close();
+
+	}
+	
+	
+	
+	// Ej prio men fungerar ej att ta bort objekt som lagts till i databas
+	public void removeStudent(String studentID) throws SQLException {
+		con = dbc.getConnection();
+		String remove = "DELETE FROM Student WHERE studentID = '" + studentID; //"'DELETE FROM Student WHERE studentID = ' ;
+		ps = con.prepareStatement(remove);
+		ps.executeUpdate();
+		con.close();
+	}
+	
+	/* EJ GJORT ÄN
+	public void generateStudentId() {
+		con = dbc.getConnection();
+		
+		String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
+		
+	}
+	*/
+	
+
+}

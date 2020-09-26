@@ -30,36 +30,21 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
-
-	private StudentReg studentreg;
-	private CourseReg coursereg;
 	private Course course;
 	private Student student;
 	private Result result;
 	private HasStudied hasStudied;
-	private HasStudiedReg hasStudiedReg;
 	private DbConnection dbcon; 
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	private DAL dal = new DAL();
+	private DALS dal = new DALS();
 	
 	
 
 
 
-	public StudentReg getStudentreg() {
-		return studentreg;
-	}
-	public void setStudentreg(StudentReg studentreg) {
-		this.studentreg = studentreg;
-	}
-	public CourseReg getCoursereg() {
-		return coursereg;
-	}
-	public void setCoursereg(CourseReg coursereg) {
-		this.coursereg = coursereg;
-	}
+	
 	public Course getCourse() {
 		return course;
 	}
@@ -84,12 +69,7 @@ public class StudentController implements Initializable {
 	public void setHasStudied(HasStudied hasStudied) {
 		this.hasStudied = hasStudied;
 	}
-	public HasStudiedReg getHasStudiedReg() {
-		return hasStudiedReg;
-	}
-	public void setHasStudiedReg(HasStudiedReg hasStudiedReg) {
-		this.hasStudiedReg = hasStudiedReg;
-	}
+	
 	public DbConnection getDbcon() {
 		return dbcon;
 	}
@@ -209,7 +189,8 @@ public class StudentController implements Initializable {
 		}
 	}
 	
-	public void populateGrade(String studentID) {
+	//Fortsätt här!!!
+	/*public void populateGrade(String studentID) {
 		
 		try {
 			tabelGrade.setItems();
@@ -218,7 +199,7 @@ public class StudentController implements Initializable {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 
 
 	//get the value from the TextField then use insertstudent to add the student
