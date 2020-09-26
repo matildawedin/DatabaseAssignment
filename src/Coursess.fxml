@@ -43,10 +43,13 @@
             <TableColumn fx:id="columnStudentName" prefWidth="115.0" text="Student Name" />
          </columns>
       </TableView>
-      <TextField layoutX="103.0" layoutY="91.0" prefHeight="33.0" prefWidth="239.0" style="-fx-background-color: transparent;" text="Courses">
+      <TextField layoutX="71.0" layoutY="65.0" prefHeight="33.0" prefWidth="239.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Select the type of course ">
          <font>
             <Font name="Helvetica Neue" size="18.0" />
          </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </TextField>
       <TextField layoutX="29.0" layoutY="435.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Register new course">
          <font>
@@ -57,7 +60,7 @@
       <TextField fx:id="textCourseName" layoutX="147.0" layoutY="468.0" prefHeight="27.0" prefWidth="109.0" promptText="Course Name*" />
       <TextField fx:id="textCredit" layoutX="259.0" layoutY="468.0" prefHeight="27.0" prefWidth="92.0" promptText="Credit*" />
       <Button fx:id="btnAddCourse" layoutX="29.0" layoutY="507.0" mnemonicParsing="false" onAction="#btnAddCourse_Click" prefHeight="27.0" prefWidth="148.0" text="Add" />
-      <Button fx:id="btnEditCourse" disable="true" layoutX="29.0" layoutY="549.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="148.0" text="Edit Course" />
+      <Button fx:id="btnEditCourse" disable="true" layoutX="29.0" layoutY="549.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="148.0" text="Finish course" />
       <Button fx:id="btnRemoveCourse" disable="true" layoutX="203.0" layoutY="549.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
       <TextField layoutX="401.0" layoutY="435.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Add partisipant">
          <font>
@@ -74,12 +77,12 @@
       <Button fx:id="btnAddGrade" disable="true" layoutX="562.0" layoutY="553.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="61.0" text="Add" />
       <ComboBox fx:id="cmbStudentID" disable="true" layoutX="400.0" layoutY="468.0" prefWidth="150.0" promptText="StudentID" />
       <Label fx:id="lblResponseCourse" layoutX="203.0" layoutY="507.0" prefHeight="27.0" prefWidth="148.0" />
-      <RadioButton fx:id="rdbtnActiveCourse" layoutX="29.0" layoutY="81.0" mnemonicParsing="false" onAction="#radioButtonCourse" selected="true" text="Active">
+      <RadioButton fx:id="rdbtnActiveCourse" layoutX="227.0" layoutY="107.0" mnemonicParsing="false" onAction="#radioButtonCourse" selected="true" text="Active">
          <toggleGroup>
             <ToggleGroup fx:id="courseGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="rdbtnFinishedCourse" layoutX="29.0" layoutY="107.0" mnemonicParsing="false" onAction="#radioButtonCourse" text="Finished" toggleGroup="$courseGroup" />
+      <RadioButton fx:id="rdbtnFinishedCourse" layoutX="68.0" layoutY="107.0" mnemonicParsing="false" onAction="#radioButtonCourse" text="Finished" toggleGroup="$courseGroup" />
       <TableView fx:id="tableGrade" disable="true" layoutX="600.0" layoutY="132.0" prefHeight="303.0" prefWidth="123.0">
         <columns>
           <TableColumn fx:id="columnGrade" prefWidth="119.0" text="Grades" />
