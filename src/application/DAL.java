@@ -14,6 +14,7 @@ public class DAL {
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
+	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	
 	public ObservableList<Student> selectAllStudent() throws SQLException{
 		
@@ -59,7 +60,6 @@ public ObservableList<String> selectAllStudentID() throws SQLException{
 	public ObservableList<Course> selectAllActiveCourses() throws SQLException{
 		
 		con = dbc.getConnection();
-		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 		
 		try {
 			String query1 = "SELECT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM HasStudied hs)";
