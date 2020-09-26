@@ -67,7 +67,7 @@
                   <Font name="Helvetica Neue" size="16.0" />
                </font>
             </TextField>
-            <Button fx:id="btnAddNewCourse" disable="true" layoutX="494.0" layoutY="468.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="61.0" text="Add" />
+            <Button fx:id="btnAddNewCourse" disable="true" layoutX="494.0" layoutY="468.0" mnemonicParsing="false" onAction="#addCourse" prefHeight="27.0" prefWidth="61.0" text="Add" />
             <Label fx:id="lblResponseStudent" layoutX="29.0" layoutY="510.0" prefHeight="18.0" prefWidth="182.0">
                <font>
                   <Font size="14.0" />
