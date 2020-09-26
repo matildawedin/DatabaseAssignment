@@ -319,7 +319,7 @@ public class Controller implements Initializable{
 	//HÅLLER PÅ
 	@FXML
 	public void btnAddStudentStudy_Click(ActionEvent event) {
-		
+		System.out.println("Hej");
 		String sID = cmbStudentID.getValue();
 		String cID = tableCourse.getSelectionModel().getSelectedItem().getCourseCode();
 		
