@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DbConnection {
+public class DbConnection extends UrlLogin {
 	
 	Connection dbcon;
 	
@@ -16,10 +16,6 @@ public class DbConnection {
 	
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-			String url = "jdbc:sqlserver://localhost:1433;database=master";
-			String user = "sa";
-			String password = "reallyStrongPwd123";
 
 
 			dbcon = DriverManager.getConnection(url, user, password);
