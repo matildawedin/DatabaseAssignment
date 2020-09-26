@@ -1,0 +1,5 @@
+*  target**.jar*.war*.ear*.class# eclipse specific git ignore*.pydevproject.project.metadatabin/**tmp/**tmp/**/**.tmp*.bak*.swp*~.niblocal.properties.classpath.settings/.loadpath# External tool builders.externalToolBuilders/# Locally stored "Eclipse launch configurations"*.launch
+.classpath
+.project
+build.fxbuild
+/bin/
