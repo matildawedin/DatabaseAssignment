@@ -121,7 +121,7 @@ public class StudentController implements Initializable {
 	
 	@FXML private TextField lableAddCourse;
 	
-	@FXML private ComboBox<Course> cmbCourseCode;
+	@FXML private ComboBox<String> cmbCourseCode;
 	
 	@FXML private Button btnAddNewCourse;
 	
@@ -129,7 +129,7 @@ public class StudentController implements Initializable {
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 	private ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
-	private ObservableList<Course> cmbCourseList = FXCollections.observableArrayList();
+	private ObservableList<String> cmbCourseList = FXCollections.observableArrayList();
 	
 	
 	
@@ -189,17 +189,30 @@ public class StudentController implements Initializable {
 		}
 	}
 	
-	//Fortsätt här!!!
-	/*public void populateGrade(String studentID) {
+	
+	public void populateGrade(String studentID) {
 		
 		try {
-			tabelGrade.setItems();
+			tabelGrade.setItems(dal.selectGrade(studentID));
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-	}*/
+	}
+	
+	public void populateCmbCourse() {
+		try {
+			cmbCourseCode.getItems().addAll(dal.selectAllCourseCode());
+			//cmbCourseList.addAll(dal.selectAllCourseCode());
+		}
+		catch(SQLException e) {
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+
+
+		}
+	}
+
 
 
 	//get the value from the TextField then use insertstudent to add the student
@@ -231,16 +244,18 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public String selectStudent(MouseEvent event) {
-
+		
 		System.out.println("inne i select");
 
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
 		String sID = s.getStudentID();
 		
 		
+		
 		if(s != null) {
 			
 			lblResponseStudent.setText("Student selected");
+			populateCmbCourse();
 			
 			
 		} else {
@@ -248,7 +263,9 @@ public class StudentController implements Initializable {
 		}
 		
 		tableCourse.getItems().clear();
+		tabelGrade.getItems().clear();
 		tableCourse.setDisable(true);
+		tabelGrade.setDisable(true);
 		btnEditStudent.setDisable(false);
 		btnRemoveStudent.setDisable(false);
 		rbtnActive.setDisable(false);
@@ -266,11 +283,13 @@ public class StudentController implements Initializable {
 		
 		
 		return sID;
+		
 	}
 	
 	
 	@FXML
 	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
+		
 		
 		System.out.println("inne i rbt");
 		String sID = selectStudent(null);
@@ -280,9 +299,10 @@ public class StudentController implements Initializable {
 			
 			
 		}
-		if(rbtnCompleted.isSelected()) {
+		else if(rbtnCompleted.isSelected()) {
 			populatecompletedCourse(sID);
 			tabelGrade.setDisable(false);
+			populateGrade(sID);
 			
 			
 			
@@ -291,8 +311,29 @@ public class StudentController implements Initializable {
 		tableCourse.setDisable(false);
 		//Vart ska denna va för att vara optimalt?
 		rbtnActive.setSelected(false);
+		rbtnCompleted.setSelected(false);
 		
 	}
+	
+	@FXML
+	public void addCourse(ActionEvent event) {
+		System.out.println("inne i add course");
+		String cc = cmbCourseCode.getValue();
+		Student s = tableStudent.getSelectionModel().getSelectedItem();
+		
+		try {
+			dal.insertCourseToStudent(s.getStudentID(), cc);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+
+		
+	
 	
 	
 	// EJ PRIO
