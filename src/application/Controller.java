@@ -124,15 +124,6 @@ public class Controller implements Initializable{
 
 	@FXML private RadioButton rdbtnFinishedCourse;
 
-
-	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
-	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-	private ObservableList<String> oblistcmbStudentID = FXCollections.observableArrayList();
-	private ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
-
-
-
-
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 
@@ -244,7 +235,7 @@ public class Controller implements Initializable{
 		try {
 			Course tempC = tableCourse.getSelectionModel().getSelectedItem();
 			dal.removeCourse(tempC.getCourseCode());
-			oblistCourse.clear();
+			tableCourse.getItems().clear();
 			lblResponseCourse.setText("Course: "+tempC.getName()+ " removed.");
 		if(rdbtnActiveCourse.isSelected()) {
 			populateTableViewActiveCourse();
@@ -269,7 +260,7 @@ public class Controller implements Initializable{
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
 				lblResponseCourse.setText("Course: "+cName+" added.");
-				oblistCourse.clear();
+				tableCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
@@ -291,7 +282,7 @@ public class Controller implements Initializable{
 	@FXML
 	public void selectCourse(MouseEvent event) {
 				
-		oblistStudent.clear();
+		tableStudent.getItems().clear();
 		btnEditCourse.setDisable(false);
 		btnRemoveCourse.setDisable(false);
 		tableStudent.setDisable(false);
@@ -305,7 +296,7 @@ public class Controller implements Initializable{
 		}
 			else if(rdbtnFinishedCourse.isSelected()) {
 				tableGrade.setDisable(false);
-				oblistGrade.clear();
+				tableGrade.getItems().clear();
 				populateTableViewGrade();			
 				populateTableViewHasStudied();	
 				
@@ -316,10 +307,8 @@ public class Controller implements Initializable{
 			}
 		}
 	
-	//HÅLLER PÅ
 	@FXML
 	public void btnAddStudentStudy_Click(ActionEvent event) {
-		System.out.println("Hej");
 		String sID = cmbStudentID.getValue();
 		String cID = tableCourse.getSelectionModel().getSelectedItem().getCourseCode();
 		
