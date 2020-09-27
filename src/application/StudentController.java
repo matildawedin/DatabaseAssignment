@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -124,10 +126,28 @@ public class StudentController implements Initializable {
 	@FXML private TextField lableAddCourse;
 	
 	@FXML private ComboBox<String> cmbCourseCode;
-	
+
 	@FXML private Button btnAddNewCourse;
+
+	@FXML private TabPane tabPaneStudent;
+
+	@FXML private Tab regStudentTab;
+
+	@FXML private Tab findStudentTab;
 	
+	@FXML private ComboBox<String> cmbStudentID;
 	
+	@FXML private TextField textName;
+	
+	@FXML private Button btnFindStudent;
+	
+	@FXML private TableView<Student> tabelFindStudent;
+	
+	@FXML private TableColumn<Student, String> cStudentID;
+	
+	@FXML private TableColumn<Student, String> cStudentName;
+
+
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 	
@@ -143,6 +163,8 @@ public class StudentController implements Initializable {
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+		cStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
+		cStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
 		
 		
@@ -150,6 +172,7 @@ public class StudentController implements Initializable {
 		con = dbcon.getConnection();
 		
 		populateStudents();
+		populateCmbStudent();
 	}
 	
 	// Change view to CourseView
@@ -159,7 +182,6 @@ public class StudentController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Coursess.fxml"));
 			Parent root = (Parent) loader.load();
-			Controller cController = loader.getController();
 			
 
 			Scene ExamViewScene = new Scene(root);
@@ -234,6 +256,18 @@ public class StudentController implements Initializable {
 
 
 		}
+	}
+	
+	public void populateCmbStudent() {
+		cmbStudentID.getItems().clear();
+		try {
+			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
+		}
+		catch(SQLException e) {
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+		}
+
+		
 	}
 
 
@@ -346,6 +380,8 @@ public class StudentController implements Initializable {
 			e.printStackTrace();
 		}
 		cmbCourseCode.getItems().clear();
+		
+		//populateActiveCourse(s.getStudentID()); //Vill man se course table efter add course???
 	}
 	
 	

@@ -96,6 +96,48 @@ public class DALS {
 		
 	}
 	
+	public ObservableList<String> selectAllCourseCode() throws SQLException{
+
+		con = dbc.getConnection();
+		ObservableList<String> oblistCC = FXCollections.observableArrayList();
+
+		try {
+
+			String selectCC = "SELECT courseID FROM Course";
+			rs = con.createStatement().executeQuery(selectCC);
+
+			while(rs.next()) {
+				oblistCC.add(new String(rs.getString(1)));
+			}
+			return oblistCC;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+
+	}
+	
+	public ObservableList<String> selectAllStudentID() throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<String> oblistSID = FXCollections.observableArrayList();
+		
+		try {
+		String selectSID = "SELECT studentID FROM Student";
+		rs = con.createStatement().executeQuery(selectSID);
+		
+		while(rs.next()) {
+			oblistSID.add(new String(rs.getString(1)));
+			
+		}
+		return oblistSID;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+		
+		
+	}
+	
 	
 	
 	// insert student values 
@@ -125,26 +167,7 @@ public class DALS {
 
 	}
 	
-	public ObservableList<String> selectAllCourseCode() throws SQLException{
-
-		con = dbc.getConnection();
-		ObservableList<String> oblistCC = FXCollections.observableArrayList();
-
-		try {
-
-			String selectCC = "SELECT courseID FROM Course";
-			rs = con.createStatement().executeQuery(selectCC);
-
-			while(rs.next()) {
-				oblistCC.add(new String(rs.getString(1)));
-			}
-			return oblistCC;
-		}
-		catch(SQLException e) {
-			throw e;
-		}
-
-	}
+	
 
 	
 	

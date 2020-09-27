@@ -21,7 +21,7 @@
                <font>
                   <Font size="18.0" />
                </font></Button>
-            <Button fx:id="btnStudentView" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Student" textFill="WHITE" underline="true">
+            <Button fx:id="btnStudentView" mnemonicParsing="false" onAction="#showStudentView" style="-fx-background-color: transparent;" text="Student" textFill="WHITE" underline="true">
                <font>
                   <Font size="18.0" />
                </font></Button>
