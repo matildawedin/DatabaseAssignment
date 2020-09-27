@@ -325,7 +325,7 @@ public class Controller implements Initializable{
 			}
 			 
 				catch (SQLException SQLException) {		
-				
+				textFieldRegistrationError.setText("That coursecode already exists");
 			}
 		}
 		else {
