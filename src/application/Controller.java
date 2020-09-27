@@ -370,11 +370,7 @@ public class Controller implements Initializable{
 		String cCredit = textCredit.getText(); 
 
 		
-		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
-
-
-
-		if (cCode !=null && cName !=null && cCredit !=null) {	
+		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {
 
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
@@ -386,17 +382,7 @@ public class Controller implements Initializable{
 				textCredit.clear();
 				populateTableViewActiveCourse();
 
-				//populateRegisterCourse();
-
-				
-
-
-
-
-			} catch (SQLException e) {		
-				e.printStackTrace();
-
-			}
+				//populateRegisterCourse()
 			 
 				catch (SQLException SQLException) {		
 				if ( SQLException.getErrorCode() == 2627) {
@@ -408,6 +394,7 @@ public class Controller implements Initializable{
 
 		}
 		}
+		
 
 		
 	
