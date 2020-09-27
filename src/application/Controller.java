@@ -168,6 +168,7 @@ public class Controller implements Initializable{
 	@FXML private Button btnAddGrade;
 	
 	@FXML private TextField textFieldRegistrationError;
+
 	
 	//tabPaneCourse.getTabs().add(tabActiveCourse);	
 
@@ -352,6 +353,7 @@ public class Controller implements Initializable{
 		else if(tabFinishedCourse.isSelected()) {	
 			populateTableViewFinishedCourse();
 		}
+		
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -365,7 +367,7 @@ public class Controller implements Initializable{
 		String cCredit = textCredit.getText(); 
 		
 		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
-	
+
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
 				textFieldRegistrationError.setText("Course: "+cName+" added.");
@@ -375,18 +377,24 @@ public class Controller implements Initializable{
 				textCourseName.clear();
 				textCredit.clear();
 				populateTableViewActiveCourse();
+
 				//populateRegisterCourse();
 				
-			} catch (SQLException e) {		
-				e.printStackTrace();
-				
-				
+
+
 			}
+			 
+				catch (SQLException SQLException) {		
+				if ( SQLException.getErrorCode() == 2627) {
+					textFieldRegistrationError.setText("That coursecode already exists");
+				}
+				else if (SQLException.getErrorCode() == 0) {
+					textFieldRegistrationError.setText("There was a problem conecting to the database, please check your interntet connection");
+				}
+
 		}
-		else {
-			textFieldRegistrationError.setText("Please fill out the fields."); 
 		}
-	}
+	
 	
 	@FXML
 	public void selectCourse(MouseEvent event) {

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <ButtonBar prefHeight="54.0" prefWidth="754.0" style="-fx-background-color: grey;">
         <buttons>
@@ -56,7 +56,7 @@
                         <Button fx:id="btnAddPartisipant" disable="true" layoutX="577.0" layoutY="443.0" mnemonicParsing="false" onAction="#btnAddStudentStudy_Click" prefHeight="33.0" prefWidth="70.0" text="Add" />
                         <ComboBox fx:id="cmbStudentID" disable="true" layoutX="399.0" layoutY="442.0" prefHeight="35.0" prefWidth="150.0" promptText="StudentID" />
                         <Button fx:id="btnEditCourse" disable="true" layoutX="88.0" layoutY="392.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="190.0" text="Move to finished courses" />
-                        <Button fx:id="btnRemoveCourse" disable="true" layoutX="109.0" layoutY="442.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
+                        <Button fx:id="btnRemoveCourse" disable="true" layoutX="109.0" layoutY="431.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
                         <TextField layoutX="399.0" layoutY="392.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Add partisipant">
                            <font>
                               <Font name="Helvetica Neue" size="16.0" />
@@ -93,7 +93,7 @@
                               <TableColumn fx:id="columnCreditF" prefWidth="96.0" text="Credit" />
                            </columns>
                         </TableView>
-                        <Button fx:id="btnRemoveCourse3" disable="true" layoutX="109.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
+                        <Button fx:id="btnRemoveCourse3" disable="true" layoutX="101.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
                         <TableView fx:id="tableFinishedStudent" disable="true" layoutX="389.0" layoutY="16.0" prefHeight="318.0" prefWidth="231.0">
                            <columns>
                               <TableColumn fx:id="columnStudentIDF" prefWidth="115.0" text="StudentID" />
@@ -135,7 +135,7 @@
                            </columns>
                         </TableView>
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
-                        <TextField fx:id="textFieldRegistrationError" layoutX="55.0" layoutY="345.0" prefHeight="89.0" prefWidth="273.0" style="-fx-background-color: Transparent;" />
+                        <TextField fx:id="textFieldRegistrationError" layoutX="58.0" layoutY="353.0" prefHeight="70.0" prefWidth="248.0" style="-fx-background-color: Transparent;" />
                      </children>
                   </AnchorPane>
               </content>
