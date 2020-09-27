@@ -128,8 +128,7 @@ public class StudentController implements Initializable {
 	
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-	private ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
-	private ObservableList<String> cmbCourseList = FXCollections.observableArrayList();
+	
 	
 	
 	
@@ -202,9 +201,9 @@ public class StudentController implements Initializable {
 	}
 	
 	public void populateCmbCourse() {
+		cmbCourseCode.getItems().clear();
 		try {
 			cmbCourseCode.getItems().addAll(dal.selectAllCourseCode());
-			//cmbCourseList.addAll(dal.selectAllCourseCode());
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
@@ -245,7 +244,7 @@ public class StudentController implements Initializable {
 	@FXML
 	public String selectStudent(MouseEvent event) {
 		
-		System.out.println("inne i select");
+		System.out.println("inne i select student");
 
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
 		String sID = s.getStudentID();
@@ -279,9 +278,6 @@ public class StudentController implements Initializable {
 		//rbtnCompleted.setSelected(false);
 		//oblistCourse.clear();
 		
-		
-		
-		
 		return sID;
 		
 	}
@@ -305,8 +301,6 @@ public class StudentController implements Initializable {
 			populateGrade(sID);
 			
 			
-			
-			
 		}
 		tableCourse.setDisable(false);
 		//Vart ska denna va för att vara optimalt?
@@ -327,6 +321,7 @@ public class StudentController implements Initializable {
 			
 			e.printStackTrace();
 		}
+		cmbCourseCode.getItems().clear();
 	}
 	
 	

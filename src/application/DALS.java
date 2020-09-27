@@ -132,7 +132,7 @@ public class DALS {
 
 		try {
 
-			String selectCC = "SELECT courseCode FROM Course";
+			String selectCC = "SELECT courseID FROM Course";
 			rs = con.createStatement().executeQuery(selectCC);
 
 			while(rs.next()) {
