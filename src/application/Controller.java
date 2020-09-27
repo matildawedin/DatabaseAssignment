@@ -315,6 +315,8 @@ public class Controller implements Initializable{
 				
 			} catch (SQLException e) {		
 				e.printStackTrace();
+				
+				
 			}
 		}
 		else {
