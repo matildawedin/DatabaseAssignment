@@ -135,6 +135,7 @@
                            </columns>
                         </TableView>
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
+                        <TextField fx:id="textFieldRegistrationError" layoutX="55.0" layoutY="345.0" prefHeight="89.0" prefWidth="273.0" style="-fx-background-color: Transparent;" />
                      </children>
                   </AnchorPane>
               </content>

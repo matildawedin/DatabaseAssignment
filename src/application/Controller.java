@@ -167,6 +167,8 @@ public class Controller implements Initializable{
 
 	@FXML private Button btnAddGrade;
 	
+	@FXML private TextField textFieldRegistrationError;
+	
 	//tabPaneCourse.getTabs().add(tabActiveCourse);	
 
 	@Override
@@ -362,10 +364,11 @@ public class Controller implements Initializable{
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
 		
-		if (cCode !=null && cName !=null && cCredit !=null) {	
+		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
+	
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
-				lblResponseCourse.setText("Course: "+cName+" added.");
+				textFieldRegistrationError.setText("Course: "+cName+" added.");
 				tableRegisterCourse.getItems().clear();
 				tableActiveCourse.getItems().clear();
 				textCourseCode.clear();
@@ -381,7 +384,7 @@ public class Controller implements Initializable{
 			}
 		}
 		else {
-			lblResponseCourse.setText("Please fill out the fields.");
+			textFieldRegistrationError.setText("Please fill out the fields."); 
 		}
 	}
 	
