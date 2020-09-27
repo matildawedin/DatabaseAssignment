@@ -98,10 +98,9 @@ public class DAL {
 		con = dbc.getConnection();
 
 		try {
-			String queryFinishedCourse1 = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM Studies hs)";
+			String queryFinishedCourse = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM Studies hs)";
 
-			//String queryFinishedCourse = "SELECT DISTINCT hs.courseID, c.courseName, c.credits FROM HasStudied hs JOIN Course c ON hs.courseID = c.courseID"; 
-			rs = con.createStatement().executeQuery(queryFinishedCourse1); 
+			rs = con.createStatement().executeQuery(queryFinishedCourse); 
 
 			while(rs.next()) {
 				oblistCourse.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
