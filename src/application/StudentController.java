@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -135,9 +136,10 @@ public class StudentController implements Initializable {
 
 	@FXML private Tab findStudentTab;
 	
+	
 	@FXML private ComboBox<String> cmbStudentID;
 	
-	@FXML private ComboBox<String> cmbStudentName;
+	@FXML private TextField textName;
 	
 	@FXML private Button btnFindStudent;
 	
@@ -146,7 +148,8 @@ public class StudentController implements Initializable {
 	@FXML private TableColumn<Student, String> cStudentID;
 	
 	@FXML private TableColumn<Student, String> cStudentName;
-
+	
+	@FXML private Group studentGroup;
 
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
@@ -173,7 +176,9 @@ public class StudentController implements Initializable {
 		
 		populateStudents();
 		populateCmbStudentID();
-		populateCmbStudentName();
+		
+		textName.textProperty().addListener((observable) -> cmbStudentID.setDisable(true));
+		cmbStudentID.valueProperty().addListener((observable) -> textName.setDisable(true));
 	}
 	
 	// Change view to CourseView
@@ -270,18 +275,6 @@ public class StudentController implements Initializable {
 
 		
 	}
-	public void populateCmbStudentName() {
-		cmbStudentName.getItems().clear();
-		
-		try {
-			cmbStudentName.getItems().addAll(dal.selectAllStudentName());
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-	}
-	
 	
 	public void populateFindStudentTable(String s) {
 		
@@ -290,7 +283,7 @@ public class StudentController implements Initializable {
 				tabelFindStudent.setItems(dal.selectStudentbyID(s));
 
 			}
-			else if(cmbStudentName.getValue() != null) {
+			else if(textName.getText() != null) {
 				tabelFindStudent.setItems(dal.selectStudentbyName(s));
 				
 			}
@@ -421,24 +414,20 @@ public class StudentController implements Initializable {
 		
 		System.out.println("inne i find student");
 		String sID = cmbStudentID.getValue();
-		String name = cmbStudentName.getValue();
+		String name = textName.getText();
 		
 		if(cmbStudentID.getValue() != null ) {
 			populateFindStudentTable(sID);
 		}
-		else if(cmbStudentName.getValue() != null) {
+		else if(textName.getText() != null) {
 			populateFindStudentTable(name);
 		}
 		
 		
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
-		cmbStudentName.getItems().clear();
+		textName.clear();
 		populateCmbStudentID();
-		populateCmbStudentName();
-		
-		
-		
 		
 		
 		
