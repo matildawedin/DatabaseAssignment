@@ -164,10 +164,10 @@ public class Controller implements Initializable{
 	@FXML private ComboBox<String> cmbStudentID;
 
 	@FXML private ComboBox<String> cmbCourseCode;
-	
+
 	@FXML private ComboBox<String> cmbGrade;
 
-	@FXML private Label lblResponseCourse;
+	//@FXML private Label lblResponseCourse;
 
 
 
@@ -197,30 +197,26 @@ public class Controller implements Initializable{
 
 		columnStudentIDF.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
+
 		cmbGrade.getItems().add("A");
 		cmbGrade.getItems().add("B");
 		cmbGrade.getItems().add("C");
 		cmbGrade.getItems().add("D");
 		cmbGrade.getItems().add("E");
 		cmbGrade.getItems().add("F");
-		
+
 
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
-		tabPaneCourse.getSelectionModel().select(tabActiveCourse);
 		tabPaneCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() { 
 			@Override 
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 				if(newTab.equals (tabActiveCourse)) {            
-					
 					tableActiveStudent.getItems().clear();
 					tableActiveStudent.setDisable(true);
-					cmbStudentID.getItems().clear();
 					populateTableViewActiveCourse();
-					populateCmbBoxStudentID();
 				}
 				else if(newTab.equals(tabFinishedCourse)) {
-					tableFinishedCourse.getItems().clear();
 					tableFinishedStudent.getItems().clear();
 					cmbGrade.setDisable(true);
 					btnAddGrade.setDisable(true);
@@ -231,6 +227,7 @@ public class Controller implements Initializable{
 				}
 				else if(newTab.equals(tabRegistrationCourse)) {
 					tableRegisterCourse.getItems().clear();
+					populateTableViewRegCourse();
 				}
 				else if(newTab.equals(tabFindCourse)) {
 					cmbCourseCode.getItems().clear();
@@ -240,17 +237,27 @@ public class Controller implements Initializable{
 		});
 		populateTableViewActiveCourse();
 		populateCmbBoxStudentID();
-		
+		populateCmbBoxCourseCode();
+
 	}
 	@FXML
 	public void populateTableViewActiveCourse() {
 		tableActiveCourse.getItems().clear();
 		try {
-				tableActiveCourse.setItems(dal.selectAllActiveCourses());
-			
+			tableActiveCourse.setItems(dal.selectAllActiveCourses());	
 		}
 		catch(SQLException e) {
 
+			e.printStackTrace();
+
+		}	
+	}
+	public void populateTableViewRegCourse() {
+		tableRegisterCourse.getItems().clear();
+		try {
+			tableRegisterCourse.setItems(dal.selectAllActiveCourses());
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 
 		}	
@@ -274,10 +281,9 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	private void populateTableViewGrade() {
+		tableGrade.getItems().clear();
 		try {
-
-			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
-
+			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();		
 			tableGrade.setItems(dal.selectAllFromGrade(tempC.getCourseCode()));
 		}
 		catch(SQLException e) {
@@ -286,6 +292,7 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	private void populateTableViewFinishedCourse() {
+		tableFinishedCourse.getItems().clear();
 		try {	
 			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
 		}
@@ -294,7 +301,7 @@ public class Controller implements Initializable{
 		}
 	}
 	@FXML
-	private void populateCmbBoxStudentID() {
+	private void populateCmbBoxStudentID() {	
 		try {
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
@@ -304,28 +311,33 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	private void populateCmbBoxCourseCode() {
+		cmbCourseCode.getItems().clear();
 		try {
-			cmbCourseCode.getItems().addAll(dal.selectAllStudentID());
+			cmbCourseCode.getItems().addAll(dal.selectAllCourseCode());
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-
+	@FXML
 	public void btnRemoveCourse_Click(ActionEvent event){
 
 		try {
+			if(tabActiveCourse.isSelected()) {
 			Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
 			dal.removeCourse(tempC.getCourseCode());
 			tableActiveCourse.getItems().clear();
-			lblResponseCourse.setText("Course: "+tempC.getName()+ " removed.");
-			if(tabActiveCourse.isSelected()) {
 				populateTableViewActiveCourse();
+				cmbStudentID.getItems().clear();
 				populateCmbBoxStudentID();
 			}
-			else if(tabFinishedCourse.isSelected()) {	
+			if(tabFinishedCourse.isSelected()) {
+				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
+				dal.removeCourse(tempC.getCourseCode());
+				tableFinishedCourse.getItems().clear();
 				populateTableViewFinishedCourse();
 			}
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -341,21 +353,18 @@ public class Controller implements Initializable{
 		if (cCode !=null && cName !=null && cCredit !=null) {	
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
-				lblResponseCourse.setText("Course: "+cName+" added.");
 				tableRegisterCourse.getItems().clear();
 				tableActiveCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
-				populateTableViewActiveCourse();
-				//populateRegisterCourse();
+				populateTableViewRegCourse();
+				cmbCourseCode.getItems().clear();
+				populateCmbBoxCourseCode();
 
 			} catch (SQLException e) {		
 				e.printStackTrace();
 			}
-		}
-		else {
-			lblResponseCourse.setText("Please fill out the fields.");
 		}
 	}
 	public void btnMoveCourse_Click(ActionEvent event) {
@@ -397,6 +406,7 @@ public class Controller implements Initializable{
 			populateTableViewStudentCourse();
 		}
 	}
+	@FXML
 	public void selectStudent(MouseEvent event) {
 		cmbGrade.setDisable(false);
 		btnAddGrade.setDisable(false);
@@ -416,6 +426,7 @@ public class Controller implements Initializable{
 		}
 
 	}
+	@FXML
 	public void btnAddGrade_Click(ActionEvent event) {
 		Course tmpCourse = tableFinishedCourse.getSelectionModel().getSelectedItem();
 		Student tmpStudent = tableFinishedStudent.getSelectionModel().getSelectedItem();

@@ -119,7 +119,7 @@
                         <TextField fx:id="textCourseName" layoutX="55.0" layoutY="189.0" prefHeight="27.0" prefWidth="148.0" promptText="Course Name*" />
                         <TextField fx:id="textCredit" layoutX="55.0" layoutY="248.0" prefHeight="27.0" prefWidth="148.0" promptText="Credit*" />
                         <Button fx:id="btnAddCourse" layoutX="58.0" layoutY="301.0" mnemonicParsing="false" onAction="#btnAddCourse_Click" prefHeight="27.0" prefWidth="148.0" text="Add" />
-                        <TableView fx:id="tableRegisterCourse" layoutX="356.0" layoutY="56.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
+                        <TableView fx:id="tableRegisterCourse" layoutX="356.0" layoutY="56.0" prefHeight="320.0" prefWidth="322.0">
                            <columns>
                               <TableColumn fx:id="columnCourseCodeR" prefWidth="118.0" text="Course Code" />
                               <TableColumn fx:id="columnCourseNameR" prefWidth="107.0" text="Course Name" />
