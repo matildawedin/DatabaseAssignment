@@ -16,17 +16,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
@@ -121,15 +125,32 @@ public class StudentController implements Initializable {
 	
 	@FXML private TextField lableAddCourse;
 	
-	@FXML private ComboBox<Course> cmbCourseCode;
-	
+	@FXML private ComboBox<String> cmbCourseCode;
+
 	@FXML private Button btnAddNewCourse;
+
+	@FXML private TabPane tabPaneStudent;
+
+	@FXML private Tab regStudentTab;
+
+	@FXML private Tab findStudentTab;
 	
+	@FXML private ComboBox<String> cmbStudentID;
 	
+	@FXML private TextField textName;
+	
+	@FXML private Button btnFindStudent;
+	
+	@FXML private TableView<Student> tabelFindStudent;
+	
+	@FXML private TableColumn<Student, String> cStudentID;
+	
+	@FXML private TableColumn<Student, String> cStudentName;
+
+
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-	private ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
-	private ObservableList<Course> cmbCourseList = FXCollections.observableArrayList();
+	
 	
 	
 	
@@ -142,6 +163,8 @@ public class StudentController implements Initializable {
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+		cStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
+		cStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
 		
 		
@@ -149,6 +172,28 @@ public class StudentController implements Initializable {
 		con = dbcon.getConnection();
 		
 		populateStudents();
+		populateCmbStudent();
+	}
+	
+	// Change view to CourseView
+	@FXML
+	public void showCourseView(ActionEvent event) {
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Coursess.fxml"));
+			Parent root = (Parent) loader.load();
+			
+
+			Scene ExamViewScene = new Scene(root);
+			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					
+			window.setScene(ExamViewScene);
+
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -189,17 +234,42 @@ public class StudentController implements Initializable {
 		}
 	}
 	
-	//Fortsätt här!!!
-	/*public void populateGrade(String studentID) {
+	
+	public void populateGrade(String studentID) {
 		
 		try {
-			tabelGrade.setItems();
+			tabelGrade.setItems(dal.selectGrade(studentID));
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-	}*/
+	}
+	
+	public void populateCmbCourse() {
+		cmbCourseCode.getItems().clear();
+		try {
+			cmbCourseCode.getItems().addAll(dal.selectAllCourseCode());
+		}
+		catch(SQLException e) {
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+
+
+		}
+	}
+	
+	public void populateCmbStudent() {
+		cmbStudentID.getItems().clear();
+		try {
+			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
+		}
+		catch(SQLException e) {
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+		}
+
+		
+	}
+
 
 
 	//get the value from the TextField then use insertstudent to add the student
@@ -231,16 +301,18 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public String selectStudent(MouseEvent event) {
-
-		System.out.println("inne i select");
+		
+		System.out.println("inne i select student");
 
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
 		String sID = s.getStudentID();
 		
 		
+		
 		if(s != null) {
 			
 			lblResponseStudent.setText("Student selected");
+			populateCmbCourse();
 			
 			
 		} else {
@@ -248,7 +320,9 @@ public class StudentController implements Initializable {
 		}
 		
 		tableCourse.getItems().clear();
+		tabelGrade.getItems().clear();
 		tableCourse.setDisable(true);
+		tabelGrade.setDisable(true);
 		btnEditStudent.setDisable(false);
 		btnRemoveStudent.setDisable(false);
 		rbtnActive.setDisable(false);
@@ -262,15 +336,14 @@ public class StudentController implements Initializable {
 		//rbtnCompleted.setSelected(false);
 		//oblistCourse.clear();
 		
-		
-		
-		
 		return sID;
+		
 	}
 	
 	
 	@FXML
 	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
+		
 		
 		System.out.println("inne i rbt");
 		String sID = selectStudent(null);
@@ -280,19 +353,42 @@ public class StudentController implements Initializable {
 			
 			
 		}
-		if(rbtnCompleted.isSelected()) {
+		else if(rbtnCompleted.isSelected()) {
 			populatecompletedCourse(sID);
 			tabelGrade.setDisable(false);
-			
-			
+			populateGrade(sID);
 			
 			
 		}
 		tableCourse.setDisable(false);
 		//Vart ska denna va för att vara optimalt?
 		rbtnActive.setSelected(false);
+		rbtnCompleted.setSelected(false);
 		
 	}
+	
+	@FXML
+	public void addCourse(ActionEvent event) {
+		System.out.println("inne i add course");
+		String cc = cmbCourseCode.getValue();
+		Student s = tableStudent.getSelectionModel().getSelectedItem();
+		
+		try {
+			dal.insertCourseToStudent(s.getStudentID(), cc);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		cmbCourseCode.getItems().clear();
+		
+		//populateActiveCourse(s.getStudentID()); //Vill man se course table efter add course???
+	}
+	
+	
+	
+
+		
+	
 	
 	
 	// EJ PRIO
