@@ -15,11 +15,13 @@ public class DAL {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
+	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
+	private ObservableList<String> oblistString = FXCollections.observableArrayList();
+	private ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
 
 	public ObservableList<Student> selectAllStudent() throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<Student> oblistS = FXCollections.observableArrayList();
 
 		try {
 
@@ -27,9 +29,9 @@ public class DAL {
 			rs = con.createStatement().executeQuery(selectAll);
 
 			while(rs.next()) {
-				oblistS.add(new Student(rs.getString(1), rs.getString(2)));
+				oblistStudent.add(new Student(rs.getString(1), rs.getString(2)));
 			}
-			return oblistS;
+			return oblistStudent;
 		}
 		catch(SQLException e) {
 			throw e;
@@ -39,17 +41,16 @@ public class DAL {
 	public ObservableList<String> selectAllStudentID() throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<String> oblistS = FXCollections.observableArrayList();
-
+		
 		try {
 
 			String selectAll = "SELECT studentID FROM Student";
 			rs = con.createStatement().executeQuery(selectAll);
 
 			while(rs.next()) {
-				oblistS.add(new String(rs.getString(1)));
+				oblistString.add(new String(rs.getString(1)));
 			}
-			return oblistS;
+			return oblistString;
 		}
 		catch(SQLException e) {
 			throw e;
@@ -59,17 +60,16 @@ public class DAL {
 	public ObservableList<String> selectAllCourseCode() throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<String> oblistS = FXCollections.observableArrayList();
-
+	
 		try {
 
 			String selectAll = "SELECT courseID FROM Course";
 			rs = con.createStatement().executeQuery(selectAll);
 
 			while(rs.next()) {
-				oblistS.add(new String(rs.getString(1)));
+				oblistString.add(new String(rs.getString(1)));
 			}
-			return oblistS;
+			return oblistString;
 		}
 		catch(SQLException e) {
 			throw e;
@@ -96,7 +96,6 @@ public class DAL {
 	public ObservableList<Course> selectAllFinishedCourses() throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
 		try {
 			String queryFinishedCourse1 = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM Studies hs)";
@@ -116,7 +115,6 @@ public class DAL {
 	}	public ObservableList<Student> selectAllFromHasStudied(String courseID) throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 
 		try {
 			String findHasStudied = "SELECT DISTINCT s1.studentID, s2.studentName FROM HasStudied s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID='" + courseID+ "'";
@@ -135,7 +133,6 @@ public class DAL {
 	public ObservableList<Student> selectAllFromStudies(String courseID) throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 
 		try {
 			String findStudies = "SELECT DISTINCT s1.studentID, s2.studentName FROM Studies s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID ='" + courseID +"'"; 
@@ -153,7 +150,6 @@ public class DAL {
 	public ObservableList<HasStudied> selectAllFromGrade(String courseID) throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
 
 		try {
 			String queryGrade = "SELECT hs.grade FROM HasStudied hs JOIN Student s ON s.studentID = hs.studentID WHERE hs.courseID ='"+courseID +"'";		
@@ -273,26 +269,6 @@ public class DAL {
 		return null;
 
 	}
-	// FUGERAR EJ
-	/*
-	public ObservableList<Course> selectCourses(String studentID) throws SQLException{
-		con = dbc.getConnection();
-		ObservableList<Course> oblistC = FXCollections.observableArrayList();
-
-		try {
-			String selectC = "SELECT * FROM Studies WHERE studentID = '" + studentID + "'";
-			rs = con.createStatement().executeQuery(selectC);
-
-			while(rs.next()) {
-				oblistC.add(new Course(rs.getString(1), rs.getString(2),rs.getString(3)));
-			}
-			return oblistC;
-		}
-		catch(SQLException e) {
-			throw e;
-		}
-
-	}*/
 
 	// insert student values 
 	public void insertStudent(String studentID, String name) throws SQLException {
