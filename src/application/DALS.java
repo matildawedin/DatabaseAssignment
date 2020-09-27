@@ -180,7 +180,7 @@ public class DALS {
 		ObservableList<Student> oblistS = FXCollections.observableArrayList();
 		
 		try {
-			String selectS = "SELECT * FROM Student WHERE studentName = '" + name + "'";
+			String selectS = "SELECT * FROM Student WHERE studentName LIKE '%" + name + "%'";
 				
 			rs = con.createStatement().executeQuery(selectS);
 
