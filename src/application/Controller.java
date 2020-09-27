@@ -21,6 +21,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -77,7 +80,11 @@ public class Controller implements Initializable{
 
 	@FXML private Button btnStudentView;
 
-	@FXML private TableView<Course> tableCourse;
+	@FXML private TableView<Course> tableActiveCourse;
+	
+	@FXML private TableView<Course> tableFinishedCourse;
+	
+	@FXML private TableView<Course> tableRegisterCourse;
 
 	@FXML private TableView<HasStudied> tableGrade;
 	
@@ -89,14 +96,24 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Course, String> columnCredit;
 
-	@FXML private TableView<Student> tableStudent;
+	@FXML private TableView<Student> tableActiveStudent;
 
+	@FXML private TableView<Student> tableFinishedStudent;
+	
+	@FXML private TabPane tabPaneCourse;
 
+	
 	@FXML private TableColumn<Student, String> columnStudentID;
 
 	@FXML private TableColumn<Student, String> columnStudentName;
 
+	@FXML private Tab tabActiveCourse;
 	
+	@FXML private Tab tabFinishedCourse;
+	
+	@FXML private Tab tabRegistrationCourse;
+	
+	@FXML private Tab tabFindCourse;
 
 	@FXML private TextField textCourseCode;
 
@@ -119,19 +136,8 @@ public class Controller implements Initializable{
 	@FXML private TextField textAddGrade;
 
 	@FXML private Button btnAddGrade;
-
-	@FXML private RadioButton rdbtnActiveCourse;
-
-	@FXML private RadioButton rdbtnFinishedCourse;
-
-
-	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
-	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-	private ObservableList<String> oblistcmbStudentID = FXCollections.observableArrayList();
-	private ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
-
-
-
+	
+	//tabPaneCourse.getTabs().add(tabActiveCourse);	
 
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
@@ -147,15 +153,21 @@ public class Controller implements Initializable{
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
 		populateTableViewActiveCourse();
-		populateCmbBoxStudentID();
-		rdbtnActiveCourse.setSelected(true);
+		tabPaneCourse.getSelectionModel().select(tabActiveCourse);
+	//	populateCmbBoxStudentID();
+		//rdbtnActiveCourse.setSelected(true);
+		
 	}
 	@FXML
 	public void populateTableViewActiveCourse() {
 		
 		try {
-			tableCourse.setItems(dal.selectAllActiveCourses());
-			
+			if(tabActiveCourse.isSelected()) {
+			tableActiveCourse.setItems(dal.selectAllActiveCourses());
+			}
+			else {
+				tableRegisterCourse.setItems(dal.selectAllActiveCourses());
+			}
 		}
 		catch(SQLException e) {
 			
@@ -163,13 +175,15 @@ public class Controller implements Initializable{
 
 		}	
 	}
+	
 	@FXML
 	public void populateTableViewHasStudied() {
-		Course tempC = tableCourse.getSelectionModel().getSelectedItem();	
+		Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
 		
 		try {
+			
 
-			tableStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
+			tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null,e);
@@ -177,12 +191,16 @@ public class Controller implements Initializable{
 	}
 	}
 	@FXML
-	public void populateTableViewStudies() {
+	public void populateTableViewStudentCourse() {
 		try {
-
-			Course tempC = tableCourse.getSelectionModel().getSelectedItem();
-			
-			tableStudent.setItems(dal.selectAllFromStudies(tempC.getCourseCode()));
+			if(tabActiveCourse.isSelected()) {
+			Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();	
+			tableActiveStudent.setItems(dal.selectAllFromStudies(tempC.getCourseCode()));
+			}
+			if(tabFinishedCourse.isSelected()) {
+			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+			tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
+			}
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
@@ -192,7 +210,7 @@ public class Controller implements Initializable{
 	private void populateTableViewGrade() {
 		try {
 
-			Course tempC = tableCourse.getSelectionModel().getSelectedItem();
+			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
 			
 			tableGrade.setItems(dal.selectAllFromGrade(tempC.getCourseCode()));
 		}
@@ -203,7 +221,7 @@ public class Controller implements Initializable{
 	@FXML
 	private void populateTableViewFinishedCourse() {
 		try {	
-			tableCourse.setItems(dal.selectAllFinishedCourses());
+			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
@@ -219,6 +237,7 @@ public class Controller implements Initializable{
 		}
 	}
 	@FXML
+/*
 	public void radioButtonCourse(ActionEvent event) {
 		if(rdbtnActiveCourse.isSelected()) {
 			tableCourse.getItems().clear();
@@ -237,20 +256,39 @@ public class Controller implements Initializable{
 			populateTableViewFinishedCourse();
 		}
 	}
+ */		
 
 
+/*	public void tabSelectionCourse(ActionEvent event) {
+		
+		if(tabActiveCourse.isSelected()) {
+			tableActiveCourse.getItems().clear();
+			tableActiveStudent.getItems().clear();
+			cmbStudentID.getItems().clear();
+			populateTableViewActiveCourse();
+			populateTableViewStudentCourse();
+			populateCmbBoxStudentID();
+		}
+		else if(tabFinishedCourse.isSelected()) {
+			tableFinishedCourse.getItems().clear();
+			tableFinishedStudent.getItems().clear();
+			populateTableViewFinishedCourse();
+			populateTableViewHasStudied();
+		}
+	}
+*/
 	public void btnRemoveCourse_Click(ActionEvent event){
 
 		try {
-			Course tempC = tableCourse.getSelectionModel().getSelectedItem();
+			Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
 			dal.removeCourse(tempC.getCourseCode());
-			oblistCourse.clear();
+			tableActiveCourse.getItems().clear();
 			lblResponseCourse.setText("Course: "+tempC.getName()+ " removed.");
-		if(rdbtnActiveCourse.isSelected()) {
+		if(tabActiveCourse.isSelected()) {
 			populateTableViewActiveCourse();
 			populateCmbBoxStudentID();
 		}
-		else if(rdbtnFinishedCourse.isSelected()) {	
+		else if(tabFinishedCourse.isSelected()) {	
 			populateTableViewFinishedCourse();
 		}
 		}
@@ -269,16 +307,12 @@ public class Controller implements Initializable{
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
 				lblResponseCourse.setText("Course: "+cName+" added.");
-				oblistCourse.clear();
+				tableRegisterCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
-				if(rdbtnActiveCourse.isSelected()) {	
-					populateTableViewActiveCourse();
-				}
-				else if(rdbtnFinishedCourse.isSelected()) {
-					populateTableViewFinishedCourse();
-				}
+				populateTableViewActiveCourse();
+				
 			} catch (SQLException e) {		
 				e.printStackTrace();
 			}
@@ -290,22 +324,30 @@ public class Controller implements Initializable{
 	
 	@FXML
 	public void selectCourse(MouseEvent event) {
-				
-		oblistStudent.clear();
+		//if(tableActiveStudent.getItems() != null) {
+			
+			
+		tableActiveStudent.getItems().clear();
 		btnEditCourse.setDisable(false);
 		btnRemoveCourse.setDisable(false);
-		tableStudent.setDisable(false);
+		btnAddPartisipant.setDisable(false);
+		cmbStudentID.setDisable(false);
+		tableActiveStudent.setDisable(false);
+		populateTableViewStudentCourse();
+		}
+		/*else {
+			System.out.println("FEEEL");
 		
-		lblResponseCourse.setText("Course selected");
+		
+	/*	lblResponseCourse.setText("Course selected");
 		if(rdbtnActiveCourse.isSelected()) {
 			tableGrade.setDisable(true);
-			populateTableViewStudies();
 			cmbStudentID.setDisable(false);
 			btnAddPartisipant.setDisable(false);
 		}
 			else if(rdbtnFinishedCourse.isSelected()) {
 				tableGrade.setDisable(false);
-				oblistGrade.clear();
+				tableGrade.getItems().clear();
 				populateTableViewGrade();			
 				populateTableViewHasStudied();	
 				
@@ -313,20 +355,18 @@ public class Controller implements Initializable{
 			}
 			else {
 				lblResponseCourse.setText("ERROR");
-			}
-		}
+			}*/
+		
 	
-	//HÅLLER PÅ
 	@FXML
 	public void btnAddStudentStudy_Click(ActionEvent event) {
-		System.out.println("Hej");
 		String sID = cmbStudentID.getValue();
-		String cID = tableCourse.getSelectionModel().getSelectedItem().getCourseCode();
+		String cID = tableActiveCourse.getSelectionModel().getSelectedItem().getCourseCode();
 		
 			try {
 				dal.insertStudentToCourse(sID, cID);
-				tableStudent.getItems().clear();
-				populateTableViewStudies();
+				tableActiveStudent.getItems().clear();
+				populateTableViewStudentCourse();
 			} catch (SQLException e) {		
 				e.printStackTrace();
 			}

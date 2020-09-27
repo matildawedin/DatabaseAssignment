@@ -19,7 +19,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,20 +30,21 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
-
-
 	private Course course;
 	private Student student;
 	private Result result;
 	private HasStudied hasStudied;
-
 	private DbConnection dbcon; 
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	private DAL dal = new DAL();
+	private DALS dal = new DALS();
+	
 	
 
+
+
+	
 	public Course getCourse() {
 		return course;
 	}
@@ -66,7 +69,7 @@ public class StudentController implements Initializable {
 	public void setHasStudied(HasStudied hasStudied) {
 		this.hasStudied = hasStudied;
 	}
-
+	
 	public DbConnection getDbcon() {
 		return dbcon;
 	}
@@ -87,7 +90,7 @@ public class StudentController implements Initializable {
 
 	@FXML private TableColumn<Course, String> columnCredit;
 	
-	@FXML private TableView<Result> tabelGrade;
+	@FXML private TableView<HasStudied> tabelGrade;
 	
 	@FXML private TableColumn<Result,String> columnGrade;
 	
@@ -110,10 +113,23 @@ public class StudentController implements Initializable {
 	
 	@FXML private Button btnRemoveStudent;
 	
+	@FXML private RadioButton rbtnCompleted;
+	
+	@FXML private RadioButton rbtnActive;
+	
+	@FXML private TextField lableToRbn;
+	
+	@FXML private TextField lableAddCourse;
+	
+	@FXML private ComboBox<Course> cmbCourseCode;
+	
+	@FXML private Button btnAddNewCourse;
+	
 	
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-	private ObservableList<Result> oblistResult = FXCollections.observableArrayList();
+	private ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
+	private ObservableList<Course> cmbCourseList = FXCollections.observableArrayList();
 	
 	
 	
@@ -149,28 +165,48 @@ public class StudentController implements Initializable {
 		}
 		
 	}
-	//FUNGERAR EJ
-	/*
-	public void populateCourse(String studentID) {
+	
+	public void populateActiveCourse(String studentID) {
 		
 		try {
-			//Student tempS = tableStudent.getSelectionModel().getSelectedItem();
-			//String sID = tempS.getStudentID();
 			
-			tableCourse.setItems(dal.selectCourses(studentID));
+			tableCourse.setItems(dal.selectStudies(studentID));
 			
 		}
 		catch(SQLException e) {
 		e.printStackTrace();
 		}
+	}
+	
+	public void populatecompletedCourse(String studentID) {
+
+		try {
+			tableCourse.setItems(dal.selectHasStudied(studentID));
+
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Fortsätt här!!!
+	/*public void populateGrade(String studentID) {
+		
+		try {
+			tabelGrade.setItems();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}*/
-	
-	
+
+
 	//get the value from the TextField then use insertstudent to add the student
 	@FXML
 	public void btnAddStudent(ActionEvent event) {
 		
-		System.out.println("inne i metod");
+		System.out.println("inne i addmetod");
 
 		if (textStudentID.getText() != null && textStudentName.getText() != null) {
 			try {
@@ -194,26 +230,72 @@ public class StudentController implements Initializable {
 	}
 	
 	@FXML
-	public void selectStudent(MouseEvent event) {
+	public String selectStudent(MouseEvent event) {
 
 		System.out.println("inne i select");
 
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
+		String sID = s.getStudentID();
+		
+		
 		if(s != null) {
-			//String sID = s.getStudentID();
-
+			
 			lblResponseStudent.setText("Student selected");
-			//populateCourse(sID);
+			
+			
 		} else {
 			lblResponseStudent.setText("ERROR");
 		}
-		//populateStudents();
+		
+		tableCourse.getItems().clear();
+		tableCourse.setDisable(true);
 		btnEditStudent.setDisable(false);
 		btnRemoveStudent.setDisable(false);
-		tableCourse.setDisable(false);
-		oblistStudent.clear();
+		rbtnActive.setDisable(false);
+		rbtnCompleted.setDisable(false);
+		lableToRbn.setDisable(false);
+		lableAddCourse.setDisable(false);
+		cmbCourseCode.setDisable(false);
+		btnAddNewCourse.setDisable(false);
+		
+		//rbtnActive.setSelected(false);
+		//rbtnCompleted.setSelected(false);
+		//oblistCourse.clear();
+		
+		
+		
+		
+		return sID;
 	}
 	
+	
+	@FXML
+	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
+		
+		System.out.println("inne i rbt");
+		String sID = selectStudent(null);
+		
+		if(rbtnActive.isSelected()) {
+			populateActiveCourse(sID);
+			
+			
+		}
+		if(rbtnCompleted.isSelected()) {
+			populatecompletedCourse(sID);
+			tabelGrade.setDisable(false);
+			
+			
+			
+			
+		}
+		tableCourse.setDisable(false);
+		//Vart ska denna va för att vara optimalt?
+		rbtnActive.setSelected(false);
+		
+	}
+	
+	
+	// EJ PRIO
 	@FXML
 	public void btnRemoveStudent(ActionEvent event) {
 		System.out.println("inne i remove");
