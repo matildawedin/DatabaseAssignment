@@ -137,6 +137,15 @@ public class Controller implements Initializable{
 
 	@FXML private Button btnAddGrade;
 	
+	@FXML private TextField textFieldActiveCourseError;
+	
+	@FXML private TextField textFieldRegistrationError;
+	
+	@FXML private TextField textFieldFindError;
+	
+	@FXML private TextField textFieldFinishedCoursesError;
+	
+	
 	//tabPaneCourse.getTabs().add(tabActiveCourse);	
 
 	@Override
@@ -291,6 +300,7 @@ public class Controller implements Initializable{
 		else if(tabFinishedCourse.isSelected()) {	
 			populateTableViewFinishedCourse();
 		}
+		
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -306,19 +316,20 @@ public class Controller implements Initializable{
 		if (cCode !=null && cName !=null && cCredit !=null) {	
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
-				lblResponseCourse.setText("Course: "+cName+" added.");
+				textFieldRegistrationError.setText("Course: "+cName+" added.");
 				tableRegisterCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
 				populateTableViewActiveCourse();
+			}
+			 
+				catch (SQLException SQLException) {		
 				
-			} catch (SQLException e) {		
-				e.printStackTrace();
 			}
 		}
 		else {
-			lblResponseCourse.setText("Please fill out the fields.");
+			textFieldRegistrationError.setText("Please fill out the fields.");
 		}
 	}
 	
