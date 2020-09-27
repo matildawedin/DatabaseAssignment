@@ -374,7 +374,7 @@ public class Controller implements Initializable{
 
 
 
-		if (cCode !=null && cName !=null && cCredit !=null) {	
+			
 
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
@@ -391,11 +391,6 @@ public class Controller implements Initializable{
 				
 
 
-
-
-			} catch (SQLException e) {		
-				e.printStackTrace();
-
 			}
 			 
 				catch (SQLException SQLException) {		
@@ -407,7 +402,7 @@ public class Controller implements Initializable{
 				}
 
 		}
-		}
+
 
 		
 	
