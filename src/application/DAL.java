@@ -159,7 +159,11 @@ public ObservableList<HasStudied> selectAllFromGrade(String courseID) throws SQL
 	}
 	public void removeCourse(String courseID) throws SQLException {
 		con = dbc.getConnection();
-		String queryRemove = "DELETE Course WHERE courseID = '" + courseID +"'";
+		String queryRemove = "DELETE HasStudied WHERE courseID ='"+courseID+"'\n"
+				+ "DELETE Studies WHERE courseID ='"+courseID+"'\n"
+				+ "DELETE Course WHERE courseID ='"+courseID+"'";
+			
+		//String queryRemove = "DELETE Course WHERE courseID = '" + courseID +"'";
 			ps = con.prepareStatement(queryRemove);
 		ps.executeUpdate();
 		con.close();
