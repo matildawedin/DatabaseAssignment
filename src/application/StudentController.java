@@ -323,9 +323,8 @@ public class StudentController implements Initializable {
 			
 			
 		} else {
-			lblResponseStudent.setText("ERROR");
-		}
-		
+			//textFieldRegisterStudentError.setText(arg0);
+		}	
 		tableCourse.getItems().clear();
 		tabelGrade.getItems().clear();
 		tableCourse.setDisable(true);
