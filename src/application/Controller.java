@@ -90,15 +90,15 @@ public class Controller implements Initializable{
 	@FXML private Button btnStudentView;
 
 	@FXML private TableView<Course> tableActiveCourse;
-	
+
 	@FXML private TableView<Course> tableFinishedCourse;
-	
+
 	@FXML private TableView<Course> tableRegisterCourse;
-	
+
 	@FXML private TableView<Course> tableFindCourse;
 
 	@FXML private TableView<HasStudied> tableGrade;
-	
+
 	@FXML private TableColumn<HasStudied, String> columnGrade;
 
 	@FXML private TableColumn<Course, String> columnCourseCode;
@@ -106,23 +106,23 @@ public class Controller implements Initializable{
 	@FXML private TableColumn<Course, String> columnCourseName;
 
 	@FXML private TableColumn<Course, String> columnCredit;
-	
+
 	@FXML private TableColumn<Course, String> columnCourseCodeR;
-	
+
 	@FXML private TableColumn<Course, String> columnCourseNameR;
-	
+
 	@FXML private TableColumn<Course, String> columnCreditR;
-	
+
 	@FXML private TableColumn<Course, String> columnCourseCodeF;
-	
+
 	@FXML private TableColumn<Course, String> columnCourseNameF;
-	
+
 	@FXML private TableColumn<Course, String> columnCreditF;
-	
+
 	@FXML private TableColumn<Course, String> columnFindCourseCode;
-	
+
 	@FXML private TableColumn<Course, String> columnFindCourseName;
-	
+
 	@FXML private TableColumn<Course, String> columnFindCredit;
 
 
@@ -130,24 +130,24 @@ public class Controller implements Initializable{
 	@FXML private TableView<Student> tableActiveStudent;
 
 	@FXML private TableView<Student> tableFinishedStudent;
-	
+
 	@FXML private TabPane tabPaneCourse;
 
-	
+
 	@FXML private TableColumn<Student, String> columnStudentID;
 
 	@FXML private TableColumn<Student, String> columnStudentName;
-	
+
 	@FXML private TableColumn<Student, String> columnStudentIDF;
 
 	@FXML private TableColumn<Student, String> columnStudentNameF;
 
 	@FXML private Tab tabActiveCourse;
-	
+
 	@FXML private Tab tabFinishedCourse;
-	
+
 	@FXML private Tab tabRegistrationCourse;
-	
+
 	@FXML private Tab tabFindCourse;
 
 	@FXML private TextField textCourseCode;
@@ -161,13 +161,13 @@ public class Controller implements Initializable{
 	@FXML private Button btnMoveCourse;
 
 	@FXML private Button btnRemoveCourse;
-	
+
 	@FXML private Button btnRemoveCourseF;
 
 	@FXML private Button btnAddPartisipant;
 
 	@FXML private ComboBox<String> cmbStudentID;
-	
+
 	@FXML private ComboBox<String> cmbCourseCode;
 
 	@FXML private Label lblResponseCourse;
@@ -175,10 +175,12 @@ public class Controller implements Initializable{
 	@FXML private TextField textAddGrade;
 
 	@FXML private Button btnAddGrade;
+
 	
 	@FXML private TextField textFieldRegistrationError;
 
 	
+
 	//tabPaneCourse.getTabs().add(tabActiveCourse);	
 
 	@Override
@@ -188,32 +190,32 @@ public class Controller implements Initializable{
 		columnCourseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
-		
+
 		columnCourseCodeR.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnCourseNameR.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCreditR.setCellValueFactory(new PropertyValueFactory<>("credits"));
-		
+
 		columnCourseCodeF.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnCourseNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCreditF.setCellValueFactory(new PropertyValueFactory<>("credits"));
-		
+
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
-		
+
 		columnStudentIDF.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
-		
+
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
 		tabPaneCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() { 
-		    @Override 
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab.equals (tabActiveCourse)) {            
-		        	try {
-		        		tableActiveCourse.getItems().clear();
-		        		tableActiveStudent.getItems().clear();
-		        		tableActiveStudent.setDisable(true);
+			@Override 
+			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+				if(newTab.equals (tabActiveCourse)) {            
+					try {
+						tableActiveCourse.getItems().clear();
+						tableActiveStudent.getItems().clear();
+						tableActiveStudent.setDisable(true);
 						tableActiveCourse.setItems(dal.selectAllActiveCourses());
 						cmbStudentID.getItems().clear();
 						populateCmbBoxStudentID();
@@ -221,34 +223,32 @@ public class Controller implements Initializable{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-		        }
-		        else if(newTab.equals(tabFinishedCourse)) {
-		        	try {		        		
-		        		tableFinishedCourse.getItems().clear();
-		        		tableFinishedStudent.getItems().clear();
-		        		tableFinishedStudent.setDisable(true);
-		        		tableGrade.setDisable(true);
-		        		tableGrade.getItems().clear();
+				}
+				else if(newTab.equals(tabFinishedCourse)) {
+					try {		        		
+						tableFinishedCourse.getItems().clear();
+						tableFinishedStudent.getItems().clear();
+						tableFinishedStudent.setDisable(true);
+						tableGrade.setDisable(true);
+						tableGrade.getItems().clear();
 						tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-		        }
-		        else if(newTab.equals(tabRegistrationCourse)) {
-		        	tableRegisterCourse.getItems().clear();
-		        }
-		        else if(newTab.equals(tabFindCourse)) {
-		        	cmbCourseCode.getItems().clear();
-		        	populateCmbBoxCourseCode();
-		        }
-		    }
+				}
+				else if(newTab.equals(tabRegistrationCourse)) {
+					tableRegisterCourse.getItems().clear();
+				}
+				else if(newTab.equals(tabFindCourse)) {
+					cmbCourseCode.getItems().clear();
+					populateCmbBoxCourseCode();
+				}
+			}
 		});
 		populateTableViewActiveCourse();
 		populateCmbBoxStudentID();
 		tabPaneCourse.getSelectionModel().select(tabActiveCourse);
-		//populateCmbBoxStudentID();
-		//populateCmbBoxCourseCode();
 	}
 	
 	@FXML
@@ -273,44 +273,44 @@ public class Controller implements Initializable{
 	
 	@FXML
 	public void populateTableViewActiveCourse() {
-		
+
 		try {
 			if(tabActiveCourse.isSelected()) {
-			tableActiveCourse.setItems(dal.selectAllActiveCourses());
+				tableActiveCourse.setItems(dal.selectAllActiveCourses());
 			}
 			else if(tabRegistrationCourse.isSelected()) {
 				tableRegisterCourse.setItems(dal.selectAllActiveCourses());
 			}
 		}
 		catch(SQLException e) {
-			
+
 			e.printStackTrace();
 
 		}	
 	}
-	
+
 	@FXML
 	public void populateTableViewHasStudied() {
 		Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
-		
+
 		try {
 			tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null,e);
 
-	}
+		}
 	}
 	@FXML
 	public void populateTableViewStudentCourse() {
 		try {
 			if(tabActiveCourse.isSelected()) {
-			Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();	
-			tableActiveStudent.setItems(dal.selectAllFromStudies(tempC.getCourseCode()));
+				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();	
+				tableActiveStudent.setItems(dal.selectAllFromStudies(tempC.getCourseCode()));
 			}
 			if(tabFinishedCourse.isSelected()) {
-			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
-			tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
+				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+				tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
 			}
 		}
 		catch(SQLException e) {
@@ -322,7 +322,7 @@ public class Controller implements Initializable{
 		try {
 
 			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
-			
+
 			tableGrade.setItems(dal.selectAllFromGrade(tempC.getCourseCode()));
 		}
 		catch(SQLException e) {
@@ -341,19 +341,19 @@ public class Controller implements Initializable{
 	@FXML
 	private void populateCmbBoxStudentID() {
 		try {
-		cmbStudentID.getItems().addAll(dal.selectAllStudentID());
+			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-		Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	@FXML
 	private void populateCmbBoxCourseCode() {
 		try {
-		cmbCourseCode.getItems().addAll(dal.selectAllStudentID());
+			cmbCourseCode.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-		Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -364,6 +364,7 @@ public class Controller implements Initializable{
 			dal.removeCourse(tempC.getCourseCode());
 			tableActiveCourse.getItems().clear();
 			lblResponseCourse.setText("Course: "+tempC.getName()+ " removed.");
+
 		if(tabActiveCourse.isSelected()) {
 			populateTableViewActiveCourse();
 			populateCmbBoxStudentID();
@@ -372,10 +373,19 @@ public class Controller implements Initializable{
 			populateTableViewFinishedCourse();
 		}
 		
+
+			if(tabActiveCourse.isSelected()) {
+				populateTableViewActiveCourse();
+				populateCmbBoxStudentID();
+			}
+			else if(tabFinishedCourse.isSelected()) {	
+				populateTableViewFinishedCourse();
+			}
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			}
+		}
 	}
 
 	@FXML
@@ -383,8 +393,13 @@ public class Controller implements Initializable{
 		String cCode = textCourseCode.getText();
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
+
 		
 		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
+
+
+
+		if (cCode !=null && cName !=null && cCredit !=null) {	
 
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
@@ -397,8 +412,14 @@ public class Controller implements Initializable{
 				populateTableViewActiveCourse();
 
 				//populateRegisterCourse();
+
 				
 
+
+
+
+			} catch (SQLException e) {		
+				e.printStackTrace();
 
 			}
 			 
@@ -419,7 +440,7 @@ public class Controller implements Initializable{
 	public void btnMoveCourse_Click(ActionEvent event) {
 		Course tmpCourse = tableActiveCourse.getSelectionModel().getSelectedItem();
 		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
-		
+
 		try {
 			dal.moveCourse(tmpCourse, tmpOblist);
 		} catch (SQLException e) {
@@ -429,71 +450,55 @@ public class Controller implements Initializable{
 		tableActiveCourse.getItems().clear();
 		tableActiveStudent.getItems().clear();
 		populateTableViewActiveCourse();
-		
+
 	}
 
 	@FXML
-	public void selectCourse(MouseEvent event) {
-		//if(tableActiveStudent.getItems() != null) {
-			
-			
+	public void selectCourse(MouseEvent event) {		
 		tableActiveStudent.getItems().clear();	
 		tableFinishedStudent.getItems().clear();	
 		btnRemoveCourse.setDisable(false);
-		
-		
-		
 		lblResponseCourse.setText("Course selected");
-		if(tabActiveCourse.isSelected()) {
-			
+
+		if(tabActiveCourse.isSelected()) {	
 			btnMoveCourse.setDisable(false);
 			tableActiveStudent.setDisable(false);
 			cmbStudentID.setDisable(false);
 			btnAddPartisipant.setDisable(false);
 			btnRemoveCourse.setDisable(false);
 			populateTableViewStudentCourse();
-			
+
 		}
-			else if(tabFinishedCourse.isSelected()) {
-				
-				tableGrade.setDisable(false);
-				tableGrade.getItems().clear();
-				tableFinishedStudent.setDisable(false);
-				btnRemoveCourseF.setDisable(false);
-				populateTableViewGrade();			
-				populateTableViewHasStudied();	
-				
-				
-			}
-			else {
-				lblResponseCourse.setText("ERROR");
-			}
+		else if(tabFinishedCourse.isSelected()) {	
+			tableGrade.setDisable(false);
+			tableGrade.getItems().clear();
+			tableFinishedStudent.setDisable(false);
+			btnRemoveCourseF.setDisable(false);
+			populateTableViewGrade();			
+			populateTableViewHasStudied();	
+
+
+		}
+		else {
+			lblResponseCourse.setText("ERROR");
+		}
 	}
-		
-	
+
+
 	@FXML
 	public void btnAddStudentStudy_Click(ActionEvent event) {
 		String sID = cmbStudentID.getValue();
 		String cID = tableActiveCourse.getSelectionModel().getSelectedItem().getCourseCode();
-		
-			try {
-				dal.insertStudentToCourse(sID, cID);
-				tableActiveStudent.getItems().clear();
-				populateTableViewStudentCourse();
-			} catch (SQLException e) {		
-				e.printStackTrace();
-			}
-		
-	}
 
-
-
-
-
-	
-
-
+		try {
+			dal.insertStudentToCourse(sID, cID);
+			tableActiveStudent.getItems().clear();
+			populateTableViewStudentCourse();
+		} catch (SQLException e) {		
+			e.printStackTrace();
+		}
 
 	}
+}
 
 
