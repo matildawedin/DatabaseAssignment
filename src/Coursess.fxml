@@ -53,7 +53,7 @@
                         </TableView>
                         <Button fx:id="btnAddPartisipant" disable="true" layoutX="577.0" layoutY="443.0" mnemonicParsing="false" onAction="#btnAddStudentStudy_Click" prefHeight="33.0" prefWidth="70.0" text="Add" />
                         <ComboBox fx:id="cmbStudentID" disable="true" layoutX="399.0" layoutY="442.0" prefHeight="35.0" prefWidth="150.0" promptText="StudentID" />
-                        <Button fx:id="btnMoveCourse" disable="true" layoutX="88.0" layoutY="392.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="190.0" text="Move to finished courses" />
+                        <Button fx:id="btnMoveCourse" disable="true" layoutX="88.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnMoveCourse_Click" prefHeight="35.0" prefWidth="190.0" text="Move to finished courses" />
                         <Button fx:id="btnRemoveCourse" disable="true" layoutX="109.0" layoutY="442.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
                         <TextField layoutX="399.0" layoutY="392.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Add partisipant">
                            <font>

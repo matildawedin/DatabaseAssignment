@@ -99,8 +99,10 @@ public class DAL {
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
 		try {
-			String queryFinishedCourse = "SELECT DISTINCT hs.courseID, c.courseName, c.credits FROM HasStudied hs JOIN Course c ON hs.courseID = c.courseID"; 
-			rs = con.createStatement().executeQuery(queryFinishedCourse); 
+			String queryFinishedCourse1 = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM Studies hs)";
+
+			//String queryFinishedCourse = "SELECT DISTINCT hs.courseID, c.courseName, c.credits FROM HasStudied hs JOIN Course c ON hs.courseID = c.courseID"; 
+			rs = con.createStatement().executeQuery(queryFinishedCourse1); 
 
 			while(rs.next()) {
 				oblistCourse.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
@@ -188,9 +190,18 @@ public class DAL {
 		con.close();
 	}
 
-	public void moveCourse(Course course) throws SQLException {
+	public void moveCourse(Course course, ObservableList<Student> studentOblist) throws SQLException {
 		con =dbc.getConnection();
-		String queryMove = " ";
+		String tmpCourseID = course.getCourseCode();
+		String tmpStudentID;
+				for(Student s : studentOblist) {
+					tmpStudentID = s.getStudentID();
+					String queryMove = "DELETE Studies WHERE courseID ='"+tmpCourseID+"' INSERT INTO HasStudied VALUES('"+tmpStudentID+"','"+tmpCourseID+"',NULL)";
+					ps = con.prepareStatement(queryMove);
+					ps.executeUpdate();
+				}
+	
+		con.close();
 	}
 	public void insertStudentToCourse(String studentID, String courseID) throws SQLException {
 		con = dbc.getConnection();

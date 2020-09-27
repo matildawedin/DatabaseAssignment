@@ -376,6 +376,18 @@ public class Controller implements Initializable{
 	}
 	public void btnMoveCourse_Click(ActionEvent event) {
 		Course tmpCourse = tableActiveCourse.getSelectionModel().getSelectedItem();
+		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
+		
+		try {
+			dal.moveCourse(tmpCourse, tmpOblist);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tableActiveCourse.getItems().clear();
+		tableActiveStudent.getItems().clear();
+		populateTableViewActiveCourse();
+		
 	}
 	@FXML
 	public void selectCourse(MouseEvent event) {
