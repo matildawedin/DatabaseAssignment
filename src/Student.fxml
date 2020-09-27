@@ -19,7 +19,7 @@
          <children>
             <ButtonBar prefHeight="54.0" prefWidth="754.0" style="-fx-background-color: grey;">
                <buttons>
-                  <Button fx:id="btnCourseView" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Course" textFill="WHITE" underline="true">
+                  <Button fx:id="btnCourseView" mnemonicParsing="false" onAction="#showCourseView" style="-fx-background-color: transparent;" text="Course" textFill="WHITE" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>

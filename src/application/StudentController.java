@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
@@ -148,6 +150,28 @@ public class StudentController implements Initializable {
 		con = dbcon.getConnection();
 		
 		populateStudents();
+	}
+	
+	// Change view to CourseView
+	@FXML
+	public void showCourseView(ActionEvent event) {
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Coursess.fxml"));
+			Parent root = (Parent) loader.load();
+			Controller cController = loader.getController();
+			
+
+			Scene ExamViewScene = new Scene(root);
+			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					
+			window.setScene(ExamViewScene);
+
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
