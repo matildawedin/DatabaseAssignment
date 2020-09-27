@@ -112,13 +112,46 @@ public class DALS {
 
 	}
 	
+	public void insertCourseToStudent(String studentID, String courseID) throws SQLException {
+		con = dbc.getConnection();
+
+		String insert = "INSERT INTO Studies VALUES(?,?)";
+		ps = con.prepareStatement(insert);
+		ps.setString(1,studentID);
+		ps.setString(2,courseID);
+		ps.executeUpdate();
+		con.close();
+		
+
+	}
+	
+	public ObservableList<String> selectAllCourseCode() throws SQLException{
+
+		con = dbc.getConnection();
+		ObservableList<String> oblistCC = FXCollections.observableArrayList();
+
+		try {
+
+			String selectCC = "SELECT courseID FROM Course";
+			rs = con.createStatement().executeQuery(selectCC);
+
+			while(rs.next()) {
+				oblistCC.add(new String(rs.getString(1)));
+			}
+			return oblistCC;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+
+	}
+
 	
 	
 	// Ej prio men fungerar ej att ta bort objekt som lagts till i databas
 	public void removeStudent(String studentID) throws SQLException {
 		con = dbc.getConnection();
-		String remove = "DELETE FROM Student WHERE studentID = '" + studentID; //"'DELETE FROM Student WHERE studentID = ' ;
-		ps = con.prepareStatement(remove);
+		String remove = "DELETE FROM Student WHERE studentID = '" + studentID + "'"; 
 		ps.executeUpdate();
 		con.close();
 	}
