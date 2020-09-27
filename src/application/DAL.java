@@ -62,7 +62,7 @@ public ObservableList<String> selectAllStudentID() throws SQLException{
 		con = dbc.getConnection();
 		
 		try {
-			String query1 = "SELECT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM HasStudied hs)";
+			String query1 = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM HasStudied hs)";
 			rs = con.createStatement().executeQuery(query1);
 
 			while(rs.next()) {
@@ -149,7 +149,7 @@ public ObservableList<HasStudied> selectAllFromGrade(String courseID) throws SQL
 	
 }
 	public void insertCourse(String cCode, String cName, String cCredit) throws SQLException {
-
+		con = dbc.getConnection();
 		String insert = "INSERT INTO Course VALUES('"+ cCode + "','"  + cName + "','" + cCredit + "')";
 
 		ps = con.prepareStatement(insert);

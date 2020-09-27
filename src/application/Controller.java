@@ -12,9 +12,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -85,6 +89,8 @@ public class Controller implements Initializable{
 	@FXML private TableView<Course> tableFinishedCourse;
 	
 	@FXML private TableView<Course> tableRegisterCourse;
+	
+	@FXML private TableView<Course> tableFindCourse;
 
 	@FXML private TableView<HasStudied> tableGrade;
 	
@@ -92,9 +98,29 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Course, String> columnCourseCode;
 
-	@FXML private TableColumn<Course, String> coulmnCourseName;
+	@FXML private TableColumn<Course, String> columnCourseName;
 
 	@FXML private TableColumn<Course, String> columnCredit;
+	
+	@FXML private TableColumn<Course, String> columnCourseCodeR;
+	
+	@FXML private TableColumn<Course, String> columnCourseNameR;
+	
+	@FXML private TableColumn<Course, String> columnCreditR;
+	
+	@FXML private TableColumn<Course, String> columnCourseCodeF;
+	
+	@FXML private TableColumn<Course, String> columnCourseNameF;
+	
+	@FXML private TableColumn<Course, String> columnCreditF;
+	
+	@FXML private TableColumn<Course, String> columnFindCourseCode;
+	
+	@FXML private TableColumn<Course, String> columnFindCourseName;
+	
+	@FXML private TableColumn<Course, String> columnFindCredit;
+
+
 
 	@FXML private TableView<Student> tableActiveStudent;
 
@@ -106,6 +132,10 @@ public class Controller implements Initializable{
 	@FXML private TableColumn<Student, String> columnStudentID;
 
 	@FXML private TableColumn<Student, String> columnStudentName;
+	
+	@FXML private TableColumn<Student, String> columnStudentIDF;
+
+	@FXML private TableColumn<Student, String> columnStudentNameF;
 
 	@FXML private Tab tabActiveCourse;
 	
@@ -153,15 +183,35 @@ public class Controller implements Initializable{
 
 		// set columns in tableview
 		columnCourseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
-		coulmnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
+		
+		columnCourseCodeR.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnCourseNameR.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnCreditR.setCellValueFactory(new PropertyValueFactory<>("credits"));
+		
+		columnCourseCodeF.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnCourseNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnCreditF.setCellValueFactory(new PropertyValueFactory<>("credits"));
+		
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
 		
+		columnStudentIDF.setCellValueFactory(new PropertyValueFactory<>("studentID"));
+		columnStudentNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
+		
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
-		populateTableViewActiveCourse();
+		/*tabPaneCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() { 
+		    @Override 
+		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+		        if(newTab.equals (total)) {            
+		            System.out.print(total.isSelected());
+		        }
+		    }
+		});*/
+		//populateTableViewActiveCourse();
 		tabPaneCourse.getSelectionModel().select(tabActiveCourse);
 	//	populateCmbBoxStudentID();
 		//rdbtnActiveCourse.setSelected(true);
@@ -174,7 +224,7 @@ public class Controller implements Initializable{
 			if(tabActiveCourse.isSelected()) {
 			tableActiveCourse.setItems(dal.selectAllActiveCourses());
 			}
-			else {
+			else if(tabRegistrationCourse.isSelected()) {
 				tableRegisterCourse.setItems(dal.selectAllActiveCourses());
 			}
 		}
@@ -245,6 +295,15 @@ public class Controller implements Initializable{
 		Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+	
+	/*private void populateRegisterCourse() {
+		try {
+			tableRegisterCourse.setItems(dal.selectAllActiveCourses());
+		}
+		catch(SQLException e) {
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			}
+	}*/
 	@FXML
 /*
 	public void radioButtonCourse(ActionEvent event) {
@@ -268,7 +327,7 @@ public class Controller implements Initializable{
  */		
 
 
-/*	public void tabSelectionCourse(ActionEvent event) {
+	/*public void tabSelectionCourse(Event event) {
 		
 		if(tabActiveCourse.isSelected()) {
 			tableActiveCourse.getItems().clear();
@@ -318,14 +377,22 @@ public class Controller implements Initializable{
 				dal.insertCourse(cCode, cName, cCredit);
 				textFieldRegistrationError.setText("Course: "+cName+" added.");
 				tableRegisterCourse.getItems().clear();
+				tableActiveCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
 				populateTableViewActiveCourse();
+
 			}
 			 
 				catch (SQLException SQLException) {		
 				textFieldRegistrationError.setText("That coursecode already exists");
+
+				//populateRegisterCourse();
+				
+			} catch (SQLException e) {		
+				e.printStackTrace();
+
 			}
 		}
 		else {
@@ -351,12 +418,12 @@ public class Controller implements Initializable{
 		
 		
 	/*	lblResponseCourse.setText("Course selected");
-		if(rdbtnActiveCourse.isSelected()) {
+		if(tabActiveCourse.isSelected()) {
 			tableGrade.setDisable(true);
 			cmbStudentID.setDisable(false);
 			btnAddPartisipant.setDisable(false);
 		}
-			else if(rdbtnFinishedCourse.isSelected()) {
+			else if(tabFinishedCourse.isSelected()) {
 				tableGrade.setDisable(false);
 				tableGrade.getItems().clear();
 				populateTableViewGrade();			

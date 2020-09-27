@@ -44,7 +44,7 @@
                         <TableView fx:id="tableActiveCourse" layoutX="14.0" layoutY="15.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                           <columns>
                             <TableColumn fx:id="columnCourseCode" prefWidth="118.0" text="Course Code" />
-                            <TableColumn fx:id="coulmnCourseName" prefWidth="107.0" text="Course Name" />
+                            <TableColumn fx:id="columnCourseName" prefWidth="107.0" text="Course Name" />
                               <TableColumn fx:id="columnCredit" prefWidth="96.0" text="Credit" />
                           </columns>
                         </TableView>
@@ -90,16 +90,16 @@
                         <Button fx:id="btnAddGrade" disable="true" layoutX="590.0" layoutY="449.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="61.0" text="Add" />
                         <TableView fx:id="tableFinishedCourse" layoutX="14.0" layoutY="15.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                            <columns>
-                              <TableColumn fx:id="columnCourseCode1" prefWidth="118.0" text="Course Code" />
-                              <TableColumn fx:id="coulmnCourseName1" prefWidth="107.0" text="Course Name" />
-                              <TableColumn fx:id="columnCredit1" prefWidth="96.0" text="Credit" />
+                              <TableColumn fx:id="columnCourseCodeF" prefWidth="118.0" text="Course Code" />
+                              <TableColumn fx:id="columnCourseNameF" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnCreditF" prefWidth="96.0" text="Credit" />
                            </columns>
                         </TableView>
                         <Button fx:id="btnRemoveCourse3" disable="true" layoutX="101.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
                         <TableView fx:id="tableFinishedStudent" disable="true" layoutX="389.0" layoutY="16.0" prefHeight="318.0" prefWidth="231.0">
                            <columns>
-                              <TableColumn fx:id="columnStudentID1" prefWidth="115.0" text="StudentID" />
-                              <TableColumn fx:id="columnStudentName1" prefWidth="115.0" text="Student Name" />
+                              <TableColumn fx:id="columnStudentIDF" prefWidth="115.0" text="StudentID" />
+                              <TableColumn fx:id="columnStudentNameF" prefWidth="115.0" text="Student Name" />
                            </columns>
                         </TableView>
                         <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
@@ -132,9 +132,9 @@
                         <Button fx:id="btnAddCourse" layoutX="58.0" layoutY="301.0" mnemonicParsing="false" onAction="#btnAddCourse_Click" prefHeight="27.0" prefWidth="148.0" text="Add" />
                         <TableView fx:id="tableRegisterCourse" layoutX="356.0" layoutY="56.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                            <columns>
-                              <TableColumn fx:id="columnCourseCode2" prefWidth="118.0" text="Course Code" />
-                              <TableColumn fx:id="coulmnCourseName2" prefWidth="107.0" text="Course Name" />
-                              <TableColumn fx:id="columnCredit2" prefWidth="96.0" text="Credit" />
+                              <TableColumn fx:id="columnCourseCodeR" prefWidth="118.0" text="Course Code" />
+                              <TableColumn fx:id="columnCourseNameR" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnCreditR" prefWidth="96.0" text="Credit" />
                            </columns>
                         </TableView>
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
