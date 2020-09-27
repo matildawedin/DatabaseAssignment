@@ -198,34 +198,25 @@ public class Controller implements Initializable{
 
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
+		tabPaneCourse.getSelectionModel().select(tabActiveCourse);
 		tabPaneCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() { 
 			@Override 
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 				if(newTab.equals (tabActiveCourse)) {            
-					try {
-						tableActiveCourse.getItems().clear();
-						tableActiveStudent.getItems().clear();
-						tableActiveStudent.setDisable(true);
-						tableActiveCourse.setItems(dal.selectAllActiveCourses());
-						cmbStudentID.getItems().clear();
-						populateCmbBoxStudentID();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					tableActiveCourse.getItems().clear();
+					tableActiveStudent.getItems().clear();
+					tableActiveStudent.setDisable(true);
+					cmbStudentID.getItems().clear();
+					populateTableViewActiveCourse();
+					populateCmbBoxStudentID();
 				}
 				else if(newTab.equals(tabFinishedCourse)) {
-					try {		        		
-						tableFinishedCourse.getItems().clear();
-						tableFinishedStudent.getItems().clear();
-						tableFinishedStudent.setDisable(true);
-						tableGrade.setDisable(true);
-						tableGrade.getItems().clear();
-						tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					tableFinishedCourse.getItems().clear();
+					tableFinishedStudent.getItems().clear();
+					tableFinishedStudent.setDisable(true);
+					tableGrade.setDisable(true);
+					tableGrade.getItems().clear();
+					populateTableViewFinishedCourse();
 				}
 				else if(newTab.equals(tabRegistrationCourse)) {
 					tableRegisterCourse.getItems().clear();
@@ -238,18 +229,14 @@ public class Controller implements Initializable{
 		});
 		populateTableViewActiveCourse();
 		populateCmbBoxStudentID();
-		tabPaneCourse.getSelectionModel().select(tabActiveCourse);
+		
 	}
 	@FXML
 	public void populateTableViewActiveCourse() {
 
 		try {
-			if(tabActiveCourse.isSelected()) {
 				tableActiveCourse.setItems(dal.selectAllActiveCourses());
-			}
-			else if(tabRegistrationCourse.isSelected()) {
-				tableRegisterCourse.setItems(dal.selectAllActiveCourses());
-			}
+			
 		}
 		catch(SQLException e) {
 
@@ -258,18 +245,6 @@ public class Controller implements Initializable{
 		}	
 	}
 
-	@FXML
-	public void populateTableViewHasStudied() {
-		Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
-
-		try {
-			tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
-		}
-		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null,e);
-
-		}
-	}
 	@FXML
 	public void populateTableViewStudentCourse() {
 		try {
@@ -408,10 +383,8 @@ public class Controller implements Initializable{
 			tableGrade.getItems().clear();
 			tableFinishedStudent.setDisable(false);
 			btnRemoveCourseF.setDisable(false);
-			populateTableViewGrade();			
-			populateTableViewHasStudied();	
-
-
+			populateTableViewGrade();	
+			populateTableViewStudentCourse();
 		}
 		else {
 			lblResponseCourse.setText("ERROR");
