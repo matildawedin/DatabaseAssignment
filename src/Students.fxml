@@ -107,7 +107,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="tabelFindStudent" layoutX="420.0" layoutY="74.0" onMouseClicked="#selectStudent" prefHeight="303.0" prefWidth="227.0">
+                              <TableView fx:id="tabelFindStudent" disable="true" layoutX="420.0" layoutY="74.0" onMouseClicked="#selectStudent" prefHeight="303.0" prefWidth="227.0">
                                  <columns>
                                     <TableColumn fx:id="cStudentID" prefWidth="102.0" text="StudentID" />
                                     <TableColumn fx:id="cStudentName" prefWidth="124.0" text="Student Name" />
@@ -124,8 +124,8 @@
                                     <Font name="Helvetica Neue" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="textName" layoutX="114.0" layoutY="249.0" promptText="Student Name" />
-                              <Button fx:id="btnFindStudent" layoutX="167.0" layoutY="317.0" mnemonicParsing="false" text="Find" />
+                              <Button fx:id="btnFindStudent" layoutX="167.0" layoutY="317.0" mnemonicParsing="false" onAction="#findStudent" text="Find" />
+                              <ComboBox fx:id="cmbStudentName" layoutX="119.0" layoutY="249.0" prefWidth="150.0" promptText="Student Name" />
                            </children></AnchorPane>
                   </content>
                 </Tab>
