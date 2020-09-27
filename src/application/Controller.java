@@ -164,10 +164,12 @@ public class Controller implements Initializable{
 	@FXML private ComboBox<String> cmbStudentID;
 
 	@FXML private ComboBox<String> cmbCourseCode;
+	
+	@FXML private ComboBox<String> cmbGrade;
 
 	@FXML private Label lblResponseCourse;
 
-	@FXML private TextField textAddGrade;
+
 
 	@FXML private Button btnAddGrade;
 
@@ -195,6 +197,13 @@ public class Controller implements Initializable{
 
 		columnStudentIDF.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
+		cmbGrade.getItems().add("A");
+		cmbGrade.getItems().add("B");
+		cmbGrade.getItems().add("C");
+		cmbGrade.getItems().add("D");
+		cmbGrade.getItems().add("E");
+		cmbGrade.getItems().add("F");
+		
 
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
@@ -203,7 +212,7 @@ public class Controller implements Initializable{
 			@Override 
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 				if(newTab.equals (tabActiveCourse)) {            
-					tableActiveCourse.getItems().clear();
+					
 					tableActiveStudent.getItems().clear();
 					tableActiveStudent.setDisable(true);
 					cmbStudentID.getItems().clear();
@@ -213,6 +222,8 @@ public class Controller implements Initializable{
 				else if(newTab.equals(tabFinishedCourse)) {
 					tableFinishedCourse.getItems().clear();
 					tableFinishedStudent.getItems().clear();
+					cmbGrade.setDisable(true);
+					btnAddGrade.setDisable(true);
 					tableFinishedStudent.setDisable(true);
 					tableGrade.setDisable(true);
 					tableGrade.getItems().clear();
@@ -233,7 +244,7 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	public void populateTableViewActiveCourse() {
-
+		tableActiveCourse.getItems().clear();
 		try {
 				tableActiveCourse.setItems(dal.selectAllActiveCourses());
 			
@@ -367,7 +378,6 @@ public class Controller implements Initializable{
 		tableActiveStudent.getItems().clear();	
 		tableFinishedStudent.getItems().clear();	
 		btnRemoveCourse.setDisable(false);
-		lblResponseCourse.setText("Course selected");
 
 		if(tabActiveCourse.isSelected()) {	
 			btnMoveCourse.setDisable(false);
@@ -386,11 +396,11 @@ public class Controller implements Initializable{
 			populateTableViewGrade();	
 			populateTableViewStudentCourse();
 		}
-		else {
-			lblResponseCourse.setText("ERROR");
-		}
 	}
-
+	public void selectStudent(MouseEvent event) {
+		cmbGrade.setDisable(false);
+		btnAddGrade.setDisable(false);
+	}
 
 	@FXML
 	public void btnAddStudentStudy_Click(ActionEvent event) {
@@ -405,6 +415,18 @@ public class Controller implements Initializable{
 			e.printStackTrace();
 		}
 
+	}
+	public void btnAddGrade_Click(ActionEvent event) {
+		Course tmpCourse = tableFinishedCourse.getSelectionModel().getSelectedItem();
+		Student tmpStudent = tableFinishedStudent.getSelectionModel().getSelectedItem();
+		String tmpGrade = cmbGrade.getSelectionModel().getSelectedItem();		
+		try {
+			dal.addGrade(tmpStudent, tmpCourse, tmpGrade);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		tableGrade.getItems().clear();
+		populateTableViewGrade();
 	}
 }
 

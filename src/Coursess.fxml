@@ -76,8 +76,7 @@
                             <TableColumn fx:id="columnGrade" prefWidth="111.0" text="Grades" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="textAddGrade" alignment="CENTER" disable="true" layoutX="402.0" layoutY="449.0" prefHeight="27.0" prefWidth="148.0" promptText="grade*" />
-                        <Button fx:id="btnAddGrade" disable="true" layoutX="590.0" layoutY="449.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="61.0" text="Add" />
+                        <Button fx:id="btnAddGrade" disable="true" layoutX="590.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnAddGrade_Click" prefHeight="27.0" prefWidth="61.0" text="Add" />
                         <TableView fx:id="tableFinishedCourse" layoutX="14.0" layoutY="15.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                            <columns>
                               <TableColumn fx:id="columnCourseCodeF" prefWidth="118.0" text="Course Code" />
@@ -86,7 +85,7 @@
                            </columns>
                         </TableView>
                         <Button fx:id="btnRemoveCourseF" disable="true" layoutX="109.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
-                        <TableView fx:id="tableFinishedStudent" disable="true" layoutX="389.0" layoutY="16.0" prefHeight="318.0" prefWidth="231.0">
+                        <TableView fx:id="tableFinishedStudent" disable="true" layoutX="389.0" layoutY="16.0" onMouseClicked="#selectStudent" prefHeight="318.0" prefWidth="231.0">
                            <columns>
                               <TableColumn fx:id="columnStudentIDF" prefWidth="115.0" text="StudentID" />
                               <TableColumn fx:id="columnStudentNameF" prefWidth="115.0" text="Student Name" />
@@ -102,6 +101,7 @@
                               <Insets />
                            </opaqueInsets>
                         </TextField>
+                        <ComboBox fx:id="cmbGrade" layoutX="402.0" layoutY="449.0" prefWidth="150.0" promptText="Grade" />
                      </children>
                   </AnchorPane>
             </content>

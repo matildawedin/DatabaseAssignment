@@ -98,7 +98,7 @@ public class DAL {
 		con = dbc.getConnection();
 
 		try {
-			String queryFinishedCourse = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM Studies hs)";
+			String queryFinishedCourse = "SELECT DISTINCT hs.courseID, c.courseName, c.credits FROM HasStudied hs JOIN Course c ON hs.courseID = c.courseID";
 
 			rs = con.createStatement().executeQuery(queryFinishedCourse); 
 
@@ -195,7 +195,6 @@ public class DAL {
 					ps = con.prepareStatement(queryMove);
 					ps.executeUpdate();
 				}
-	
 		con.close();
 	}
 	public void insertStudentToCourse(String studentID, String courseID) throws SQLException {
@@ -287,6 +286,15 @@ public class DAL {
 		con = dbc.getConnection();
 		String remove = "DELETE FROM Student WHERE studentID = '" + studentID; //"'DELETE FROM Student WHERE studentID = ' ;
 		ps = con.prepareStatement(remove);
+		ps.executeUpdate();
+		con.close();
+	}
+	public void addGrade(Student student, Course course, String grade) throws SQLException {
+		con = dbc.getConnection();
+		String studentID = student.getStudentID();
+		String courseID = course.getCourseCode();		
+		String addGrade = "DELETE HasStudied WHERE studentID ='"+studentID+"'INSERT INTO HasStudied VALUES('"+studentID+"','"+courseID+"','"+grade+"')";
+		ps = con.prepareStatement(addGrade);
 		ps.executeUpdate();
 		con.close();
 	}
