@@ -98,6 +98,7 @@
                                  </font>
                               </TextField>
                               <ComboBox fx:id="cmbCourseCode" disable="true" layoutX="302.0" layoutY="404.0" prefWidth="150.0" promptText="Course code" />
+                              <TextField fx:id="textFieldRegisterStudentError" layoutX="303.0" layoutY="439.0" prefHeight="76.0" prefWidth="363.0" style="-fx-background-color: Transparent;" />
                            </children>
                         </AnchorPane>
                   </content>

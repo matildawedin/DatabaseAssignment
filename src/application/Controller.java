@@ -175,7 +175,6 @@ public class Controller implements Initializable{
 	@FXML private TextField textFieldRegistrationError;
 
 	
-	
 	//tabPaneCourse.getTabs().add(tabActiveCourse);	
 
 	@Override
@@ -394,6 +393,7 @@ public class Controller implements Initializable{
 		String cCredit = textCredit.getText(); 
 		
 		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
+
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
 				textFieldRegistrationError.setText("Course: "+cName+" added.");
@@ -404,6 +404,10 @@ public class Controller implements Initializable{
 				textCredit.clear();
 				populateTableViewActiveCourse();
 
+				//populateRegisterCourse();
+				
+
+
 			}
 			 
 				catch (SQLException SQLException) {		
@@ -413,11 +417,8 @@ public class Controller implements Initializable{
 				else if (SQLException.getErrorCode() == 0) {
 					textFieldRegistrationError.setText("There was a problem conecting to the database, please check your interntet connection");
 				}
-			}
+
 		}
-		
-		else {
-			textFieldRegistrationError.setText("Please fill out the fields.");
 		}
 		}
 	

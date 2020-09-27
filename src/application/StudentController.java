@@ -146,6 +146,8 @@ public class StudentController implements Initializable {
 	@FXML private TableColumn<Student, String> cStudentID;
 	
 	@FXML private TableColumn<Student, String> cStudentName;
+	
+	@FXML private TextField textFieldRegisterStudentError;
 
 
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
@@ -278,21 +280,26 @@ public class StudentController implements Initializable {
 		
 		System.out.println("inne i addmetod");
 
-		if (textStudentID.getText() != null && textStudentName.getText() != null) {
+		if (!textStudentID.getText().isEmpty() && !textStudentName.getText().isEmpty()) {
 			try {
 				dal.insertStudent(textStudentID.getText(),textStudentName.getText());
-				lblResponseStudent.setText("Course: "+(textStudentName.getText())+" added.");
-
+				textFieldRegisterStudentError.setText("Course: "+(textStudentName.getText())+" added.");
+				
+				
+				
 			} catch (SQLException e) {		
-				e.printStackTrace();
+				if(e.getErrorCode() == 2627) {
+					textFieldRegisterStudentError.setText("That studentID already exist. Please enter another combination of 'C' + IDnumber.");
+				} else if(e.getErrorCode() == 0) {
+					textFieldRegisterStudentError.setText("There was a problem connecting to the database, please check your connection.");
+				} 
 			}
 			
 			
 		}
 		else {
-			lblResponseStudent.setText("Please fill out the fields.");
+			textFieldRegisterStudentError.setText("Please fill out the fields.");
 		}
-		//vart ska detta vara?
 		oblistStudent.clear();
 		populateStudents();
 		textStudentID.clear();
