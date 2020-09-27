@@ -137,7 +137,7 @@ public class StudentController implements Initializable {
 	
 	@FXML private ComboBox<String> cmbStudentID;
 	
-	@FXML private TextField textName;
+	@FXML private ComboBox<String> cmbStudentName;
 	
 	@FXML private Button btnFindStudent;
 	
@@ -172,7 +172,8 @@ public class StudentController implements Initializable {
 		con = dbcon.getConnection();
 		
 		populateStudents();
-		populateCmbStudent();
+		populateCmbStudentID();
+		populateCmbStudentName();
 	}
 	
 	// Change view to CourseView
@@ -258,7 +259,7 @@ public class StudentController implements Initializable {
 		}
 	}
 	
-	public void populateCmbStudent() {
+	public void populateCmbStudentID() {
 		cmbStudentID.getItems().clear();
 		try {
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
@@ -269,6 +270,37 @@ public class StudentController implements Initializable {
 
 		
 	}
+	public void populateCmbStudentName() {
+		cmbStudentName.getItems().clear();
+		
+		try {
+			cmbStudentName.getItems().addAll(dal.selectAllStudentName());
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public void populateFindStudentTable(String s) {
+		
+		try {
+			if(cmbStudentID.getValue() != null ) {
+				tabelFindStudent.setItems(dal.selectStudentbyID(s));
+
+			}
+			else if(cmbStudentName.getValue() != null) {
+				tabelFindStudent.setItems(dal.selectStudentbyName(s));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 
 
 
@@ -382,6 +414,34 @@ public class StudentController implements Initializable {
 		cmbCourseCode.getItems().clear();
 		
 		//populateActiveCourse(s.getStudentID()); //Vill man se course table efter add course???
+	}
+	
+	@FXML
+	public void findStudent(ActionEvent event)  {
+		
+		System.out.println("inne i find student");
+		String sID = cmbStudentID.getValue();
+		String name = cmbStudentName.getValue();
+		
+		if(cmbStudentID.getValue() != null ) {
+			populateFindStudentTable(sID);
+		}
+		else if(cmbStudentName.getValue() != null) {
+			populateFindStudentTable(name);
+		}
+		
+		
+		tabelFindStudent.setDisable(false);
+		cmbStudentID.getItems().clear();
+		cmbStudentName.getItems().clear();
+		populateCmbStudentID();
+		populateCmbStudentName();
+		
+		
+		
+		
+		
+		
 	}
 	
 	

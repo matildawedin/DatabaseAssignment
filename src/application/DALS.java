@@ -134,7 +134,64 @@ public class DALS {
 		catch(SQLException e) {
 			throw e;
 		}
+	}
+	
+	public ObservableList<String> selectAllStudentName() throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<String> oblistSN = FXCollections.observableArrayList();
 		
+		try {
+		String selectN = "SELECT studentName FROM Student";
+		rs = con.createStatement().executeQuery(selectN);
+		
+		while(rs.next()) {
+			oblistSN.add(new String(rs.getString(1)));
+			
+		}
+		return oblistSN;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+	}
+	
+	public ObservableList<Student> selectStudentbyID(String studentID) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<Student> oblistS = FXCollections.observableArrayList();
+		
+		try {
+			String selectS = "SELECT * FROM Student WHERE studentID = '" + studentID + "'";
+				
+			rs = con.createStatement().executeQuery(selectS);
+
+			while(rs.next()) {
+				oblistS.add(new Student(rs.getString(1), rs.getString(2)));
+			}
+			return oblistS;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+		
+	}
+	
+	public ObservableList<Student> selectStudentbyName(String name) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<Student> oblistS = FXCollections.observableArrayList();
+		
+		try {
+			String selectS = "SELECT * FROM Student WHERE studentName = '" + name + "'";
+				
+			rs = con.createStatement().executeQuery(selectS);
+
+			while(rs.next()) {
+				oblistS.add(new Student(rs.getString(1), rs.getString(2)));
+			}
+			return oblistS;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
 		
 	}
 	
