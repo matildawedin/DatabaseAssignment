@@ -477,7 +477,7 @@ public class Controller implements Initializable{
 		if (tmpGrade !=null) {
 		try {
 			dal.addGrade(tmpStudent, tmpCourse, tmpGrade);
-			lblGradeStudentAnswer.setText("Grade " +  tmpGrade + "inserted");
+			lblGradeStudentAnswer.setText("Grade " +  tmpGrade + " inserted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
