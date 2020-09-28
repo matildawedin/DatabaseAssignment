@@ -5,11 +5,12 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -30,60 +31,132 @@
             <Insets />
          </opaqueInsets>
       </ButtonBar>
-      <TableView fx:id="tableCourse" layoutX="29.0" layoutY="132.0" onMouseClicked="#selectCourse" prefHeight="303.0" prefWidth="322.0">
-        <columns>
-          <TableColumn fx:id="columnCourseCode" prefWidth="118.0" text="Course Code" />
-          <TableColumn fx:id="coulmnCourseName" prefWidth="107.0" text="Course Name" />
-            <TableColumn fx:id="columnCredit" prefWidth="96.0" text="Credit" />
-        </columns>
-      </TableView>
-      <TableView fx:id="tableStudent" disable="true" layoutX="366.0" layoutY="132.0" prefHeight="303.0" prefWidth="218.0">
-         <columns>
-            <TableColumn fx:id="columnStudentID" prefWidth="100.0" text="StudentID" />
-            <TableColumn fx:id="columnStudentName" prefWidth="115.0" text="Student Name" />
-         </columns>
-      </TableView>
-      <TextField layoutX="103.0" layoutY="91.0" prefHeight="33.0" prefWidth="239.0" style="-fx-background-color: transparent;" text="Courses">
-         <font>
-            <Font name="Helvetica Neue" size="18.0" />
-         </font>
-      </TextField>
-      <TextField layoutX="29.0" layoutY="435.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Register new course">
-         <font>
-            <Font name="Helvetica Neue" size="16.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textCourseCode" layoutX="29.0" layoutY="468.0" prefHeight="27.0" prefWidth="116.0" promptText="Course code*" />
-      <TextField fx:id="textCourseName" layoutX="147.0" layoutY="468.0" prefHeight="27.0" prefWidth="109.0" promptText="Course Name*" />
-      <TextField fx:id="textCredit" layoutX="259.0" layoutY="468.0" prefHeight="27.0" prefWidth="92.0" promptText="Credit*" />
-      <Button fx:id="btnAddCourse" layoutX="29.0" layoutY="507.0" mnemonicParsing="false" onAction="#btnAddCourse_Click" prefHeight="27.0" prefWidth="148.0" text="Add" />
-      <Button fx:id="btnEditCourse" disable="true" layoutX="29.0" layoutY="549.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="148.0" text="Edit Course" />
-      <Button fx:id="btnRemoveCourse" disable="true" layoutX="203.0" layoutY="549.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
-      <TextField layoutX="401.0" layoutY="435.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Add partisipant">
-         <font>
-            <Font name="Helvetica Neue" size="16.0" />
-         </font>
-      </TextField>
-      <TextField layoutX="401.0" layoutY="520.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Add result">
-         <font>
-            <Font name="Helvetica Neue" size="16.0" />
-         </font>
-      </TextField>
-      <Button fx:id="btnAddPartisipant" disable="true" layoutX="562.0" layoutY="468.0" mnemonicParsing="false" onAction="#btnAddStudentStudy_Click" prefHeight="27.0" prefWidth="61.0" text="Add" />
-      <TextField fx:id="textAddGrade" alignment="CENTER" disable="true" layoutX="401.0" layoutY="553.0" prefHeight="27.0" prefWidth="148.0" promptText="grade*" />
-      <Button fx:id="btnAddGrade" disable="true" layoutX="562.0" layoutY="553.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="61.0" text="Add" />
-      <ComboBox fx:id="cmbStudentID" disable="true" layoutX="400.0" layoutY="468.0" prefWidth="150.0" promptText="StudentID" />
       <Label fx:id="lblResponseCourse" layoutX="203.0" layoutY="507.0" prefHeight="27.0" prefWidth="148.0" />
-      <RadioButton fx:id="rdbtnActiveCourse" layoutX="29.0" layoutY="81.0" mnemonicParsing="false" onAction="#radioButtonCourse" selected="true" text="Active">
-         <toggleGroup>
-            <ToggleGroup fx:id="courseGroup" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="rdbtnFinishedCourse" layoutX="29.0" layoutY="107.0" mnemonicParsing="false" onAction="#radioButtonCourse" text="Finished" toggleGroup="$courseGroup" />
-      <TableView fx:id="tableGrade" disable="true" layoutX="600.0" layoutY="132.0" prefHeight="303.0" prefWidth="123.0">
-        <columns>
-          <TableColumn fx:id="columnGrade" prefWidth="119.0" text="Grades" />
-        </columns>
-      </TableView>
+      <TabPane fx:id="tabPaneCourse" layoutX="-3.0" layoutY="54.0" prefHeight="556.0" prefWidth="754.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabActiveCourse" text="Active Courses">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="729.0">
+                     <children>
+                        <TableView fx:id="tableActiveCourse" layoutX="14.0" layoutY="15.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
+                          <columns>
+                            <TableColumn fx:id="columnCourseCode" prefWidth="118.0" text="Course Code" />
+                            <TableColumn fx:id="columnCourseName" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnCredit" prefWidth="96.0" text="Credit" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="tableActiveStudent" disable="true" layoutX="389.0" layoutY="16.0" prefHeight="318.0" prefWidth="308.0">
+                           <columns>
+                              <TableColumn fx:id="columnStudentID" prefWidth="150.0" text="StudentID" />
+                              <TableColumn fx:id="columnStudentName" prefWidth="155.0" text="Student Name" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="btnAddPartisipant" disable="true" layoutX="577.0" layoutY="443.0" mnemonicParsing="false" onAction="#btnAddStudentStudy_Click" prefHeight="33.0" prefWidth="70.0" text="Add" />
+                        <ComboBox fx:id="cmbStudentID" disable="true" layoutX="399.0" layoutY="442.0" prefHeight="35.0" prefWidth="150.0" promptText="StudentID" />
+                        <Button fx:id="btnMoveCourse" disable="true" layoutX="88.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnMoveCourse_Click" prefHeight="35.0" prefWidth="190.0" text="Move to finished courses" />
+                        <Button fx:id="btnRemoveCourse" disable="true" layoutX="109.0" layoutY="442.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
+                        <TextField layoutX="399.0" layoutY="392.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Add partisipant">
+                           <font>
+                              <Font name="Helvetica Neue" size="16.0" />
+                           </font>
+                        </TextField>
+                        <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
+                        <Separator layoutX="359.0" layoutY="370.0" orientation="VERTICAL" prefHeight="149.0" prefWidth="5.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabFinishedCourse" text="Finished Courses">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="419.0" prefWidth="729.0">
+                     <children>
+                        <TableView fx:id="tableGrade" disable="true" layoutX="621.0" layoutY="16.0" prefHeight="319.0" prefWidth="112.0">
+                          <columns>
+                              <TableColumn minWidth="0.0" prefWidth="0.0" />
+                            <TableColumn fx:id="columnGrade" prefWidth="111.0" text="Grades" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnAddGrade" disable="true" layoutX="590.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnAddGrade_Click" prefHeight="27.0" prefWidth="61.0" text="Add" />
+                        <TableView fx:id="tableFinishedCourse" layoutX="14.0" layoutY="15.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
+                           <columns>
+                              <TableColumn fx:id="columnCourseCodeF" prefWidth="118.0" text="Course Code" />
+                              <TableColumn fx:id="columnCourseNameF" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnCreditF" prefWidth="96.0" text="Credit" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="btnRemoveCourseF" disable="true" layoutX="109.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
+                        <TableView fx:id="tableFinishedStudent" disable="true" layoutX="389.0" layoutY="16.0" onMouseClicked="#selectStudent" prefHeight="318.0" prefWidth="231.0">
+                           <columns>
+                              <TableColumn fx:id="columnStudentIDF" prefWidth="115.0" text="StudentID" />
+                              <TableColumn fx:id="columnStudentNameF" prefWidth="115.0" text="Student Name" />
+                           </columns>
+                        </TableView>
+                        <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
+                        <Separator layoutX="359.0" layoutY="370.0" orientation="VERTICAL" prefHeight="149.0" prefWidth="5.0" />
+                        <TextField layoutX="402.0" layoutY="400.0" prefHeight="35.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Type grade for selected student">
+                           <font>
+                              <Font name="Helvetica Neue" size="16.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextField>
+                        <ComboBox fx:id="cmbGrade" layoutX="402.0" layoutY="449.0" prefWidth="150.0" promptText="Grade" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="tabRegistrationCourse" text="Registration">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField layoutX="44.0" layoutY="69.0" prefHeight="33.0" prefWidth="191.0" style="-fx-background-color: transparent;" text="Register new course">
+                           <font>
+                              <Font name="Helvetica Neue" size="18.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="textCourseCode" layoutX="55.0" layoutY="133.0" prefHeight="27.0" prefWidth="148.0" promptText="Course code*" />
+                        <TextField fx:id="textCourseName" layoutX="55.0" layoutY="189.0" prefHeight="27.0" prefWidth="148.0" promptText="Course Name*" />
+                        <TextField fx:id="textCredit" layoutX="55.0" layoutY="248.0" prefHeight="27.0" prefWidth="148.0" promptText="Credit*" />
+                        <Button fx:id="btnAddCourse" layoutX="58.0" layoutY="301.0" mnemonicParsing="false" onAction="#btnAddCourse_Click" prefHeight="27.0" prefWidth="148.0" text="Add" />
+                        <TableView fx:id="tableRegisterCourse" layoutX="356.0" layoutY="56.0" prefHeight="320.0" prefWidth="322.0">
+                           <columns>
+                              <TableColumn fx:id="columnCourseCodeR" prefWidth="118.0" text="Course Code" />
+                              <TableColumn fx:id="columnCourseNameR" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnCreditR" prefWidth="96.0" text="Credit" />
+                           </columns>
+                        </TableView>
+                        <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="tabFindCourse" text="Find">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="74.0" layoutY="72.0" prefHeight="21.0" prefWidth="148.0" text="Find course by">
+                           <font>
+                              <Font name="Helvetica Neue" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFindCourse" layoutX="68.0" layoutY="213.0" promptText="Course Name" />
+                        <TableView fx:id="tableCourse3" layoutX="342.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
+                           <columns>
+                              <TableColumn fx:id="columnCourseCode3" prefWidth="118.0" text="Course Code" />
+                              <TableColumn fx:id="coulmnCourseName3" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnCredit3" prefWidth="96.0" text="Credit" />
+                           </columns>
+                        </TableView>
+                        <ComboBox fx:id="cmbCourseCode" layoutX="69.0" layoutY="126.0" prefHeight="27.0" prefWidth="158.0" promptText="Course Code" />
+                        <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="Find" />
+                        <Label layoutX="119.0" layoutY="176.0" prefHeight="17.0" prefWidth="59.0" text="--OR--" />
+                        <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
