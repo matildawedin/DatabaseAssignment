@@ -216,26 +216,42 @@ public class DAL {
 
 	}
 
-	public ResultSet findCourse(String courseCode) {
-
-
+	public ObservableList<Course> selectCourseByCode(String courseCode) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<Course> oblistC = FXCollections.observableArrayList();
 		try{
-			String findC = "SELECT * FROM Course WHERE courseCode = "+ "'" + courseCode + "'" + ")";
+			String findC = "SELECT * FROM Course WHERE courseID = '" + courseCode + "'";
+			rs = con.createStatement().executeQuery(findC);
 
-			ps = con.prepareStatement(findC);
-			rs = ps.executeQuery();
-
-			if(rs.next()) {
-				return rs;
+			while(rs.next()) {
+				oblistC.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
 			}
-
+			return oblistC;
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw e;
 		}
-		return null;
-
 	}
+	public ObservableList<Course> selectCoursebyName(String name) throws SQLException{
+		con = dbc.getConnection();
+		ObservableList<Course> oblistC = FXCollections.observableArrayList();
+		
+		try {
+			String selectC = "SELECT * FROM Course WHERE courseName LIKE '%" + name + "%'";
+				
+			rs = con.createStatement().executeQuery(selectC);
+
+			while(rs.next()) {
+				oblistC.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
+			}
+			return oblistC;
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+		
+	}
+	
 
 	public ResultSet findStudentsFromStudies(String courseCode) {
 

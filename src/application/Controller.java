@@ -204,6 +204,10 @@ public class Controller implements Initializable{
 		columnCourseCodeF.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnCourseNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCreditF.setCellValueFactory(new PropertyValueFactory<>("credits"));
+		
+		columnFindCourseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnFindCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnFindCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
 
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -504,6 +508,47 @@ public class Controller implements Initializable{
 		}
 		tableGrade.getItems().clear();
 		populateTableViewGrade();
+	}
+	public void populateFindCourseTable(String c) {
+		
+		try {
+			if(cmbCourseCode.getValue() != null ) {
+				tableFindCourse.setItems(dal.selectCourseByCode(c));
+
+			}
+			else if(textFindCourse.getText() != null) {
+				tableFindCourse.setItems(dal.selectCoursebyName(c));	
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	@FXML
+	public void findCourse(ActionEvent event)  {
+		
+		System.out.println("inne i find course");
+		String cID = cmbCourseCode.getValue();
+		String name = textFindCourse.getText();
+		
+		if(cmbCourseCode.getValue() != null ) {
+			populateFindCourseTable(cID);
+		}
+		else if(textFindCourse.getText() != null) {
+			populateFindCourseTable(name);
+		}
+		
+		tableFindCourse.setDisable(false);
+		cmbCourseCode.getItems().clear();
+		textFindCourse.clear();
+		populateCmbBoxCourseCode();
+		cmbCourseCode.setDisable(false);
+		textFindCourse.setDisable(false);
+		btnFindCourse.setDisable(true);
+		
+		
+		
 	}
 	
 }
