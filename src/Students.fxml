@@ -98,6 +98,7 @@
                                  </font>
                               </TextField>
                               <ComboBox fx:id="cmbCourseCode" disable="true" layoutX="306.0" layoutY="404.0" prefWidth="150.0" promptText="Course code" />
+                              <Label fx:id="lblAddCourseResponse" layoutX="308.0" layoutY="444.0" prefHeight="17.0" prefWidth="147.0" />
                            </children>
                         </AnchorPane>
                   </content>
