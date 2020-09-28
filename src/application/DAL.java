@@ -14,15 +14,11 @@ public class DAL {
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
-	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-	private ObservableList<String> oblistString = FXCollections.observableArrayList();
 	private ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
 
 	public ObservableList<Student> selectAllStudent() throws SQLException{
-
 		con = dbc.getConnection();
-
+		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 		try {
 
 			String selectAll = "SELECT * FROM Student";
@@ -39,9 +35,8 @@ public class DAL {
 
 	}
 	public ObservableList<String> selectAllStudentID() throws SQLException{
-
 		con = dbc.getConnection();
-		
+		ObservableList<String> oblistString = FXCollections.observableArrayList();
 		try {
 
 			String selectAll = "SELECT studentID FROM Student";
@@ -55,12 +50,10 @@ public class DAL {
 		catch(SQLException e) {
 			throw e;
 		}
-
 	}
 	public ObservableList<String> selectAllCourseCode() throws SQLException{
-
 		con = dbc.getConnection();
-	
+		ObservableList<String> oblistString = FXCollections.observableArrayList();
 		try {
 
 			String selectAll = "SELECT courseID FROM Course";
@@ -77,9 +70,8 @@ public class DAL {
 
 	}
 	public ObservableList<Course> selectAllActiveCourses() throws SQLException{
-
 		con = dbc.getConnection();
-
+		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 		try {
 			String query1 = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM HasStudied hs)";
 			rs = con.createStatement().executeQuery(query1);
@@ -94,11 +86,10 @@ public class DAL {
 		}
 	}
 	public ObservableList<Course> selectAllFinishedCourses() throws SQLException{
-
 		con = dbc.getConnection();
-
+		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 		try {
-			String queryFinishedCourse = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM Studies hs)";
+			String queryFinishedCourse = "SELECT DISTINCT hs.courseID, c.courseName, c.credits FROM HasStudied hs JOIN Course c ON hs.courseID = c.courseID";
 
 			rs = con.createStatement().executeQuery(queryFinishedCourse); 
 
@@ -112,9 +103,8 @@ public class DAL {
 		}
 
 	}	public ObservableList<Student> selectAllFromHasStudied(String courseID) throws SQLException{
-
 		con = dbc.getConnection();
-
+		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 		try {
 			String findHasStudied = "SELECT DISTINCT s1.studentID, s2.studentName FROM HasStudied s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID='" + courseID+ "'";
 			rs = con.createStatement().executeQuery(findHasStudied); 
@@ -130,9 +120,8 @@ public class DAL {
 
 	}
 	public ObservableList<Student> selectAllFromStudies(String courseID) throws SQLException{
-
 		con = dbc.getConnection();
-
+		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 		try {
 			String findStudies = "SELECT DISTINCT s1.studentID, s2.studentName FROM Studies s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID ='" + courseID +"'"; 
 			rs = con.createStatement().executeQuery(findStudies); 
@@ -195,7 +184,6 @@ public class DAL {
 					ps = con.prepareStatement(queryMove);
 					ps.executeUpdate();
 				}
-	
 		con.close();
 	}
 	public void insertStudentToCourse(String studentID, String courseID) throws SQLException {
@@ -287,6 +275,15 @@ public class DAL {
 		con = dbc.getConnection();
 		String remove = "DELETE FROM Student WHERE studentID = '" + studentID; //"'DELETE FROM Student WHERE studentID = ' ;
 		ps = con.prepareStatement(remove);
+		ps.executeUpdate();
+		con.close();
+	}
+	public void addGrade(Student student, Course course, String grade) throws SQLException {
+		con = dbc.getConnection();
+		String studentID = student.getStudentID();
+		String courseID = course.getCourseCode();		
+		String addGrade = "DELETE HasStudied WHERE studentID ='"+studentID+"'INSERT INTO HasStudied VALUES('"+studentID+"','"+courseID+"','"+grade+"')";
+		ps = con.prepareStatement(addGrade);
 		ps.executeUpdate();
 		con.close();
 	}
