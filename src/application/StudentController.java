@@ -148,7 +148,10 @@ public class StudentController implements Initializable {
 	
 	@FXML private TableColumn<Student, String> cStudentName;
 	
+	//används detta?
 	@FXML private Group studentGroup;
+	
+	@FXML private Label lblAddCourseResponse;
 
 	private ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 	private ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
@@ -175,6 +178,7 @@ public class StudentController implements Initializable {
 		
 		populateStudents();
 		populateCmbStudentID();
+		populateCmbCourse();
 		
 		textName.textProperty().addListener((observable) -> cmbStudentID.setDisable(true));
 		cmbStudentID.valueProperty().addListener((observable) -> textName.setDisable(true));
@@ -342,13 +346,11 @@ public class StudentController implements Initializable {
 		if(s != null) {
 			
 			lblResponseStudent.setText("Student selected");
-			populateCmbCourse();
 			
 			
-		} else {
-			lblResponseStudent.setText("ERROR");
-		}
+		} 
 		
+		cmbCourseCode.getItems().clear();
 		tableCourse.getItems().clear();
 		tabelGrade.getItems().clear();
 		tableCourse.setDisable(true);
@@ -360,6 +362,9 @@ public class StudentController implements Initializable {
 		lableAddCourse.setDisable(false);
 		cmbCourseCode.setDisable(false);
 		btnAddNewCourse.setDisable(false);
+		populateCmbCourse();
+		lblAddCourseResponse.setText(null);
+		
 		
 		//rbtnActive.setSelected(false);
 		//rbtnCompleted.setSelected(false);
@@ -403,14 +408,27 @@ public class StudentController implements Initializable {
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
 		
 		try {
+			if(cmbCourseCode.getValue() != null) {
 			dal.insertCourseToStudent(s.getStudentID(), cc);
-		} catch (SQLException e) {
 			
-			e.printStackTrace();
+			}
+			else {
+				lblAddCourseResponse.setText("Please select a course");
+				
+			}
+		} catch (SQLException e) {
+			if(e.getErrorCode() == 2627) {
+				lblAddCourseResponse.setText("That  already exist");
+				}
+				else if(e.getErrorCode() == 0) {
+					lblAddCourseResponse.setText("There was a problem connecting to the database, please check your connection.");
+				} 
+			
 		}
 		cmbCourseCode.getItems().clear();
+		populateCmbCourse();
 		
-		//populateActiveCourse(s.getStudentID()); //Vill man se course table efter add course???
+		
 	}
 	
 	@FXML
@@ -423,7 +441,7 @@ public class StudentController implements Initializable {
 		if(cmbStudentID.getValue() != null ) {
 			populateFindStudentTable(sID);
 		}
-		else if(textName.getText() != null) {
+		else if(!textName.getText().isEmpty()) {
 			populateFindStudentTable(name);
 		}
 		
@@ -445,25 +463,30 @@ public class StudentController implements Initializable {
 	@FXML
 	public void btnRemoveStudent(ActionEvent event) {
 		System.out.println("inne i remove");
-
-		try {
-			Student tempS = tableStudent.getSelectionModel().getSelectedItem();
-			String sID = tempS.getStudentID();
-
-			dal.removeStudent(sID);
-			tableStudent.getItems().clear();
-
-		}
-		catch (SQLException e) {
-		e.printStackTrace();
-		}
+		Student tempS = tableStudent.getSelectionModel().getSelectedItem();
+		String sID = tempS.getStudentID();
 		
+		if(tempS != null) {
+
+			try {
+
+				lblResponseStudent.setText( tempS.getName() + " is removed");
+				dal.removeStudent(sID);
+				tableStudent.getItems().clear();
+
+			}
+			catch (SQLException e) {
+			e.printStackTrace();
+			}
+		}
+
 		populateStudents();
 		btnRemoveStudent.setDisable(true);
 		cmbCourseCode.setDisable(true);
 		btnAddNewCourse.setDisable(true);
 		rbtnActive.setDisable(true);
 		rbtnCompleted.setDisable(true);
+		
 		
 		
 	}
