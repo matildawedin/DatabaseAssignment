@@ -39,8 +39,6 @@ public class Controller implements Initializable{
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private DAL dal = new DAL();
 
 	public Course getCourse() {
