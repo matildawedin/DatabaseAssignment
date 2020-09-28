@@ -369,7 +369,7 @@ public class Controller implements Initializable{
 			dal.removeCourse(tempC.getCourseCode());
 			tableActiveCourse.getItems().clear();
 
-			
+			}
 		if(tabActiveCourse.isSelected()) {
 			populateTableViewActiveCourse();
 			populateCmbBoxStudentID();
@@ -397,6 +397,8 @@ public class Controller implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	
+		
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
