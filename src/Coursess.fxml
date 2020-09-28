@@ -31,12 +31,11 @@
             <Insets />
          </opaqueInsets>
       </ButtonBar>
-      <Label fx:id="lblResponseCourse" layoutX="203.0" layoutY="507.0" prefHeight="27.0" prefWidth="148.0" />
       <TabPane fx:id="tabPaneCourse" layoutX="-3.0" layoutY="54.0" prefHeight="556.0" prefWidth="754.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="tabActiveCourse" text="Active Courses">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="729.0">
+              <AnchorPane fx:id="lblAddParticipant" minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="729.0">
                      <children>
                         <TableView fx:id="tableActiveCourse" layoutX="14.0" layoutY="15.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                           <columns>
@@ -55,20 +54,20 @@
                         <ComboBox fx:id="cmbStudentID" disable="true" layoutX="399.0" layoutY="442.0" prefHeight="35.0" prefWidth="150.0" promptText="StudentID" />
                         <Button fx:id="btnMoveCourse" disable="true" layoutX="88.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnMoveCourse_Click" prefHeight="35.0" prefWidth="190.0" text="Move to finished courses" />
                         <Button fx:id="btnRemoveCourse" disable="true" layoutX="109.0" layoutY="442.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
-                        <TextField layoutX="399.0" layoutY="392.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Add partisipant">
-                           <font>
-                              <Font name="Helvetica Neue" size="16.0" />
-                           </font>
-                        </TextField>
                         <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
                         <Separator layoutX="359.0" layoutY="370.0" orientation="VERTICAL" prefHeight="149.0" prefWidth="5.0" />
+                        <Label layoutX="407.0" layoutY="399.0" prefHeight="29.0" prefWidth="130.0" text="Add Participant">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab fx:id="tabFinishedCourse" text="Finished Courses">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="419.0" prefWidth="729.0">
+              <AnchorPane fx:id="gradeForStudenlbl" minHeight="0.0" minWidth="0.0" prefHeight="419.0" prefWidth="729.0">
                      <children>
                         <TableView fx:id="tableGrade" disable="true" layoutX="621.0" layoutY="16.0" prefHeight="319.0" prefWidth="112.0">
                           <columns>
@@ -93,15 +92,12 @@
                         </TableView>
                         <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
                         <Separator layoutX="359.0" layoutY="370.0" orientation="VERTICAL" prefHeight="149.0" prefWidth="5.0" />
-                        <TextField layoutX="402.0" layoutY="400.0" prefHeight="35.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-color: blue;" text="Type grade for selected student">
-                           <font>
-                              <Font name="Helvetica Neue" size="16.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </TextField>
                         <ComboBox fx:id="cmbGrade" layoutX="402.0" layoutY="449.0" prefWidth="150.0" promptText="Grade" />
+                        <Label layoutX="402.0" layoutY="396.0" prefHeight="39.0" prefWidth="223.0" text="Insert grade for student">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
             </content>
@@ -127,6 +123,7 @@
                            </columns>
                         </TableView>
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
+                        <Label fx:id="lblAnswercCourseReg" layoutX="55.0" layoutY="366.0" prefHeight="60.0" prefWidth="235.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -141,17 +138,18 @@
                            </font>
                         </Label>
                         <TextField fx:id="textFindCourse" layoutX="68.0" layoutY="213.0" promptText="Course Name" />
-                        <TableView fx:id="tableCourse3" layoutX="342.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
+                        <TableView fx:id="tableFindCourse" layoutX="342.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                            <columns>
-                              <TableColumn fx:id="columnCourseCode3" prefWidth="118.0" text="Course Code" />
-                              <TableColumn fx:id="coulmnCourseName3" prefWidth="107.0" text="Course Name" />
-                              <TableColumn fx:id="columnCredit3" prefWidth="96.0" text="Credit" />
+                              <TableColumn fx:id="columnFindCourseCode" prefWidth="118.0" text="Course Code" />
+                              <TableColumn fx:id="columnFindCourseName" prefWidth="107.0" text="Course Name" />
+                              <TableColumn fx:id="columnFindCredit" prefWidth="96.0" text="Credit" />
                            </columns>
                         </TableView>
                         <ComboBox fx:id="cmbCourseCode" layoutX="69.0" layoutY="126.0" prefHeight="27.0" prefWidth="158.0" promptText="Course Code" />
-                        <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="Find" />
+                        <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" onAction="#findCourse" prefHeight="27.0" prefWidth="59.0" text="Find" />
                         <Label layoutX="119.0" layoutY="176.0" prefHeight="17.0" prefWidth="59.0" text="--OR--" />
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
+                        <Label fx:id="lblAnswerFindCourse" layoutX="92.0" layoutY="325.0" prefHeight="72.0" prefWidth="203.0" />
                      </children>
                   </AnchorPane>
               </content>

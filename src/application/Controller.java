@@ -182,9 +182,10 @@ public class Controller implements Initializable{
 
 	@FXML private Button btnAddGrade;
 
-	
-	@FXML private TextField textFieldRegistrationError;
 
+	@FXML private Label	lblAnswercCourseReg;
+	
+	@FXML private Label lblAnswerFindCourse;
 	
 
 	//tabPaneCourse.getTabs().add(tabActiveCourse);	
@@ -204,6 +205,10 @@ public class Controller implements Initializable{
 		columnCourseCodeF.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnCourseNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCreditF.setCellValueFactory(new PropertyValueFactory<>("credits"));
+		
+		columnFindCourseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnFindCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnFindCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
 
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		columnStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -394,44 +399,40 @@ public class Controller implements Initializable{
 
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
-
-				textFieldRegistrationError.setText("Course: "+cName+" added.");
-
+				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				tableRegisterCourse.getItems().clear();
 				tableActiveCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
-
 				populateTableViewActiveCourse();
-
-
-				//populateRegisterCourse();
-
 				populateTableViewRegCourse();
 				cmbCourseCode.getItems().clear();
 				populateCmbBoxCourseCode();
 
 
 			}
+			
 
 			 
 				catch (SQLException SQLException) {		
 				if ( SQLException.getErrorCode() == 2627) {
-					textFieldRegistrationError.setText("That coursecode already exists");
+					lblAnswercCourseReg.setText("That coursecode already exists");
 				}
 				else if (SQLException.getErrorCode() == 0) {
-					textFieldRegistrationError.setText("There was a problem conecting to the database, please check your interntet connection");
+					lblAnswercCourseReg.setText("There was a problem conecting to the database, please check your interntet connection");
 				}
-
+				
+		}
+						
+		}
+		else {
+			lblAnswercCourseReg.setText("Please fill out all the fields.");
 		}
 
-
-		}
-		
-
-	
 	}
+	
+	
 	public void btnMoveCourse_Click(ActionEvent event) {
 		Course tmpCourse = tableActiveCourse.getSelectionModel().getSelectedItem();
 		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
@@ -504,6 +505,47 @@ public class Controller implements Initializable{
 		}
 		tableGrade.getItems().clear();
 		populateTableViewGrade();
+	}
+	public void populateFindCourseTable(String c) {
+		
+		try {
+			if(cmbCourseCode.getValue() != null ) {
+				tableFindCourse.setItems(dal.selectCourseByCode(c));
+
+			}
+			else if(textFindCourse.getText() != null) {
+				tableFindCourse.setItems(dal.selectCoursebyName(c));	
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	@FXML
+	public void findCourse(ActionEvent event)  {
+		
+		System.out.println("inne i find course");
+		String cID = cmbCourseCode.getValue();
+		String name = textFindCourse.getText();
+		
+		if(cmbCourseCode.getValue() != null ) {
+			populateFindCourseTable(cID);
+		}
+		else if(textFindCourse.getText() != null) {
+			populateFindCourseTable(name);
+		}
+		
+		tableFindCourse.setDisable(false);
+		cmbCourseCode.getItems().clear();
+		textFindCourse.clear();
+		populateCmbBoxCourseCode();
+		cmbCourseCode.setDisable(false);
+		textFindCourse.setDisable(false);
+		btnFindCourse.setDisable(true);
+		
+		
+		
 	}
 	
 }
