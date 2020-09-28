@@ -19,7 +19,7 @@ public class Runners extends Application{
 	
 	public void start(Stage primaryStage) throws Exception{
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Students.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Coursess.fxml"));
 		
 			Parent root = (Parent) loader.load();
 			
