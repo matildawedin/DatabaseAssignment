@@ -20,7 +20,11 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -33,6 +37,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 public class Controller implements Initializable{
 
 
@@ -150,6 +155,8 @@ public class Controller implements Initializable{
 	@FXML private TextField textCourseName;
 
 	@FXML private TextField textCredit;
+	
+	@FXML private TextField textFindCourse;
 
 	@FXML private Button btnAddCourse;
 
@@ -160,6 +167,8 @@ public class Controller implements Initializable{
 	@FXML private Button btnRemoveCourseF;
 
 	@FXML private Button btnAddPartisipant;
+	
+	@FXML private Button btnFindCourse;
 
 	@FXML private ComboBox<String> cmbStudentID;
 
@@ -235,11 +244,39 @@ public class Controller implements Initializable{
 				}
 			}
 		});
+		
+		textFindCourse.textProperty().addListener((observable) -> cmbCourseCode.setDisable(true));
+		cmbCourseCode.valueProperty().addListener((observable) -> textFindCourse.setDisable(true));
+		cmbCourseCode.valueProperty().addListener((observable) -> btnFindCourse.setDisable(false));
+		textFindCourse.textProperty().addListener((observable) -> btnFindCourse.setDisable(false));
 		populateTableViewActiveCourse();
 		populateCmbBoxStudentID();
 		populateCmbBoxCourseCode();
-
 	}
+		
+	
+	// Change view to CourseView
+	@FXML
+	public void showStudentView(ActionEvent event) {
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Student.fxml"));
+			Parent root = (Parent) loader.load();
+			
+
+			Scene ExamViewScene = new Scene(root);
+			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					
+			window.setScene(ExamViewScene);
+
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	@FXML
 	public void populateTableViewActiveCourse() {
 		tableActiveCourse.getItems().clear();
@@ -439,6 +476,8 @@ public class Controller implements Initializable{
 		tableGrade.getItems().clear();
 		populateTableViewGrade();
 	}
+	
 }
+
 
 
