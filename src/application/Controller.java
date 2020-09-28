@@ -368,15 +368,7 @@ public class Controller implements Initializable{
 		String cCode = textCourseCode.getText();
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-
-		
-
 		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
-
-
-
-			
-
 
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
@@ -390,9 +382,6 @@ public class Controller implements Initializable{
 
 
 				//populateRegisterCourse();
-
-				
-
 
 			}
 
