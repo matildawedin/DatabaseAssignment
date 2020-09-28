@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StudentController">
+<AnchorPane prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StudentController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0">
          <children>
@@ -43,7 +43,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="tableCourse" disable="true" layoutX="306.0" layoutY="62.0" prefHeight="303.0" prefWidth="319.0">
+                              <TableView fx:id="tableCourse" disable="true" layoutX="306.0" layoutY="56.0" prefHeight="303.0" prefWidth="319.0">
                                  <columns>
                                     <TableColumn fx:id="columnCourseCode" prefWidth="114.0" text="Course Code" />
                                     <TableColumn fx:id="coulmnCourseName" prefWidth="111.0" text="Course Name" />
