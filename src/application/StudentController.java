@@ -114,7 +114,6 @@ public class StudentController implements Initializable {
 	
 	@FXML private Label lblResponseStudent;
 	
-	@FXML private Button btnEditStudent;
 	
 	@FXML private Button btnRemoveStudent;
 	
@@ -179,6 +178,9 @@ public class StudentController implements Initializable {
 		
 		textName.textProperty().addListener((observable) -> cmbStudentID.setDisable(true));
 		cmbStudentID.valueProperty().addListener((observable) -> textName.setDisable(true));
+		cmbStudentID.valueProperty().addListener((observable) -> btnFindStudent.setDisable(false));
+		textName.textProperty().addListener((observable) -> btnFindStudent.setDisable(false));
+		
 	}
 	
 	// Change view to CourseView
@@ -348,7 +350,6 @@ public class StudentController implements Initializable {
 		tabelGrade.getItems().clear();
 		tableCourse.setDisable(true);
 		tabelGrade.setDisable(true);
-		btnEditStudent.setDisable(false);
 		btnRemoveStudent.setDisable(false);
 		rbtnActive.setDisable(false);
 		rbtnCompleted.setDisable(false);
@@ -428,6 +429,9 @@ public class StudentController implements Initializable {
 		cmbStudentID.getItems().clear();
 		textName.clear();
 		populateCmbStudentID();
+		cmbStudentID.setDisable(false);
+		textName.setDisable(false);
+		btnFindStudent.setDisable(true);
 		
 		
 		
@@ -435,12 +439,6 @@ public class StudentController implements Initializable {
 	
 	
 	
-
-		
-	
-	
-	
-	// EJ PRIO
 	@FXML
 	public void btnRemoveStudent(ActionEvent event) {
 		System.out.println("inne i remove");
@@ -450,13 +448,21 @@ public class StudentController implements Initializable {
 			String sID = tempS.getStudentID();
 
 			dal.removeStudent(sID);
+			tableStudent.getItems().clear();
 
 		}
 		catch (SQLException e) {
 		e.printStackTrace();
 		}
-		oblistCourse.clear();
+		
 		populateStudents();
+		btnRemoveStudent.setDisable(true);
+		cmbCourseCode.setDisable(true);
+		btnAddNewCourse.setDisable(true);
+		rbtnActive.setDisable(true);
+		rbtnCompleted.setDisable(true);
+		
+		
 	}
 	
 }
