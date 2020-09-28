@@ -362,25 +362,11 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	public void btnRemoveCourse_Click(ActionEvent event){
-
 		try {
 			if(tabActiveCourse.isSelected()) {
 			Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
 			dal.removeCourse(tempC.getCourseCode());
 			tableActiveCourse.getItems().clear();
-
-			
-		if(tabActiveCourse.isSelected()) {
-			populateTableViewActiveCourse();
-			populateCmbBoxStudentID();
-		}
-		else if(tabFinishedCourse.isSelected()) {	
-			populateTableViewFinishedCourse();
-		}
-		
-
-			if(tabActiveCourse.isSelected()) {
-
 				populateTableViewActiveCourse();
 				cmbStudentID.getItems().clear();
 				populateCmbBoxStudentID();
@@ -391,12 +377,13 @@ public class Controller implements Initializable{
 				tableFinishedCourse.getItems().clear();
 				populateTableViewFinishedCourse();
 			}
-
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
