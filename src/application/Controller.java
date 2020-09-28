@@ -317,6 +317,7 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	private void populateCmbBoxStudentID() {	
+			cmbStudentID.getItems().clear();
 		try {
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
