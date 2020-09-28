@@ -39,8 +39,6 @@ public class Controller implements Initializable{
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
-	private PreparedStatement ps;
-	private ResultSet rs;
 	private DAL dal = new DAL();
 
 	public Course getCourse() {
@@ -319,6 +317,7 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	private void populateCmbBoxStudentID() {	
+			cmbStudentID.getItems().clear();
 		try {
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
