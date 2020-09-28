@@ -7,18 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,8 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -38,9 +31,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 public class Controller implements Initializable{
-
-
+	
 	private Course course;
 	private Student student;
 	private Result result;
@@ -84,10 +77,15 @@ public class Controller implements Initializable{
 	}
 
 	// FXML Functions
+	@FXML private TabPane tabPaneCourse;
+	
+	@FXML private Tab tabActiveCourse;
 
-	@FXML private Button btnCourseView;
+	@FXML private Tab tabFinishedCourse;
 
-	@FXML private Button btnStudentView;
+	@FXML private Tab tabRegistrationCourse;
+
+	@FXML private Tab tabFindCourse;
 
 	@FXML private TableView<Course> tableActiveCourse;
 
@@ -98,6 +96,10 @@ public class Controller implements Initializable{
 	@FXML private TableView<Course> tableFindCourse;
 
 	@FXML private TableView<HasStudied> tableGrade;
+	
+	@FXML private TableView<Student> tableActiveStudent;
+
+	@FXML private TableView<Student> tableFinishedStudent;
 
 	@FXML private TableColumn<HasStudied, String> columnGrade;
 
@@ -125,15 +127,6 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Course, String> columnFindCredit;
 
-
-
-	@FXML private TableView<Student> tableActiveStudent;
-
-	@FXML private TableView<Student> tableFinishedStudent;
-
-	@FXML private TabPane tabPaneCourse;
-
-
 	@FXML private TableColumn<Student, String> columnStudentID;
 
 	@FXML private TableColumn<Student, String> columnStudentName;
@@ -142,21 +135,17 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Student, String> columnStudentNameF;
 
-	@FXML private Tab tabActiveCourse;
-
-	@FXML private Tab tabFinishedCourse;
-
-	@FXML private Tab tabRegistrationCourse;
-
-	@FXML private Tab tabFindCourse;
-
 	@FXML private TextField textCourseCode;
 
 	@FXML private TextField textCourseName;
 
 	@FXML private TextField textCredit;
-	
+
 	@FXML private TextField textFindCourse;
+	
+	@FXML private Button btnCourseView;
+
+	@FXML private Button btnStudentView;
 
 	@FXML private Button btnAddCourse;
 
@@ -167,28 +156,20 @@ public class Controller implements Initializable{
 	@FXML private Button btnRemoveCourseF;
 
 	@FXML private Button btnAddPartisipant;
-	
+
 	@FXML private Button btnFindCourse;
 
+	@FXML private Button btnAddGrade;
+	
 	@FXML private ComboBox<String> cmbStudentID;
 
 	@FXML private ComboBox<String> cmbCourseCode;
 
 	@FXML private ComboBox<String> cmbGrade;
 
-	//@FXML private Label lblResponseCourse;
-
-
-
-	@FXML private Button btnAddGrade;
-
-
 	@FXML private Label	lblAnswercCourseReg;
-	
-	@FXML private Label lblAnswerFindCourse;
-	
 
-	//tabPaneCourse.getTabs().add(tabActiveCourse);	
+	@FXML private Label lblAnswerFindCourse;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
@@ -205,7 +186,7 @@ public class Controller implements Initializable{
 		columnCourseCodeF.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnCourseNameF.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCreditF.setCellValueFactory(new PropertyValueFactory<>("credits"));
-		
+
 		columnFindCourseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		columnFindCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnFindCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
@@ -224,9 +205,9 @@ public class Controller implements Initializable{
 		cmbGrade.getItems().add("E");
 		cmbGrade.getItems().add("F");
 
-
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
+		
 		tabPaneCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() { 
 			@Override 
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
@@ -237,24 +218,22 @@ public class Controller implements Initializable{
 				}
 				else if(newTab.equals(tabFinishedCourse)) {
 					tableFinishedStudent.getItems().clear();
+					tableGrade.getItems().clear();
+					tableGrade.setDisable(true);
 					cmbGrade.setDisable(true);
 					btnAddGrade.setDisable(true);
 					tableFinishedStudent.setDisable(true);
-					tableGrade.setDisable(true);
-					tableGrade.getItems().clear();
 					populateTableViewFinishedCourse();
 				}
 				else if(newTab.equals(tabRegistrationCourse)) {
-					tableRegisterCourse.getItems().clear();
 					populateTableViewRegCourse();
 				}
 				else if(newTab.equals(tabFindCourse)) {
-					cmbCourseCode.getItems().clear();
 					populateCmbBoxCourseCode();
 				}
 			}
 		});
-		
+
 		textFindCourse.textProperty().addListener((observable) -> cmbCourseCode.setDisable(true));
 		cmbCourseCode.valueProperty().addListener((observable) -> textFindCourse.setDisable(true));
 		cmbCourseCode.valueProperty().addListener((observable) -> btnFindCourse.setDisable(false));
@@ -263,29 +242,24 @@ public class Controller implements Initializable{
 		populateCmbBoxStudentID();
 		populateCmbBoxCourseCode();
 	}
-	
+
 	@FXML
 	public void showStudentView(ActionEvent event) {
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Students.fxml"));
 			Parent root = (Parent) loader.load();
-			
 
 			Scene ExamViewScene = new Scene(root);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					
-			window.setScene(ExamViewScene);
 
-			
+			window.setScene(ExamViewScene);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
-		
 	@FXML
 	public void populateTableViewActiveCourse() {
 		tableActiveCourse.getItems().clear();
@@ -293,11 +267,10 @@ public class Controller implements Initializable{
 			tableActiveCourse.setItems(dal.selectAllActiveCourses());	
 		}
 		catch(SQLException e) {
-
 			e.printStackTrace();
-
 		}	
 	}
+	@FXML
 	public void populateTableViewRegCourse() {
 		tableRegisterCourse.getItems().clear();
 		try {
@@ -305,7 +278,6 @@ public class Controller implements Initializable{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-
 		}	
 	}
 
@@ -313,11 +285,13 @@ public class Controller implements Initializable{
 	public void populateTableViewStudentCourse() {
 		try {
 			if(tabActiveCourse.isSelected()) {
-				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();	
+				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
+				tableActiveStudent.getItems().clear();
 				tableActiveStudent.setItems(dal.selectAllFromStudies(tempC.getCourseCode()));
 			}
 			if(tabFinishedCourse.isSelected()) {
 				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+				tableFinishedStudent.getItems().clear();
 				tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseCode()));
 			}
 		}
@@ -355,6 +329,7 @@ public class Controller implements Initializable{
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+	
 	@FXML
 	private void populateCmbBoxCourseCode() {
 		cmbCourseCode.getItems().clear();
@@ -365,30 +340,43 @@ public class Controller implements Initializable{
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+	
+	@FXML
+	public void populateFindCourseTable(String c) {
+
+		try {
+			if(cmbCourseCode.getValue() != null ) {
+				tableFindCourse.setItems(dal.selectCourseByCode(c));
+			}
+			else if(textFindCourse.getText() != null) {
+				tableFindCourse.setItems(dal.selectCoursebyName(c));	
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@FXML
 	public void btnRemoveCourse_Click(ActionEvent event){
 		try {
 			if(tabActiveCourse.isSelected()) {
-			Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
-			dal.removeCourse(tempC.getCourseCode());
-			tableActiveCourse.getItems().clear();
+				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
+				dal.removeCourse(tempC.getCourseCode());
 				populateTableViewActiveCourse();
-				cmbStudentID.getItems().clear();
 				populateCmbBoxStudentID();
 			}
 			if(tabFinishedCourse.isSelected()) {
 				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
 				dal.removeCourse(tempC.getCourseCode());
-				tableFinishedCourse.getItems().clear();
 				populateTableViewFinishedCourse();
 			}
-			
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
@@ -400,39 +388,27 @@ public class Controller implements Initializable{
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
-				tableRegisterCourse.getItems().clear();
-				tableActiveCourse.getItems().clear();
 				textCourseCode.clear();
 				textCourseName.clear();
 				textCredit.clear();
-				populateTableViewActiveCourse();
 				populateTableViewRegCourse();
-				cmbCourseCode.getItems().clear();
 				populateCmbBoxCourseCode();
-
-
-			}
-			
-
-			 
-				catch (SQLException SQLException) {		
+			} 
+			catch (SQLException SQLException) {		
 				if ( SQLException.getErrorCode() == 2627) {
 					lblAnswercCourseReg.setText("That coursecode already exists");
 				}
 				else if (SQLException.getErrorCode() == 0) {
 					lblAnswercCourseReg.setText("There was a problem conecting to the database, please check your interntet connection");
 				}
-				
-		}
-						
+			}
 		}
 		else {
 			lblAnswercCourseReg.setText("Please fill out all the fields.");
 		}
-
 	}
-	
-	
+
+	@FXML
 	public void btnMoveCourse_Click(ActionEvent event) {
 		Course tmpCourse = tableActiveCourse.getSelectionModel().getSelectedItem();
 		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
@@ -440,33 +416,26 @@ public class Controller implements Initializable{
 		try {
 			dal.moveCourse(tmpCourse, tmpOblist);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		tableActiveCourse.getItems().clear();
 		tableActiveStudent.getItems().clear();
 		populateTableViewActiveCourse();
-
 	}
 
 	@FXML
 	public void selectCourse(MouseEvent event) {		
-		tableActiveStudent.getItems().clear();	
-		tableFinishedStudent.getItems().clear();	
-		btnRemoveCourse.setDisable(false);
 
 		if(tabActiveCourse.isSelected()) {	
+			btnRemoveCourse.setDisable(false);
 			btnMoveCourse.setDisable(false);
 			tableActiveStudent.setDisable(false);
 			cmbStudentID.setDisable(false);
 			btnAddPartisipant.setDisable(false);
 			btnRemoveCourse.setDisable(false);
 			populateTableViewStudentCourse();
-
 		}
 		else if(tabFinishedCourse.isSelected()) {	
 			tableGrade.setDisable(false);
-			tableGrade.getItems().clear();
 			tableFinishedStudent.setDisable(false);
 			btnRemoveCourseF.setDisable(false);
 			populateTableViewGrade();	
@@ -486,7 +455,6 @@ public class Controller implements Initializable{
 
 		try {
 			dal.insertStudentToCourse(sID, cID);
-			tableActiveStudent.getItems().clear();
 			populateTableViewStudentCourse();
 		} catch (SQLException e) {		
 			e.printStackTrace();
@@ -503,51 +471,29 @@ public class Controller implements Initializable{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		tableGrade.getItems().clear();
 		populateTableViewGrade();
-	}
-	public void populateFindCourseTable(String c) {
-		
-		try {
-			if(cmbCourseCode.getValue() != null ) {
-				tableFindCourse.setItems(dal.selectCourseByCode(c));
-
-			}
-			else if(textFindCourse.getText() != null) {
-				tableFindCourse.setItems(dal.selectCoursebyName(c));	
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
 	}
 	@FXML
 	public void findCourse(ActionEvent event)  {
-		
-		System.out.println("inne i find course");
 		String cID = cmbCourseCode.getValue();
 		String name = textFindCourse.getText();
-		
+
 		if(cmbCourseCode.getValue() != null ) {
 			populateFindCourseTable(cID);
 		}
 		else if(textFindCourse.getText() != null) {
 			populateFindCourseTable(name);
 		}
-		
+
 		tableFindCourse.setDisable(false);
 		cmbCourseCode.getItems().clear();
 		textFindCourse.clear();
 		populateCmbBoxCourseCode();
 		cmbCourseCode.setDisable(false);
 		textFindCourse.setDisable(false);
-		btnFindCourse.setDisable(true);
-		
-		
-		
+		btnFindCourse.setDisable(true);	
 	}
-	
+
 }
 
 
