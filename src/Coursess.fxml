@@ -140,7 +140,7 @@
                               <Font name="Helvetica Neue" size="20.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="68.0" layoutY="213.0" promptText="Course Name" />
+                        <TextField fx:id="textFindCourse" layoutX="68.0" layoutY="213.0" promptText="Course Name" />
                         <TableView fx:id="tableCourse3" layoutX="342.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="320.0" prefWidth="322.0">
                            <columns>
                               <TableColumn fx:id="columnCourseCode3" prefWidth="118.0" text="Course Code" />
@@ -149,7 +149,7 @@
                            </columns>
                         </TableView>
                         <ComboBox fx:id="cmbCourseCode" layoutX="69.0" layoutY="126.0" prefHeight="27.0" prefWidth="158.0" promptText="Course Code" />
-                        <Button layoutX="119.0" layoutY="262.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="Find" />
+                        <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="Find" />
                         <Label layoutX="119.0" layoutY="176.0" prefHeight="17.0" prefWidth="59.0" text="--OR--" />
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
                      </children>

@@ -7,3 +7,4 @@ public class UrlLogin {
 	protected static String password = "testa123";
 
 }
+

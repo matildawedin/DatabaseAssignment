@@ -155,6 +155,8 @@ public class Controller implements Initializable{
 	@FXML private TextField textCourseName;
 
 	@FXML private TextField textCredit;
+	
+	@FXML private TextField textFindCourse;
 
 	@FXML private Button btnAddCourse;
 
@@ -165,6 +167,8 @@ public class Controller implements Initializable{
 	@FXML private Button btnRemoveCourseF;
 
 	@FXML private Button btnAddPartisipant;
+	
+	@FXML private Button btnFindCourse;
 
 	@FXML private ComboBox<String> cmbStudentID;
 
@@ -245,10 +249,14 @@ public class Controller implements Initializable{
 				}
 			}
 		});
+		
+		textFindCourse.textProperty().addListener((observable) -> cmbCourseCode.setDisable(true));
+		cmbCourseCode.valueProperty().addListener((observable) -> textFindCourse.setDisable(true));
+		cmbCourseCode.valueProperty().addListener((observable) -> btnFindCourse.setDisable(false));
+		textFindCourse.textProperty().addListener((observable) -> btnFindCourse.setDisable(false));
 		populateTableViewActiveCourse();
 		populateCmbBoxStudentID();
 		populateCmbBoxCourseCode();
-
 	}
 	
 	@FXML
@@ -271,6 +279,8 @@ public class Controller implements Initializable{
 		}
 	}
 	
+	
+		
 	@FXML
 	public void populateTableViewActiveCourse() {
 		tableActiveCourse.getItems().clear();
@@ -508,6 +518,8 @@ public class Controller implements Initializable{
 		tableGrade.getItems().clear();
 		populateTableViewGrade();
 	}
+	
 }
+
 
 

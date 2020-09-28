@@ -231,7 +231,11 @@ public class DALS {
 	// Ej prio men fungerar ej att ta bort objekt som lagts till i databas
 	public void removeStudent(String studentID) throws SQLException {
 		con = dbc.getConnection();
-		String remove = "DELETE FROM Student WHERE studentID = '" + studentID + "'"; 
+		String remove = "DELETE FROM Studies WHERE studentID = '" + studentID + "'\n"
+				+ "DELETE FROM HasStudied WHERE studentID = '" + studentID + "'\n"
+				+ "DELETE FROM Student WHERE studentID = '" + studentID + "'\n";
+		
+		ps = con.prepareStatement(remove);	
 		ps.executeUpdate();
 		con.close();
 	}
