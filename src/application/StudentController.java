@@ -37,7 +37,6 @@ import javafx.stage.Stage;
 public class StudentController implements Initializable {
 	private Course course;
 	private Student student;
-	private Result result;
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
@@ -62,12 +61,7 @@ public class StudentController implements Initializable {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	public Result getResult() {
-		return result;
-	}
-	public void setResult(Result result) {
-		this.result = result;
-	}
+
 	public HasStudied getHasStudied() {
 		return hasStudied;
 	}
@@ -97,7 +91,7 @@ public class StudentController implements Initializable {
 	
 	@FXML private TableView<HasStudied> tabelGrade;
 	
-	@FXML private TableColumn<Result,String> columnGrade;
+	@FXML private TableColumn<HasStudied,String> columnGrade;
 	
 	@FXML private TableView<Student> tableStudent;
 

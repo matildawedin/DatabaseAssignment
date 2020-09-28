@@ -36,7 +36,6 @@ public class Controller implements Initializable{
 	
 	private Course course;
 	private Student student;
-	private Result result;
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
@@ -55,12 +54,6 @@ public class Controller implements Initializable{
 	}
 	public void setStudent(Student student) {
 		this.student = student;
-	}
-	public Result getResult() {
-		return result;
-	}
-	public void setResult(Result result) {
-		this.result = result;
 	}
 	public HasStudied getHasStudied() {
 		return hasStudied;
