@@ -14,26 +14,8 @@ public class DAL {
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	private ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
 
-	public ObservableList<Student> selectAllStudent() throws SQLException{
-		con = dbc.getConnection();
-		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-		try {
 
-			String selectAll = "SELECT * FROM Student";
-			rs = con.createStatement().executeQuery(selectAll);
-
-			while(rs.next()) {
-				oblistStudent.add(new Student(rs.getString(1), rs.getString(2)));
-			}
-			return oblistStudent;
-		}
-		catch(SQLException e) {
-			throw e;
-		}
-
-	}
 	public ObservableList<String> selectAllStudentID() throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<String> oblistString = FXCollections.observableArrayList();
@@ -138,6 +120,7 @@ public class DAL {
 	public ObservableList<HasStudied> selectAllFromGrade(String courseID) throws SQLException{
 
 		con = dbc.getConnection();
+		ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
 
 		try {
 			String queryGrade = "SELECT hs.grade FROM HasStudied hs JOIN Student s ON s.studentID = hs.studentID WHERE hs.courseID ='"+courseID +"'";		
@@ -191,28 +174,8 @@ public class DAL {
 
 		String insert = "INSERT INTO Studies VALUES('"+ studentID+"','"+ courseID+"')";
 		ps = con.prepareStatement(insert);
-		//ps.setString(1,studentID);
-		//	ps.setString(2,courseID);
 		ps.executeUpdate();
 		con.close();
-
-	}
-	public ResultSet findStudent(String studentID) {
-		try{
-			String findS = "SELECT * FROM Student WHERE studentID = "+ "'" + studentID + "'" + ")";
-
-			ps = con.prepareStatement(findS);
-			rs = ps.executeQuery();
-
-			if(rs.next()) {
-				return rs;
-			}
-
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
 
 	}
 
@@ -251,49 +214,7 @@ public class DAL {
 		}
 		
 	}
-	
 
-	public ResultSet findStudentsFromStudies(String courseCode) {
-
-
-		try{
-			String findStudents = "SELECT studentID FROM Studies WHERE courseCode = "+ "'" + courseCode + "'" + ")";
-
-			ps = con.prepareStatement(findStudents);
-			rs = ps.executeQuery();
-
-			if(rs.next()) {
-				return rs;
-			}
-
-		}	catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-
-	// insert student values 
-	public void insertStudent(String studentID, String name) throws SQLException {
-		con = dbc.getConnection();
-
-		String insert = "INSERT INTO Student VALUES(?,?)";
-
-		ps = con.prepareStatement(insert);
-		ps.setString(1,studentID);
-		ps.setString(2,name);
-		ps.executeUpdate();
-		con.close();
-
-	}
-
-	public void removeStudent(String studentID) throws SQLException {
-		con = dbc.getConnection();
-		String remove = "DELETE FROM Student WHERE studentID = '" + studentID; //"'DELETE FROM Student WHERE studentID = ' ;
-		ps = con.prepareStatement(remove);
-		ps.executeUpdate();
-		con.close();
-	}
 	public void addGrade(Student student, Course course, String grade) throws SQLException {
 		con = dbc.getConnection();
 		String studentID = student.getStudentID();
@@ -303,16 +224,5 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
-
-
-	/* EJ GJORT ÄN
-	public void generateStudentId() {
-		con = dbc.getConnection();
-
-		String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
-
-	}
-	 */
-
 
 }
