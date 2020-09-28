@@ -323,6 +323,7 @@ public class StudentController implements Initializable {
 		lblAddCourseResponse.setText(null);
 		
 		
+		
 		return sID;
 		
 	}
@@ -331,8 +332,11 @@ public class StudentController implements Initializable {
 		
 		String sID = selectStudent(null);
 		
+		
+		
 		if(rbtnActive.isSelected()) {
 			populateActiveCourse(sID);
+			rbtnActive.setSelected(false);
 			
 			
 		}
@@ -340,12 +344,11 @@ public class StudentController implements Initializable {
 			populatecompletedCourse(sID);
 			tabelGrade.setDisable(false);
 			populateGrade(sID);
+			rbtnCompleted.setSelected(false);
 			
 			
 		}
 		tableCourse.setDisable(false);
-		rbtnActive.setSelected(false);
-		rbtnCompleted.setSelected(false);
 		
 	}
 	
@@ -355,7 +358,7 @@ public class StudentController implements Initializable {
 
 
 
-	//get the value from the TextField then use insertstudent to add the student
+	/*//get the value from the TextField then use insertstudent to add the student
 	@FXML
 	public void btnAddStudent(ActionEvent event) {
 		
@@ -381,7 +384,32 @@ public class StudentController implements Initializable {
 		populateStudents();
 		textStudentID.clear();
 		textStudentName.clear();
+	}*/
+	
+
+	/// addStudent med generera id 
+	@FXML
+	public void btnAddStudent(ActionEvent event) throws SQLException {
+		
+		if(!textStudentName.getText().isEmpty()) {
+			//textStudentID.setText(dal.generateStudentId());
+			try {
+				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		else {
+			lblResponseStudent.setText("Please fill out the fields.");
+		}
+		
+		populateStudents();
+		textStudentID.clear();
+		textStudentName.clear();
+		
 	}
+	
 	
 	
 	
