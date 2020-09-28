@@ -170,7 +170,11 @@ public class Controller implements Initializable{
 	@FXML private Label	lblAnswercCourseReg;
 
 	@FXML private Label lblAnswerFindCourse;
+	
+	@FXML private Label lblAddParticipantAnswer;
 
+	@FXML private Label lblGradeStudentAnswer;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 
@@ -452,26 +456,44 @@ public class Controller implements Initializable{
 	public void btnAddStudentStudy_Click(ActionEvent event) {
 		String sID = cmbStudentID.getValue();
 		String cID = tableActiveCourse.getSelectionModel().getSelectedItem().getCourseCode();
-
+		if (sID != null) {
 		try {
 			dal.insertStudentToCourse(sID, cID);
 			populateTableViewStudentCourse();
 		} catch (SQLException e) {		
-			e.printStackTrace();
+			if (e.getErrorCode() == 2627) {
+				lblAddParticipantAnswer.setText("The selected student is already part of the selected course");
+			}
+			else if (e.getErrorCode() == 0) {
+				lblAddParticipantAnswer.setText("There was a problem conecting to the database, please check your interntet connection");
 		}
-
+		
+			
+		}
+		
+		}
+		else {
+			lblAddParticipantAnswer.setText("Please select a studentID");
+		}
 	}
 	@FXML
 	public void btnAddGrade_Click(ActionEvent event) {
 		Course tmpCourse = tableFinishedCourse.getSelectionModel().getSelectedItem();
 		Student tmpStudent = tableFinishedStudent.getSelectionModel().getSelectedItem();
-		String tmpGrade = cmbGrade.getSelectionModel().getSelectedItem();		
+		String tmpGrade = cmbGrade.getSelectionModel().getSelectedItem();
+		if (tmpGrade !=null) {
 		try {
 			dal.addGrade(tmpStudent, tmpCourse, tmpGrade);
+			lblGradeStudentAnswer.setText("Grade " +  tmpGrade + "inserted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		populateTableViewGrade();
+		}
+		else {
+			lblGradeStudentAnswer.setText("Please select a grade");
+		}
+			
 	}
 	@FXML
 	public void findCourse(ActionEvent event)  {
