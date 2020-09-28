@@ -309,7 +309,7 @@ public class StudentController implements Initializable {
 	@FXML
 	public String selectStudent(MouseEvent event) {
 		
-		System.out.println("inne i select student");
+		System.out.println("inne i select student"); //Is this necessary?
 
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
 		String sID = s.getStudentID();

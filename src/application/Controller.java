@@ -250,7 +250,7 @@ public class Controller implements Initializable{
 		}
 		catch(SQLException e) {
 			
-			e.printStackTrace();
+			e.printStackTrace(); //Need another errorhandling than printStackTrace?
 
 		}	
 	}
@@ -313,7 +313,7 @@ public class Controller implements Initializable{
 		}
 		catch(SQLException e) {
 		Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-		}
+		} //Vad gör logger?
 	}
 	
 	/*private void populateRegisterCourse() {
@@ -479,7 +479,7 @@ public class Controller implements Initializable{
 
 
 	
-
+ 
 
 
 	}
