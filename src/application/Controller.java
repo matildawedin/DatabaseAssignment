@@ -339,7 +339,7 @@ public class Controller implements Initializable{
 
 		try {
 			if(cmbCourseID.getValue() != null ) {
-				tableFindCourse.setItems(dal.selectCourseByCode(c));
+				tableFindCourse.setItems(dal.selectCourseByID(c));
 			}
 			else if(textFindCourse.getText() != null) {
 				tableFindCourse.setItems(dal.selectCoursebyName(c));	
