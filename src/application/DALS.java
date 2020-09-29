@@ -238,7 +238,7 @@ public class DALS {
 			while(rs.next()) {
 				String s = rs.getString(1);
 				
-				/*if( s.charAt(2) != '\0') {
+				if( s.length() == 3) {
 					StringBuilder sb = new StringBuilder();
 					sb.append(s.charAt(1));
 					sb.append(s.charAt(2));
@@ -257,7 +257,7 @@ public class DALS {
 					newID = newSb.toString();
 			
 				}
-				else if(s.charAt(2) == '\0') {*/
+				else if(s.length() == 2) {
 					char newC = s.charAt(1);
 					int number = Character.getNumericValue(newC);
 
@@ -271,7 +271,7 @@ public class DALS {
 					newSb.append(newChar);
 					newID = newSb.toString();
 					
-				//}
+				}
 
 			}
 			return  newID;

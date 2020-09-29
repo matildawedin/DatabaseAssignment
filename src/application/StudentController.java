@@ -146,7 +146,7 @@ public class StudentController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 		// set columns in tableview
-		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseID"));
 		coulmnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
@@ -369,7 +369,14 @@ public class StudentController implements Initializable {
 		
 		
 
-		if(!textStudentName.getText().isEmpty()&& textStudentName.getText().matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+		if(textStudentName.getText().isEmpty()) {
+			lblResponseStudent.setText("Please fill out the field");
+		}
+		else if(!textStudentName.getText().matches("^[a-zA-Z]+$")) {
+			lblResponseStudent.setText("Error!\nName can only contain letters");
+			
+		}
+		else if(!textStudentName.getText().isEmpty() && textStudentName.getText().matches("^[a-zï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½]+$")) {
 
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
@@ -380,9 +387,6 @@ public class StudentController implements Initializable {
 					lblResponseStudent.setText("There was a problem connecting to the database\nPlease check your connection");
 				}
 			}
-		}
-		else {
-			lblResponseStudent.setText("Please fill out the field \nand a name can only contain\n letters");
 		}
 		
 		populateStudentTable();
@@ -427,7 +431,7 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		populateActiveCourseTable(s.getStudentID()); // syns Ã¤ven om course table Ã¤r disable, Ã¤ndra?
+		//populateActiveCourseTable(s.getStudentID()); // syns Ã¤ven om course table Ã¤r disable, Ã¤ndra?
 		
 		
 		
@@ -435,19 +439,26 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public void findStudent(ActionEvent event)  {
-		
+		lblFindStudentAnswer.setText(null);
 		String sID = cmbStudentID.getValue();
 		String name = textName.getText();
 		
 		if(sID != null ) {
 			populateFindStudentTable(sID);
+			
 		}
-		else if(!name.isEmpty( )&& name.matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+		else if(name.isEmpty( )){ 
+			lblFindStudentAnswer.setText("Please fill in field");
+			
+		}
+		else if(!name.matches("^[a-zA-Z]+$")) {
+			lblFindStudentAnswer.setText("Keep in mind that\nStudent name can only contain \nletters");
+		}
+		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
 		}
-		else { 
-			lblFindStudentAnswer.setText("Please fill in field or studentID \nand keep in mind that a\nStudent name can only contain \nletters");
-		}
+		
+		
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
 		textName.clear();
