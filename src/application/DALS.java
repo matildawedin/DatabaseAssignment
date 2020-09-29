@@ -247,7 +247,6 @@ public class DALS {
 					
 					
 					String charString = sb.toString();
-
 					int number = Integer.parseInt(charString);
 
 					if(s != null) {

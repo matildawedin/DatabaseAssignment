@@ -264,6 +264,16 @@ public class Controller implements Initializable{
 		}	
 	}
 	@FXML
+	private void populateTableFinishedCourse() {
+		tableFinishedCourse.getItems().clear();
+		try {	
+			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
+		}
+		catch(SQLException e) {
+			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	@FXML
 	public void populateTableRegCourse() {
 		tableRegCourse.getItems().clear();
 		try {
@@ -303,16 +313,7 @@ public class Controller implements Initializable{
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	@FXML
-	private void populateTableFinishedCourse() {
-		tableFinishedCourse.getItems().clear();
-		try {	
-			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
-		}
-		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-		}
-	}
+
 	@FXML
 	private void populateCmbStudentID() {	
 			cmbStudentID.getItems().clear();
@@ -376,14 +377,17 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
-		
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-		if (!cName.isEmpty() && !cCredit.isEmpty() 
-			  && cName.matches("^[a-zÂ‰ˆA-Z≈ƒ÷]+$") && cCredit.matches("^[0-9]+$")) {		
-			try {
 
-				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
+		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
+
+		if (!cName.isEmpty() && !cCredit.isEmpty() 
+
+			  && cName.matches("^[a-zA-Z]+$") && cCredit.matches("^[0-9]+$")) {		
+
+			try {
+				dal.insertCourse(dal.generateExamID(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				populateTableRegCourse();
 				populateCmbCourseID();
@@ -403,7 +407,7 @@ public class Controller implements Initializable{
 		textCourseName.clear();
 		textCredit.clear();
 		}
-	
+	}
 
 	@FXML
 	public void btnMoveCourse_Click(ActionEvent event) {
@@ -411,7 +415,6 @@ public class Controller implements Initializable{
 		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
 
 		try {
-			System.out.println("Hej");
 			dal.moveCourse(tmpCourse, tmpOblist);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -496,12 +499,11 @@ public class Controller implements Initializable{
 		if(cID != null ) {
 			populateTableFindCourse(cID);
 		}
-		else if(!name.isEmpty()&& name.matches("^[a-zA-ZÂ‰ˆ≈ƒ÷]+$")) {
-
+		else if(!name.isEmpty()&& name.matches("^[a-zA-Z]+$")) {
 			populateTableFindCourse(name);
 		}
 		else {
-			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");
+			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters a-z, A-Z");
 		}
 		tableFindCourse.setDisable(false);
 		textFindCourse.clear();

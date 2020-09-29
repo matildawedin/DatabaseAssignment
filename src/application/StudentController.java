@@ -377,8 +377,6 @@ public class StudentController implements Initializable {
 			lblResponseStudent.setText("Error!\nName can only contain letters");
 			
 		}
-		else if(!textStudentName.getText().isEmpty() && textStudentName.getText().matches("^[a-z���A-Z���]+$")) {
-
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
 				lblResponseStudent.setText( "Student is added!");
