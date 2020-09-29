@@ -384,7 +384,7 @@ public class Controller implements Initializable{
 		if (!cName.isEmpty() && !cCredit.isEmpty() 
 			 && cName.matches("^[a-z���A-Z���]+$") && cCredit.matches("^[0-9]+$")) {	
 			try {
-				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
+				dal.insertCourse(dal.generateExamID(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				populateTableRegCourse();
 				populateCmbCourseID();
@@ -412,6 +412,7 @@ public class Controller implements Initializable{
 		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
 
 		try {
+			System.out.println("Hej");
 			dal.moveCourse(tmpCourse, tmpOblist);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -502,7 +503,6 @@ public class Controller implements Initializable{
 		else {
 			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");
 		}
-
 		tableFindCourse.setDisable(false);
 		textFindCourse.clear();
 		populateCmbCourseID();
