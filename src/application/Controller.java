@@ -380,13 +380,7 @@ public class Controller implements Initializable{
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
 		if (!cName.isEmpty() && !cCredit.isEmpty() 
-			  && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {	
-
-
-		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
-
-		if (!cName.isEmpty() && !cCredit.isEmpty() 
-			 && cName.matches("^[a-zï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½]+$") && cCredit.matches("^[0-9]+$")) {	
+			  && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {		
 			try {
 
 				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
@@ -409,7 +403,7 @@ public class Controller implements Initializable{
 		textCourseName.clear();
 		textCredit.clear();
 		}
-	}
+	
 
 	@FXML
 	public void btnMoveCourse_Click(ActionEvent event) {
