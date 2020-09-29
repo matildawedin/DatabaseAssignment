@@ -238,10 +238,14 @@ public class DALS {
 			while(rs.next()) {
 				String s = rs.getString(1);
 				
-				if( s.length() == 3) {
+				if( s.length() == 5) {
 					StringBuilder sb = new StringBuilder();
 					sb.append(s.charAt(1));
 					sb.append(s.charAt(2));
+					sb.append(s.charAt(3));
+					sb.append(s.charAt(4));
+					
+					
 					String charString = sb.toString();
 
 					int number = Integer.parseInt(charString);
@@ -256,21 +260,6 @@ public class DALS {
 					newSb.append(newString);
 					newID = newSb.toString();
 			
-				}
-				else if(s.length() == 2) {
-					char newC = s.charAt(1);
-					int number = Character.getNumericValue(newC);
-
-					if(s != null) {
-						number++;
-
-					}
-					char newChar = (char) (number + '0');
-					StringBuilder newSb = new StringBuilder();
-					newSb.append(s.charAt(0));
-					newSb.append(newChar);
-					newID = newSb.toString();
-					
 				}
 
 			}
