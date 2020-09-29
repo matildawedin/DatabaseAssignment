@@ -3,16 +3,16 @@ package application;
 public class Course {
 
 	// Declare attribut
-	private String courseCode;
+	private String courseID;
 	private String name;
 	private String credits;
 
 	//Getter and Setters for the attribute 
-	public String getCourseCode() {
-		return courseCode;
+	public String getCourseID() {
+		return courseID;
 	}
-	public void setCourseCode(String courseCode) {
-		this.courseCode = courseCode;
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
 	}
 	public String getName() {
 		return name;
@@ -30,7 +30,7 @@ public class Course {
 	//Constructor
 	public Course(String courseCode, String name, String credits) {
 		super();//vad glör denna? den genererades automatisk 
-		this.courseCode = courseCode;
+		this.courseID = courseCode;
 		this.name = name;
 		this.credits = credits;
 	}

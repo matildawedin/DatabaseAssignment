@@ -33,7 +33,7 @@ public class DAL {
 		}
 	}
 	
-	public ObservableList<String> selectAllCourseCode() throws SQLException{
+	public ObservableList<String> selectAllCourseID() throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<String> oblistString = FXCollections.observableArrayList();
 		
@@ -51,12 +51,12 @@ public class DAL {
 		}
 	}
 
-	public ObservableList<Course> selectCourseByCode(String courseCode) throws SQLException{
+	public ObservableList<Course> selectCourseByCode(String courseID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistC = FXCollections.observableArrayList();
 		
 		try{
-			String findC = "SELECT * FROM Course WHERE courseID = '" + courseCode + "'";
+			String findC = "SELECT * FROM Course WHERE courseID = '" + courseID + "'";
 			rs = con.createStatement().executeQuery(findC);
 
 			while(rs.next()) {
@@ -209,7 +209,7 @@ public class DAL {
 
 	public void moveCourse(Course course, ObservableList<Student> studentOblist) throws SQLException {
 		con =dbc.getConnection();
-		String tmpCourseID = course.getCourseCode();
+		String tmpCourseID = course.getCourseID();
 		String tmpStudentID;
 		for(Student s : studentOblist) {
 			tmpStudentID = s.getStudentID();
@@ -223,11 +223,42 @@ public class DAL {
 	public void addGrade(Student student, Course course, String grade) throws SQLException {
 		con = dbc.getConnection();
 		String studentID = student.getStudentID();
-		String courseID = course.getCourseCode();		
+		String courseID = course.getCourseID();		
 		String addGrade = "DELETE HasStudied WHERE studentID ='"+studentID+"'INSERT INTO HasStudied VALUES('"+studentID+"','"+courseID+"','"+grade+"')";
 		
 		ps = con.prepareStatement(addGrade);
 		ps.executeUpdate();
 		con.close();
+	}
+	public String generateStudentId() throws SQLException {
+		con = dbc.getConnection();
+		String newID = null;
+
+		try {
+			
+			String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
+			rs = con.createStatement().executeQuery(generate);
+			
+			while(rs.next()) {
+			String s = rs.getString(1);
+				char charAt1 = s.charAt(1);
+				int number = Character.getNumericValue(charAt1);
+
+				if(s != null) {
+					number++;
+
+				}
+				char newChar = (char) (number + '0');
+				StringBuilder sb = new StringBuilder();
+				sb.append(s.charAt(0));
+				sb.append(newChar);
+				newID = sb.toString();
+
+			}
+			return  newID;
+
+		}catch(SQLException e) {
+			throw e;
+		}
 	}
 }
