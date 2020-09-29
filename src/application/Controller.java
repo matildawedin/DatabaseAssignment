@@ -124,7 +124,7 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Student, String> columnFinishedStudentName;
 
-	@FXML private TextField textCourseID;
+	//@FXML private TextField textCourseID;
 
 	@FXML private TextField textCourseName;
 
@@ -382,12 +382,15 @@ public class Controller implements Initializable{
 		if (!cName.isEmpty() && !cCredit.isEmpty() 
 			  && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {	
 
+
+		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
+
+		if (!cName.isEmpty() && !cCredit.isEmpty() 
+			 && cName.matches("^[a-zï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½]+$") && cCredit.matches("^[0-9]+$")) {	
 			try {
-				dal.insertCourse(cName,cCredit);
+
+				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
-				textCourseID.clear();
-				textCourseName.clear();
-				textCredit.clear();
 				populateTableRegCourse();
 				populateCmbCourseID();
 			} 
@@ -402,6 +405,9 @@ public class Controller implements Initializable{
 		}
 		else {
 			lblAnswercCourseReg.setText("Please fill out all the fields. \nKeep in mind that the Course Name\nonly can contain letters and \nCredit only numbers");
+		}
+		textCourseName.clear();
+		textCredit.clear();
 		}
 	}
 
@@ -496,6 +502,7 @@ public class Controller implements Initializable{
 			populateTableFindCourse(cID);
 		}
 		else if(!name.isEmpty()&& name.matches("^[a-zA-ZåäöÅÄÖ]+$")) {
+
 			populateTableFindCourse(name);
 		}
 		else {
