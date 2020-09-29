@@ -3,15 +3,10 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
@@ -78,7 +72,7 @@ public class StudentController implements Initializable {
 	
 	@FXML private TableView<Course> tableCourse;
 	
-	@FXML private TableColumn<Course, String> columnCourseCode;
+	@FXML private TableColumn<Course, String> columnCourseID;
 
 	@FXML private TableColumn<Course, String> coulmnCourseName;
 
@@ -97,8 +91,6 @@ public class StudentController implements Initializable {
 	
 	@FXML private Button btnAddStudent;
 	
-	@FXML private TextField textStudentID;
-	
 	@FXML private TextField textStudentName;
 	
 	@FXML private Label lblResponseStudent;
@@ -114,7 +106,7 @@ public class StudentController implements Initializable {
 	
 	@FXML private Label lblAddCourse;
 	
-	@FXML private ComboBox<String> cmbCourseCode;
+	@FXML private ComboBox<String> cmbCourseID;
 
 	@FXML private Button btnAddNewCourse;
 
@@ -150,7 +142,7 @@ public class StudentController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 		// set columns in tableview
-		columnCourseCode.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
 		coulmnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
@@ -248,9 +240,9 @@ public class StudentController implements Initializable {
 	}
 	
 	public void populateCmbCourse() {
-		cmbCourseCode.getItems().clear();
+		cmbCourseID.getItems().clear();
 		try {
-			cmbCourseCode.getItems().addAll(dal.selectAllCourseCode());
+			cmbCourseID.getItems().addAll(dal.selectAllCourseID());
 		}
 		catch(SQLException e) {
 			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
@@ -307,7 +299,7 @@ public class StudentController implements Initializable {
 		} 
 		
 		// behövs alla dessa????
-		cmbCourseCode.getItems().clear();
+		cmbCourseID.getItems().clear();
 		tableCourse.getItems().clear();
 		tabelGrade.getItems().clear();
 		tableCourse.setDisable(true);
@@ -317,7 +309,7 @@ public class StudentController implements Initializable {
 		rbtnCompleted.setDisable(false);
 		lblToRbn.setDisable(false);
 		lblAddCourse.setDisable(false);
-		cmbCourseCode.setDisable(false);
+		cmbCourseID.setDisable(false);
 		btnAddNewCourse.setDisable(false);
 		populateCmbCourse();
 		lblAddCourseResponse.setText(null);
@@ -358,46 +350,19 @@ public class StudentController implements Initializable {
 
 
 
-	/*//get the value from the TextField then use insertstudent to add the student
-	@FXML
-	public void btnAddStudent(ActionEvent event) {
-		
-
-		if (!textStudentID.getText().isEmpty() && !textStudentName.getText().isEmpty()) {
-			try {
-				dal.insertStudent(textStudentID.getText(),textStudentName.getText());
-				lblResponseStudent.setText("Student: "+(textStudentName.getText())+" added.");
-
-			} catch (SQLException e) {		
-				if(e.getErrorCode() == 2627) {
-				lblResponseStudent.setText("That studentID already exist");
-				}
-				else if(e.getErrorCode() == 0) {
-				lblResponseStudent.setText("There was a problem connecting to the database, please check your connection.");
-				} 
-			}
-		}
-		else {
-			lblResponseStudent.setText("Please fill out the fields.");
-		}
-		
-		populateStudents();
-		textStudentID.clear();
-		textStudentName.clear();
-	}*/
+	//get the value from the TextField then use insertstudent to add the student
 	
-
-	/// addStudent med generera id 
 	@FXML
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		
+		
 		if(!textStudentName.getText().isEmpty()) {
-			//textStudentID.setText(dal.generateStudentId());
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
 			} catch (SQLException e) {
-				
-				e.printStackTrace();
+				if(e.getErrorCode() == 0) {
+					lblResponseStudent.setText("There was a problem connecting to the database\nPlease check your connection");
+				}
 			}
 		}
 		else {
@@ -405,8 +370,9 @@ public class StudentController implements Initializable {
 		}
 		
 		populateStudents();
-		textStudentID.clear();
 		textStudentName.clear();
+		populateCmbStudentID();
+		
 		
 	}
 	
@@ -418,14 +384,14 @@ public class StudentController implements Initializable {
 	@FXML
 	public void addCourse(ActionEvent event) {
 		
-		String cc = cmbCourseCode.getValue();
+		String cc = cmbCourseID.getValue();
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
 		
 		lblAddCourseResponse.setText(null);
 		
 		
 		try {
-			if(cmbCourseCode.getValue() != null) {
+			if(cmbCourseID.getValue() != null) {
 			dal.insertCourseToStudent(s.getStudentID(), cc);
 			lblAddCourseResponse.setText("New course added!");
 			
@@ -443,7 +409,7 @@ public class StudentController implements Initializable {
 				} 
 			
 		}
-		cmbCourseCode.getItems().clear();
+		cmbCourseID.getItems().clear();
 		populateCmbCourse();
 		populateActiveCourse(s.getStudentID()); // syns även om course table är disable, ändra?
 		
@@ -497,7 +463,7 @@ public class StudentController implements Initializable {
 		
 		populateStudents();
 		btnRemoveStudent.setDisable(true);
-		cmbCourseCode.setDisable(true);
+		cmbCourseID.setDisable(true);
 		btnAddNewCourse.setDisable(true);
 		rbtnActive.setDisable(true);
 		rbtnCompleted.setDisable(true);
