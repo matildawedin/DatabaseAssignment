@@ -500,7 +500,6 @@ public class Controller implements Initializable{
 		}
 
 		tableFindCourse.setDisable(false);
-		cmbCourseCode.getItems().clear();
 		textFindCourse.clear();
 		populateCmbBoxCourseCode();
 		cmbCourseCode.setDisable(false);
