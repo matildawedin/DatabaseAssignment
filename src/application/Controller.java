@@ -376,15 +376,14 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
+		
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-
-		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
-
 		if (!cName.isEmpty() && !cCredit.isEmpty() 
-			 && cName.matches("^[a-zï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½]+$") && cCredit.matches("^[0-9]+$")) {	
+			  && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {		
 			try {
-				dal.insertCourse(dal.generateExamID(), cName, cCredit);
+
+				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				populateTableRegCourse();
 				populateCmbCourseID();
@@ -404,7 +403,7 @@ public class Controller implements Initializable{
 		textCourseName.clear();
 		textCredit.clear();
 		}
-	}
+	
 
 	@FXML
 	public void btnMoveCourse_Click(ActionEvent event) {
@@ -497,7 +496,8 @@ public class Controller implements Initializable{
 		if(cID != null ) {
 			populateTableFindCourse(cID);
 		}
-		else if(!name.isEmpty()&& name.matches("^[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]+$")) {
+		else if(!name.isEmpty()&& name.matches("^[a-zA-ZåäöÅÄÖ]+$")) {
+
 			populateTableFindCourse(name);
 		}
 		else {

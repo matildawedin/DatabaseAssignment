@@ -29,6 +29,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
+	
+	//Attribute 
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;
@@ -37,7 +39,7 @@ public class StudentController implements Initializable {
 	private Connection con;
 	
 	
-	
+	// Getter and Setters
 	public Course getCourse() {
 		return course;
 	}
@@ -65,7 +67,7 @@ public class StudentController implements Initializable {
 		this.dbcon = dbcon;
 	}
 	
-	
+	// 
 	@FXML private Button btnCourseView;
 
 	@FXML private Button btnStudentView;
@@ -144,7 +146,7 @@ public class StudentController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 		// set columns in tableview
-		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseID"));
 		coulmnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
@@ -158,7 +160,7 @@ public class StudentController implements Initializable {
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
 		
-		populateStudents();
+		populateStudentTable();
 		populateCmbStudentID();
 		populateCmbCourse();
 		
@@ -192,9 +194,9 @@ public class StudentController implements Initializable {
 
 	//--------------------------------Populate methods-------------------------------------------
 
-    // add all the current student to the studentTable
+    // Add all the current student to the studentTable
 	@FXML
-	public void populateStudents() {
+	public void populateStudentTable() {
 		
 		try {
 			tableStudent.setItems(dal.selectAllStudent());
@@ -206,7 +208,8 @@ public class StudentController implements Initializable {
 		
 	}
 	
-	public void populateActiveCourse(String studentID) {
+	// Add all active courses to the course table based on a specific student id
+	public void populateActiveCourseTable(String studentID) {
 		
 		try {
 			
@@ -218,7 +221,8 @@ public class StudentController implements Initializable {
 		}
 	}
 	
-	public void populatecompletedCourse(String studentID) {
+	// Add all completed courses to the course table based on a specific student id
+	public void populatecompletedCourseTable(String studentID) {
 
 		try {
 			tableCourse.setItems(dal.selectHasStudied(studentID));
@@ -230,7 +234,8 @@ public class StudentController implements Initializable {
 	}
 	
 	
-	public void populateGrade(String studentID) {
+	// Adds the grade from a certaint course to the grade table based on a specific student id
+	public void populateGradeTable(String studentID) {
 		
 		try {
 			tabelGrade.setItems(dal.selectGrade(studentID));
@@ -241,6 +246,7 @@ public class StudentController implements Initializable {
 		
 	}
 	
+	// Add all the current courses to the combobox
 	public void populateCmbCourse() {
 		cmbCourseID.getItems().clear();
 		try {
@@ -253,6 +259,7 @@ public class StudentController implements Initializable {
 		}
 	}
 	
+	// Add all the current students to the combobox
 	public void populateCmbStudentID() {
 		cmbStudentID.getItems().clear();
 		try {
@@ -264,7 +271,7 @@ public class StudentController implements Initializable {
 
 		
 	}
-	
+	// Add student to findstudent table based on a specific student id or name
 	public void populateFindStudentTable(String s) {
 		
 		try {
@@ -285,6 +292,8 @@ public class StudentController implements Initializable {
 	
 	//--------------------------------Select methods-------------------------------------------
 	
+	
+	//
 	@FXML
 	public String selectStudent(MouseEvent event) {
 
@@ -315,6 +324,7 @@ public class StudentController implements Initializable {
 		btnAddNewCourse.setDisable(false);
 		populateCmbCourse();
 		lblAddCourseResponse.setText(null);
+		lblResponseStudent.setText(null);
 		
 		
 		
@@ -329,15 +339,15 @@ public class StudentController implements Initializable {
 		
 		
 		if(rbtnActive.isSelected()) {
-			populateActiveCourse(sID);
+			populateActiveCourseTable(sID);
 			rbtnActive.setSelected(false);
 			
 			
 		}
 		else if(rbtnCompleted.isSelected()) {
-			populatecompletedCourse(sID);
+			populatecompletedCourseTable(sID);
 			tabelGrade.setDisable(false);
-			populateGrade(sID);
+			populateGradeTable(sID);
 			rbtnCompleted.setSelected(false);
 			
 			
@@ -358,20 +368,28 @@ public class StudentController implements Initializable {
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		
 		
-		if(!textStudentName.getText().isEmpty()&& textStudentName.getText().matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+
+		if(textStudentName.getText().isEmpty()) {
+			lblResponseStudent.setText("Please fill out the field");
+		}
+		else if(!textStudentName.getText().matches("^[a-zA-Z]+$")) {
+			lblResponseStudent.setText("Error!\nName can only contain letters");
+			
+		}
+		else if(!textStudentName.getText().isEmpty() && textStudentName.getText().matches("^[a-zï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½]+$")) {
+
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
+				lblResponseStudent.setText( "Student is added!");
+				
 			} catch (SQLException e) {
 				if(e.getErrorCode() == 0) {
 					lblResponseStudent.setText("There was a problem connecting to the database\nPlease check your connection");
 				}
 			}
 		}
-		else {
-			lblResponseStudent.setText("Please fill out the field \nand a name can only contain\n letters");
-		}
 		
-		populateStudents();
+		populateStudentTable();
 		textStudentName.clear();
 		populateCmbStudentID();
 		
@@ -413,7 +431,7 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		populateActiveCourse(s.getStudentID()); // syns Ã¤ven om course table Ã¤r disable, Ã¤ndra?
+		//populateActiveCourseTable(s.getStudentID()); // syns Ã¤ven om course table Ã¤r disable, Ã¤ndra?
 		
 		
 		
@@ -421,19 +439,26 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public void findStudent(ActionEvent event)  {
-		
+		lblFindStudentAnswer.setText(null);
 		String sID = cmbStudentID.getValue();
 		String name = textName.getText();
 		
-		if(cmbStudentID.getValue() != null ) {
+		if(sID != null ) {
 			populateFindStudentTable(sID);
+			
 		}
-		else if(!textName.getText().isEmpty( )&& textStudentName.getText().matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+		else if(name.isEmpty( )){ 
+			lblFindStudentAnswer.setText("Please fill in field");
+			
+		}
+		else if(!name.matches("^[a-zA-Z]+$")) {
+			lblFindStudentAnswer.setText("Keep in mind that\nStudent name can only contain \nletters");
+		}
+		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
 		}
-		else { 
-			lblFindStudentAnswer.setText("Please fill in field or studentID \nand keep in mind that a\nStudent name can only contain \nletters");
-		}
+		
+		
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
 		textName.clear();
@@ -465,7 +490,7 @@ public class StudentController implements Initializable {
 			}
 		}
 		
-		populateStudents();
+		populateStudentTable();
 		btnRemoveStudent.setDisable(true);
 		cmbCourseID.setDisable(true);
 		btnAddNewCourse.setDisable(true);
