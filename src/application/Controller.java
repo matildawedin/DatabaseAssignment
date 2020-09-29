@@ -359,12 +359,14 @@ public class Controller implements Initializable{
 			if(tabActiveCourse.isSelected()) {
 				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
 				dal.removeCourse(tempC.getCourseCode());
+				tableActiveStudent.getItems().clear();
 				populateTableViewActiveCourse();
 				populateCmbBoxStudentID();
 			}
 			if(tabFinishedCourse.isSelected()) {
 				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
 				dal.removeCourse(tempC.getCourseCode());
+				tableFinishedStudent.getItems().clear();
 				populateTableViewFinishedCourse();
 			}
 
