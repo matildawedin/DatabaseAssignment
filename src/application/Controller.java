@@ -411,6 +411,7 @@ public class Controller implements Initializable{
 		ObservableList<Student> tmpOblist = tableActiveStudent.getItems();
 
 		try {
+			System.out.println("Hej");
 			dal.moveCourse(tmpCourse, tmpOblist);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -502,7 +503,6 @@ public class Controller implements Initializable{
 		else {
 			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");
 		}
-
 		tableFindCourse.setDisable(false);
 		textFindCourse.clear();
 		populateCmbCourseID();
