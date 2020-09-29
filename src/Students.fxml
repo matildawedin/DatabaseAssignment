@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StudentController">
+<AnchorPane prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StudentController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0">
          <children>
@@ -84,7 +84,7 @@
                                     <Font name="Helvetica Neue" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblToRbn" layoutX="309.0" layoutY="3.0" prefHeight="26.0" prefWidth="225.0" text="Select typ of course to display">
+                              <Label fx:id="lblToRbn" layoutX="309.0" layoutY="3.0" prefHeight="28.0" prefWidth="330.0" text="Select typ of course to display">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -94,7 +94,7 @@
                                     <Font name="Helvetica Neue" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="31.0" layoutY="371.0" prefHeight="27.0" prefWidth="163.0" text="Register new student">
+                              <Label layoutX="31.0" layoutY="371.0" prefHeight="27.0" prefWidth="207.0" text="Register new student">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
