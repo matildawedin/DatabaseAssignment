@@ -29,6 +29,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
+	
+	//Attribute 
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;
@@ -37,7 +39,7 @@ public class StudentController implements Initializable {
 	private Connection con;
 	
 	
-	
+	// Getter and Setters
 	public Course getCourse() {
 		return course;
 	}
@@ -65,7 +67,7 @@ public class StudentController implements Initializable {
 		this.dbcon = dbcon;
 	}
 	
-	
+	// 
 	@FXML private Button btnCourseView;
 
 	@FXML private Button btnStudentView;
@@ -156,7 +158,7 @@ public class StudentController implements Initializable {
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
 		
-		populateStudents();
+		populateStudentTable();
 		populateCmbStudentID();
 		populateCmbCourse();
 		
@@ -190,9 +192,9 @@ public class StudentController implements Initializable {
 
 	//--------------------------------Populate methods-------------------------------------------
 
-    // add all the current student to the studentTable
+    // Add all the current student to the studentTable
 	@FXML
-	public void populateStudents() {
+	public void populateStudentTable() {
 		
 		try {
 			tableStudent.setItems(dal.selectAllStudent());
@@ -204,7 +206,8 @@ public class StudentController implements Initializable {
 		
 	}
 	
-	public void populateActiveCourse(String studentID) {
+	// Add all active courses to the course table based on a specific student id
+	public void populateActiveCourseTable(String studentID) {
 		
 		try {
 			
@@ -216,7 +219,8 @@ public class StudentController implements Initializable {
 		}
 	}
 	
-	public void populatecompletedCourse(String studentID) {
+	// Add all completed courses to the course table based on a specific student id
+	public void populatecompletedCourseTable(String studentID) {
 
 		try {
 			tableCourse.setItems(dal.selectHasStudied(studentID));
@@ -228,7 +232,8 @@ public class StudentController implements Initializable {
 	}
 	
 	
-	public void populateGrade(String studentID) {
+	// Adds the grade from a certaint course to the grade table based on a specific student id
+	public void populateGradeTable(String studentID) {
 		
 		try {
 			tabelGrade.setItems(dal.selectGrade(studentID));
@@ -239,6 +244,7 @@ public class StudentController implements Initializable {
 		
 	}
 	
+	// Add all the current courses to the combobox
 	public void populateCmbCourse() {
 		cmbCourseID.getItems().clear();
 		try {
@@ -251,6 +257,7 @@ public class StudentController implements Initializable {
 		}
 	}
 	
+	// Add all the current students to the combobox
 	public void populateCmbStudentID() {
 		cmbStudentID.getItems().clear();
 		try {
@@ -262,7 +269,7 @@ public class StudentController implements Initializable {
 
 		
 	}
-	
+	// Add student to findstudent table based on a specific student id or name
 	public void populateFindStudentTable(String s) {
 		
 		try {
@@ -283,6 +290,8 @@ public class StudentController implements Initializable {
 	
 	//--------------------------------Select methods-------------------------------------------
 	
+	
+	//
 	@FXML
 	public String selectStudent(MouseEvent event) {
 
@@ -313,6 +322,7 @@ public class StudentController implements Initializable {
 		btnAddNewCourse.setDisable(false);
 		populateCmbCourse();
 		lblAddCourseResponse.setText(null);
+		lblResponseStudent.setText(null);
 		
 		
 		
@@ -327,15 +337,15 @@ public class StudentController implements Initializable {
 		
 		
 		if(rbtnActive.isSelected()) {
-			populateActiveCourse(sID);
+			populateActiveCourseTable(sID);
 			rbtnActive.setSelected(false);
 			
 			
 		}
 		else if(rbtnCompleted.isSelected()) {
-			populatecompletedCourse(sID);
+			populatecompletedCourseTable(sID);
 			tabelGrade.setDisable(false);
-			populateGrade(sID);
+			populateGradeTable(sID);
 			rbtnCompleted.setSelected(false);
 			
 			
@@ -356,9 +366,12 @@ public class StudentController implements Initializable {
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		
 		
+		
 		if(!textStudentName.getText().isEmpty()) {
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
+				lblResponseStudent.setText( "Student is added!");
+				
 			} catch (SQLException e) {
 				if(e.getErrorCode() == 0) {
 					lblResponseStudent.setText("There was a problem connecting to the database\nPlease check your connection");
@@ -369,7 +382,7 @@ public class StudentController implements Initializable {
 			lblResponseStudent.setText("Please fill out the fields.");
 		}
 		
-		populateStudents();
+		populateStudentTable();
 		textStudentName.clear();
 		populateCmbStudentID();
 		
@@ -411,7 +424,7 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		populateActiveCourse(s.getStudentID()); // syns även om course table är disable, ändra?
+		populateActiveCourseTable(s.getStudentID()); // syns även om course table är disable, ändra?
 		
 		
 		
@@ -461,7 +474,7 @@ public class StudentController implements Initializable {
 			}
 		}
 		
-		populateStudents();
+		populateStudentTable();
 		btnRemoveStudent.setDisable(true);
 		cmbCourseID.setDisable(true);
 		btnAddNewCourse.setDisable(true);
