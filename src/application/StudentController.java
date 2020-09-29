@@ -136,7 +136,7 @@ public class StudentController implements Initializable {
 	@FXML private Label lblFindStudentAnswer;
 	
 	//används denna?
-	@FXML private Group studentGroup;
+	//@FXML private Group studentGroup;
 	
 	
 	
@@ -500,6 +500,8 @@ public class StudentController implements Initializable {
 		btnAddNewCourse.setDisable(true);
 		rbtnActive.setDisable(true);
 		rbtnCompleted.setDisable(true);
+		tableCourse.getItems().clear();
+		
 		
 	}
 	
