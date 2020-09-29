@@ -100,20 +100,20 @@ public class DALS {
 		
 	}
 	//Receive an list of all courseCodes from Course table
-	public ObservableList<String> selectAllCourseCode() throws SQLException{
+	public ObservableList<String> selectAllCourseID() throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<String> oblistCC = FXCollections.observableArrayList();
+		ObservableList<String> oblistCID = FXCollections.observableArrayList();
 
 		try {
 
-			String selectCC = "SELECT courseID FROM Course";
-			rs = con.createStatement().executeQuery(selectCC);
+			String selectCID = "SELECT courseID FROM Course";
+			rs = con.createStatement().executeQuery(selectCID);
 
 			while(rs.next()) {
-				oblistCC.add(new String(rs.getString(1)));
+				oblistCID.add(new String(rs.getString(1)));
 			}
-			return oblistCC;
+			return oblistCID;
 		}
 		catch(SQLException e) {
 			throw e;
