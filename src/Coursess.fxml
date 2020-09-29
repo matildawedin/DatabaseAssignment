@@ -125,7 +125,7 @@
                            </columns>
                         </TableView>
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
-                        <Label fx:id="lblAnswercCourseReg" layoutX="55.0" layoutY="366.0" prefHeight="60.0" prefWidth="235.0" />
+                        <Label fx:id="lblAnswercCourseReg" layoutX="40.0" layoutY="336.0" prefHeight="90.0" prefWidth="250.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -151,7 +151,7 @@
                         <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" onAction="#findCourse" prefHeight="27.0" prefWidth="59.0" text="Find" />
                         <Label layoutX="119.0" layoutY="176.0" prefHeight="17.0" prefWidth="59.0" text="--OR--" />
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
-                        <Label fx:id="lblAnswerFindCourse" layoutX="92.0" layoutY="325.0" prefHeight="72.0" prefWidth="203.0" />
+                        <Label fx:id="lblAnswerFindCourse" layoutX="66.0" layoutY="299.0" prefHeight="98.0" prefWidth="229.0" />
                      </children>
                   </AnchorPane>
               </content>

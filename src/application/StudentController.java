@@ -131,6 +131,8 @@ public class StudentController implements Initializable {
 	
 	@FXML private Label lblAddCourseResponse;
 	
+	@FXML private Label lblFindStudentAnswer;
+	
 	//anv√§nds denna?
 	@FXML private Group studentGroup;
 	
@@ -356,7 +358,7 @@ public class StudentController implements Initializable {
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		
 		
-		if(!textStudentName.getText().isEmpty()) {
+		if(!textStudentName.getText().isEmpty()&& textStudentName.getText().matches("^[a-zÂ‰ˆA-Z≈ƒ÷]+$")) {
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
 			} catch (SQLException e) {
@@ -366,7 +368,7 @@ public class StudentController implements Initializable {
 			}
 		}
 		else {
-			lblResponseStudent.setText("Please fill out the fields.");
+			lblResponseStudent.setText("Please fill out the field \nand a name can only contain\n letters");
 		}
 		
 		populateStudents();
@@ -426,10 +428,12 @@ public class StudentController implements Initializable {
 		if(cmbStudentID.getValue() != null ) {
 			populateFindStudentTable(sID);
 		}
-		else if(!textName.getText().isEmpty()) {
+		else if(!textName.getText().isEmpty( )&& textStudentName.getText().matches("^[a-zÂ‰ˆA-Z≈ƒ÷]+$")) {
 			populateFindStudentTable(name);
 		}
-		
+		else { 
+			lblFindStudentAnswer.setText("Please fill in field or studentID \nand keep in mind that a\nStudent name can only contain \nletters");
+		}
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
 		textName.clear();
