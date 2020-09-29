@@ -334,6 +334,7 @@ public class StudentController implements Initializable {
 	@FXML
 	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
 		
+		//get student id from selected student
 		String sID = selectStudent(null);
 		
 		
@@ -431,8 +432,9 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		//populateActiveCourseTable(s.getStudentID()); // syns även om course table är disable, ändra?
-		
+		populateActiveCourseTable(s.getStudentID()); // syns även om course table är disable, ändra?
+		//rbtnActive.setSelected(true);
+		tableCourse.setDisable(false);
 		
 		
 	}
