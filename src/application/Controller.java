@@ -124,7 +124,7 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Student, String> columnFinishedStudentName;
 
-	@FXML private TextField textCourseID;
+	//@FXML private TextField textCourseID;
 
 	@FXML private TextField textCourseName;
 
@@ -376,17 +376,21 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
-		String cCode = textCourseID.getText();
+		
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
+		if (!cName.isEmpty() && !cCredit.isEmpty() 
+			  && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {	
 
+
+		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
+
+		if (!cName.isEmpty() && !cCredit.isEmpty() 
+			 && cName.matches("^[a-zï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½]+$") && cCredit.matches("^[0-9]+$")) {	
 			try {
-				dal.insertCourse(cCode, cName, cCredit);
+
+				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
-				textCourseID.clear();
-				textCourseName.clear();
-				textCredit.clear();
 				populateTableRegCourse();
 				populateCmbCourseID();
 			} 
@@ -400,7 +404,10 @@ public class Controller implements Initializable{
 			}
 		}
 		else {
-			lblAnswercCourseReg.setText("Please fill out all the fields.");
+			lblAnswercCourseReg.setText("Please fill out all the fields. \nKeep in mind that the Course Name\nonly can contain letters and \nCredit only numbers");
+		}
+		textCourseName.clear();
+		textCredit.clear();
 		}
 	}
 
@@ -491,11 +498,15 @@ public class Controller implements Initializable{
 		String cID = cmbCourseID.getValue();
 		String name = textFindCourse.getText();
 
-		if(cmbCourseID.getValue() != null ) {
+		if(cID != null ) {
 			populateTableFindCourse(cID);
 		}
-		else if(textFindCourse.getText() != null) {
+		else if(!name.isEmpty()&& name.matches("^[a-zA-ZåäöÅÄÖ]+$")) {
+
 			populateTableFindCourse(name);
+		}
+		else {
+			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");
 		}
 
 		tableFindCourse.setDisable(false);
