@@ -379,7 +379,8 @@ public class Controller implements Initializable{
 		String cCode = textCourseCode.getText();
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
+		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty() 
+			&& cCode.matches("^[a-zÂ‰ˆA-Z≈ƒ÷0-9]+$") && cName.matches("^[a-zÂ‰ˆA-Z≈ƒ÷]+$") && cCredit.matches("^[0-9]+$")) {	
 
 			try {
 				dal.insertCourse(cCode, cName, cCredit);
@@ -400,7 +401,7 @@ public class Controller implements Initializable{
 			}
 		}
 		else {
-			lblAnswercCourseReg.setText("Please fill out all the fields.");
+			lblAnswercCourseReg.setText("Please fill out all the fields. \nKeep in mind that the Course Name\nonly can contain letters and \nCredit only numbers");
 		}
 	}
 
@@ -492,11 +493,14 @@ public class Controller implements Initializable{
 		String cID = cmbCourseCode.getValue();
 		String name = textFindCourse.getText();
 
-		if(cmbCourseCode.getValue() != null ) {
+		if(cID != null ) {
 			populateFindCourseTable(cID);
 		}
-		else if(textFindCourse.getText() != null) {
+		else if(name.isEmpty()&& name.matches("^[a-zA-ZÂ‰ˆ≈ƒ÷]+$")) {
 			populateFindCourseTable(name);
+		}
+		else {
+			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");
 		}
 
 		tableFindCourse.setDisable(false);
