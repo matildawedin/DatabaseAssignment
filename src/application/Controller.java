@@ -376,14 +376,14 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
-		String cCode = textCourseID.getText();
+		
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty() 
-			&& cCode.matches("^[a-zåäöA-ZÅÄÖ0-9]+$") && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {	
+		if (!cName.isEmpty() && !cCredit.isEmpty() 
+			  && cName.matches("^[a-zåäöA-ZÅÄÖ]+$") && cCredit.matches("^[0-9]+$")) {	
 
 			try {
-				dal.insertCourse(cCode, cName, cCredit);
+				dal.insertCourse(cName,cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				textCourseID.clear();
 				textCourseName.clear();
@@ -493,10 +493,10 @@ public class Controller implements Initializable{
 		String name = textFindCourse.getText();
 
 		if(cID != null ) {
-			populateFindCourseTable(cID);
+			populateTableFindCourse(cID);
 		}
-		else if(name.isEmpty()&& name.matches("^[a-zA-ZåäöÅÄÖ]+$")) {
-			populateFindCourseTable(name);
+		else if(!name.isEmpty()&& name.matches("^[a-zA-ZåäöÅÄÖ]+$")) {
+			populateTableFindCourse(name);
 		}
 		else {
 			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");

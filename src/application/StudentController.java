@@ -425,10 +425,10 @@ public class StudentController implements Initializable {
 		String sID = cmbStudentID.getValue();
 		String name = textName.getText();
 		
-		if(cmbStudentID.getValue() != null ) {
+		if(sID != null ) {
 			populateFindStudentTable(sID);
 		}
-		else if(!textName.getText().isEmpty( )&& textStudentName.getText().matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+		else if(!name.isEmpty( )&& name.matches("^[a-zåäöA-ZÅÄÖ]+$")) {
 			populateFindStudentTable(name);
 		}
 		else { 
