@@ -35,7 +35,8 @@ public class StudentController implements Initializable {
 	private Student student;
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
-	private StudentDAL dal = new StudentDAL();
+	private DAL dal = new DAL();
+
 	private Connection con;
 	
 	
@@ -391,14 +392,6 @@ public class StudentController implements Initializable {
 			populateCmbStudentID();
 			
 		}
-		
-	
-		
-	
-	
-	
-	
-	
 	
 	
 	@FXML
@@ -412,7 +405,7 @@ public class StudentController implements Initializable {
 		
 		try {
 			if(cmbCourseID.getValue() != null) {
-			dal.insertCourseToStudent(s.getStudentID(), cc);
+			dal.insertStudentToCourse(s.getStudentID(), cc);
 			lblAddCourseResponse.setText("New course added!");
 			
 			}

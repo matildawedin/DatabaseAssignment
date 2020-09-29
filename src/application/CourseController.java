@@ -37,7 +37,7 @@ public class CourseController implements Initializable{
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
-	private CourseDAL dal = new CourseDAL();
+	private DAL dal = new DAL();
 
 	public Course getCourse() {
 		return course;
@@ -339,7 +339,7 @@ public class CourseController implements Initializable{
 
 		try {
 			if(cmbCourseID.getValue() != null ) {
-				tableFindCourse.setItems(dal.selectCourseByCode(c));
+				tableFindCourse.setItems(dal.selectCourseByID(c));
 			}
 			else if(textFindCourse.getText() != null) {
 				tableFindCourse.setItems(dal.selectCoursebyName(c));	
