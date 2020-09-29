@@ -146,7 +146,7 @@ public class StudentController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 		// set columns in tableview
-		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+		columnCourseID.setCellValueFactory(new PropertyValueFactory<>("courseID"));
 		coulmnCourseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnCredit.setCellValueFactory(new PropertyValueFactory<>("credits"));
 		columnStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
@@ -369,20 +369,22 @@ public class StudentController implements Initializable {
 		
 		
 
-		if(!textStudentName.getText().isEmpty()&& textStudentName.getText().matches("^[a-zA-Z]+$")) {
-
+		if(textStudentName.getText().isEmpty()) {
+			lblResponseStudent.setText("Error!\nPlease fill out the field");
+		}
+		else if(!textStudentName.getText().matches("^[a-zA-Z]+$")) {
+			lblResponseStudent.setText("Error!\nName can only contain letters");
+			
+		}
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
 				lblResponseStudent.setText( "Student is added!");
 				
 			} catch (SQLException e) {
 				if(e.getErrorCode() == 0) {
-					lblResponseStudent.setText("There was a problem connecting to the database\nPlease check your connection");
+					lblResponseStudent.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
 				}
 			}
-		}
-		else {
-			lblResponseStudent.setText("Please fill out the field \nand a name can only contain\n letters");
 		}
 		
 		populateStudentTable();
@@ -413,21 +415,21 @@ public class StudentController implements Initializable {
 			
 			}
 			else {
-				lblAddCourseResponse.setText("Please select a course");
+				lblAddCourseResponse.setText("Error!\nPlease select a course");
 				
 			}
 		} catch (SQLException e) {
 			if(e.getErrorCode() == 2627) {
-				lblAddCourseResponse.setText(s.getName() + " already studies/has studied that course!\nPlease choose another course!");
+				lblAddCourseResponse.setText("Error!\n" + s.getName() + " already studies/has studied that course!\nPlease choose another course!");
 				}
 				else if(e.getErrorCode() == 0) {
-					lblAddCourseResponse.setText("There was a problem connecting to the database, please check your connection.");
+					lblAddCourseResponse.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection.");
 				} 
 			
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		populateActiveCourseTable(s.getStudentID()); // syns Ã¤ven om course table Ã¤r disable, Ã¤ndra?
+		//populateActiveCourseTable(s.getStudentID()); // syns Ã¤ven om course table Ã¤r disable, Ã¤ndra?
 		
 		
 		
@@ -435,19 +437,26 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public void findStudent(ActionEvent event)  {
-		
+		lblFindStudentAnswer.setText(null);
 		String sID = cmbStudentID.getValue();
 		String name = textName.getText();
 		
 		if(sID != null ) {
 			populateFindStudentTable(sID);
+			
 		}
-		else if(!name.isEmpty( )&& name.matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+		else if(name.isEmpty( )){ 
+			lblFindStudentAnswer.setText("Error!\nPlease fill in field");
+			
+		}
+		else if(!name.matches("^[a-zA-Z]+$")) {
+			lblFindStudentAnswer.setText("Error!\nKeep in mind that\nStudent name can only contain \nletters");
+		}
+		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
 		}
-		else { 
-			lblFindStudentAnswer.setText("Please fill in field or studentID \nand keep in mind that a\nStudent name can only contain \nletters");
-		}
+		
+		
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
 		textName.clear();

@@ -208,7 +208,7 @@ public class DAL {
 	}
 
 	public void moveCourse(Course course, ObservableList<Student> studentOblist) throws SQLException {
-		con =dbc.getConnection();
+		con = dbc.getConnection();
 		String tmpCourseID = course.getCourseID();
 		String tmpStudentID;
 		for(Student s : studentOblist) {
@@ -230,29 +230,28 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
-	/*public String generateExamID() {
+	public String generateExamID() throws SQLException {
 		String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
+		String tmpID = new String();
 		try {
 			rs = con.createStatement().executeQuery(generate);
-
-			String tmpID = new String();
 
 			while(rs.next()) {
 				String s = rs.getString(1);
 
-				for(int i = 10000; s ==null && i < 100000; i++) { 
-					Boolean unique = null;
+				for(int i = 100; s ==null && i < 1000; i++) { 
 					String number = String.valueOf(i);
-					tmpID = ("C" + number);
+					tmpID = number;
 				}
+				
 			}
-			return tmpID;
+
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw e;
 		}
-	
+		return tmpID;
 		}
-*/
+
 		public String generateCourseId() throws SQLException {
 			con = dbc.getConnection();
 			String newID = null;
@@ -270,7 +269,6 @@ public class DAL {
 
 					if(s != null) {
 						number++;
-
 					}
 					String newString = (Integer.toString(number));
 					StringBuilder sb = new StringBuilder();
