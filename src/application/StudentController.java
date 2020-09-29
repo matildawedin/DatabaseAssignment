@@ -391,8 +391,8 @@ public class StudentController implements Initializable {
 	@FXML
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		
+		
 		if(!textStudentName.getText().isEmpty()) {
-			//textStudentID.setText(dal.generateStudentId());
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
 			} catch (SQLException e) {

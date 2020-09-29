@@ -225,31 +225,28 @@ public class DALS {
 	}
 	
 	
-	
-	// Funkar ej
+// Generate StudentID
 	public String generateStudentId() throws SQLException {
 		con = dbc.getConnection();
 		String newID = null;
 
 		try {
-			//Denna kopling funknar ej
+			
 			String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
 			rs = con.createStatement().executeQuery(generate);
-
-
-			if(rs != null) {
-
-				//String generate = "C6";
-				char charAt1 = generate.charAt(1);
+			
+			while(rs.next()) {
+			String s = rs.getString(1);
+				char charAt1 = s.charAt(1);
 				int number = Character.getNumericValue(charAt1);
 
-				if(generate != null) {
+				if(s != null) {
 					number++;
 
 				}
 				char newChar = (char) (number + '0');
 				StringBuilder sb = new StringBuilder();
-				sb.append(generate.charAt(0));
+				sb.append(s.charAt(0));
 				sb.append(newChar);
 				newID = sb.toString();
 
