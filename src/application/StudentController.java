@@ -35,7 +35,7 @@ public class StudentController implements Initializable {
 	private Student student;
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
-	private DALS dal = new DALS();
+	private StudentDAL dal = new StudentDAL();
 	private Connection con;
 	
 	
@@ -253,7 +253,7 @@ public class StudentController implements Initializable {
 			cmbCourseID.getItems().addAll(dal.selectAllCourseID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 
 
 		}
@@ -266,7 +266,7 @@ public class StudentController implements Initializable {
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		

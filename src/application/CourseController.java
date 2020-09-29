@@ -30,14 +30,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class Controller implements Initializable{
+public class CourseController implements Initializable{
 	
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
-	private DAL dal = new DAL();
+	private CourseDAL dal = new CourseDAL();
 
 	public Course getCourse() {
 		return course;
@@ -270,7 +270,7 @@ public class Controller implements Initializable{
 			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	@FXML
@@ -299,7 +299,7 @@ public class Controller implements Initializable{
 			}
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	@FXML
@@ -310,7 +310,7 @@ public class Controller implements Initializable{
 			tableFinishedGrade.setItems(dal.selectAllFromGrade(tempC.getCourseID()));
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -321,7 +321,7 @@ public class Controller implements Initializable{
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	
@@ -332,7 +332,7 @@ public class Controller implements Initializable{
 			cmbCourseID.getItems().addAll(dal.selectAllCourseID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	

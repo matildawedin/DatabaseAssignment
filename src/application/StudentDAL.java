@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class DALS {
+public class StudentDAL {
 	
 	private DbConnection dbc = new DbConnection();
 	private Connection con;
