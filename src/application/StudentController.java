@@ -370,7 +370,7 @@ public class StudentController implements Initializable {
 		
 
 		if(textStudentName.getText().isEmpty()) {
-			lblResponseStudent.setText("Please fill out the field");
+			lblResponseStudent.setText("Error!\nPlease fill out the field");
 		}
 		else if(!textStudentName.getText().matches("^[a-zA-Z]+$")) {
 			lblResponseStudent.setText("Error!\nName can only contain letters");
@@ -384,7 +384,7 @@ public class StudentController implements Initializable {
 				
 			} catch (SQLException e) {
 				if(e.getErrorCode() == 0) {
-					lblResponseStudent.setText("There was a problem connecting to the database\nPlease check your connection");
+					lblResponseStudent.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
 				}
 			}
 		}
@@ -417,15 +417,15 @@ public class StudentController implements Initializable {
 			
 			}
 			else {
-				lblAddCourseResponse.setText("Please select a course");
+				lblAddCourseResponse.setText("Error!\nPlease select a course");
 				
 			}
 		} catch (SQLException e) {
 			if(e.getErrorCode() == 2627) {
-				lblAddCourseResponse.setText(s.getName() + " already studies/has studied that course!\nPlease choose another course!");
+				lblAddCourseResponse.setText("Error!\n" + s.getName() + " already studies/has studied that course!\nPlease choose another course!");
 				}
 				else if(e.getErrorCode() == 0) {
-					lblAddCourseResponse.setText("There was a problem connecting to the database, please check your connection.");
+					lblAddCourseResponse.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection.");
 				} 
 			
 		}
@@ -448,11 +448,11 @@ public class StudentController implements Initializable {
 			
 		}
 		else if(name.isEmpty( )){ 
-			lblFindStudentAnswer.setText("Please fill in field");
+			lblFindStudentAnswer.setText("Error!\nPlease fill in field");
 			
 		}
 		else if(!name.matches("^[a-zA-Z]+$")) {
-			lblFindStudentAnswer.setText("Keep in mind that\nStudent name can only contain \nletters");
+			lblFindStudentAnswer.setText("Error!\nKeep in mind that\nStudent name can only contain \nletters");
 		}
 		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
