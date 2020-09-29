@@ -103,17 +103,17 @@ public class DALS {
 	public ObservableList<String> selectAllCourseID() throws SQLException{
 
 		con = dbc.getConnection();
-		ObservableList<String> oblistCID = FXCollections.observableArrayList();
+		ObservableList<String> oblistCC = FXCollections.observableArrayList();
 
 		try {
 
-			String selectCID = "SELECT courseID FROM Course";
-			rs = con.createStatement().executeQuery(selectCID);
+			String selectCC = "SELECT courseID FROM Course";
+			rs = con.createStatement().executeQuery(selectCC);
 
 			while(rs.next()) {
-				oblistCID.add(new String(rs.getString(1)));
+				oblistCC.add(new String(rs.getString(1)));
 			}
-			return oblistCID;
+			return oblistCC;
 		}
 		catch(SQLException e) {
 			throw e;

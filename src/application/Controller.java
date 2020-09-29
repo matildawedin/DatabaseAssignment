@@ -124,7 +124,7 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Student, String> columnFinishedStudentName;
 
-	@FXML private TextField textCourseID;
+	//@FXML private TextField textCourseID;
 
 	@FXML private TextField textCourseName;
 
@@ -376,17 +376,13 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void btnAddCourse_Click(ActionEvent event) {
-		String cCode = textCourseID.getText();
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
-		if (!cCode.isEmpty() && !cName.isEmpty() && !cCredit.isEmpty()) {	
+		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
 
 			try {
-				dal.insertCourse(cCode, cName, cCredit);
+				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
-				textCourseID.clear();
-				textCourseName.clear();
-				textCredit.clear();
 				populateTableRegCourse();
 				populateCmbCourseID();
 			} 
@@ -402,6 +398,8 @@ public class Controller implements Initializable{
 		else {
 			lblAnswercCourseReg.setText("Please fill out all the fields.");
 		}
+		textCourseName.clear();
+		textCredit.clear();
 	}
 
 	@FXML

@@ -230,28 +230,55 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
-	public String generateStudentId() throws SQLException {
+	/*public void generateExamID(WrittenExam newWrittenExam) {
+		String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
+		rs = con.createStatement().executeQuery(generate);
+		while(rs.next()) {
+			String s = rs.getString(1);
+		
+		for(int i = 10000; s == null && i < 100000; i++) { 
+			Bolean unique = null;
+			String number = String.valueOf(i);
+			String tmpID = ("C" + number);
+			for(Course tmpCourse : courseList) {
+				for(WrittenExam tmpExam : tmpCourse.examList) {
+					if(tmpExam.getExamID() != null) {
+						if(tmpExam.getExamID().equals(tmpID)) {
+							unique = 1;
+						}
+					}
+				}
+				if(unique == 0) {
+					newWrittenExam.setExamID(tmpID);
+				}
+			}
+		}
+		}
+	}
+*/
+	public String generateCourseId() throws SQLException {
 		con = dbc.getConnection();
 		String newID = null;
 
 		try {
 			
-			String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
+			String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
 			rs = con.createStatement().executeQuery(generate);
 			
 			while(rs.next()) {
 			String s = rs.getString(1);
 				char charAt1 = s.charAt(1);
-				int number = Character.getNumericValue(charAt1);
+				char charAt2 = s.charAt(2);
+				int number = (Character.getNumericValue(charAt1) + Character.getNumericValue(charAt2));
 
 				if(s != null) {
 					number++;
 
 				}
-				char newChar = (char) (number + '0');
+				String newString = (Integer.toString(number));
 				StringBuilder sb = new StringBuilder();
 				sb.append(s.charAt(0));
-				sb.append(newChar);
+				sb.append(newString);
 				newID = sb.toString();
 
 			}
