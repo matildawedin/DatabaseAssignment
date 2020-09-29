@@ -124,8 +124,6 @@ public class Controller implements Initializable{
 
 	@FXML private TableColumn<Student, String> columnFinishedStudentName;
 
-	//@FXML private TextField textCourseID;
-
 	@FXML private TextField textCourseName;
 
 	@FXML private TextField textCredit;
@@ -387,7 +385,7 @@ public class Controller implements Initializable{
 			  && cName.matches("^[a-zA-Z]+$") && cCredit.matches("^[0-9]+$")) {		
 
 			try {
-				dal.insertCourse(dal.generateExamID(), cName, cCredit);
+				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				populateTableRegCourse();
 				populateCmbCourseID();
