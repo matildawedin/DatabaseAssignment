@@ -32,11 +32,11 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public ObservableList<String> selectAllCourseID() throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<String> oblistString = FXCollections.observableArrayList();
-		
+
 		try {
 			String selectAll = "SELECT courseID FROM Course";
 			rs = con.createStatement().executeQuery(selectAll);
@@ -54,7 +54,7 @@ public class DAL {
 	public ObservableList<Course> selectCourseByCode(String courseID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistC = FXCollections.observableArrayList();
-		
+
 		try{
 			String findC = "SELECT * FROM Course WHERE courseID = '" + courseID + "'";
 			rs = con.createStatement().executeQuery(findC);
@@ -68,7 +68,7 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public ObservableList<Course> selectCoursebyName(String name) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistC = FXCollections.observableArrayList();
@@ -87,11 +87,11 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public ObservableList<Student> selectAllFromHasStudied(String courseID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-		
+
 		try {
 			String findHasStudied = "SELECT DISTINCT s1.studentID, s2.studentName FROM HasStudied s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID='" + courseID+ "'";
 			rs = con.createStatement().executeQuery(findHasStudied); 
@@ -105,11 +105,11 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public ObservableList<Student> selectAllFromStudies(String courseID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
-		
+
 		try {
 			String findStudies = "SELECT DISTINCT s1.studentID, s2.studentName FROM Studies s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID ='" + courseID +"'"; 
 			rs = con.createStatement().executeQuery(findStudies); 
@@ -122,11 +122,11 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public ObservableList<Course> selectAllActiveCourses() throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
-		
+
 		try {
 			String query1 = "SELECT DISTINCT courseID, courseName, credits FROM Course WHERE courseID NOT IN(SELECT hs.courseID FROM HasStudied hs)";
 			rs = con.createStatement().executeQuery(query1);
@@ -140,11 +140,11 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public ObservableList<Course> selectAllFinishedCourses() throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
-		
+
 		try {
 			String queryFinishedCourse = "SELECT DISTINCT hs.courseID, c.courseName, c.credits FROM HasStudied hs JOIN Course c ON hs.courseID = c.courseID";
 
@@ -159,7 +159,7 @@ public class DAL {
 			throw e;
 		}
 	}	
-	
+
 	public ObservableList<HasStudied> selectAllFromGrade(String courseID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<HasStudied> oblistGrade = FXCollections.observableArrayList();
@@ -177,7 +177,7 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	public void insertCourse(String cCode, String cName, String cCredit) throws SQLException {
 		con = dbc.getConnection();
 		String insert = "INSERT INTO Course VALUES('"+ cCode + "','"  + cName + "','" + cCredit + "')";
@@ -186,11 +186,11 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
-	
+
 	public void insertStudentToCourse(String studentID, String courseID) throws SQLException {
 		con = dbc.getConnection();
 		String insert = "INSERT INTO Studies VALUES('"+ studentID+"','"+ courseID+"')";
-		
+
 		ps = con.prepareStatement(insert);
 		ps.executeUpdate();
 		con.close();
@@ -201,7 +201,7 @@ public class DAL {
 		String queryRemove = "DELETE HasStudied WHERE courseID ='"+courseID+"'\n"
 				+ "DELETE Studies WHERE courseID ='"+courseID+"'\n"
 				+ "DELETE Course WHERE courseID ='"+courseID+"'";
-		
+
 		ps = con.prepareStatement(queryRemove);
 		ps.executeUpdate();
 		con.close();
@@ -225,67 +225,64 @@ public class DAL {
 		String studentID = student.getStudentID();
 		String courseID = course.getCourseID();		
 		String addGrade = "DELETE HasStudied WHERE studentID ='"+studentID+"'INSERT INTO HasStudied VALUES('"+studentID+"','"+courseID+"','"+grade+"')";
-		
+
 		ps = con.prepareStatement(addGrade);
 		ps.executeUpdate();
 		con.close();
 	}
-	/*public void generateExamID(WrittenExam newWrittenExam) {
+	/*public String generateExamID() {
 		String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
-		rs = con.createStatement().executeQuery(generate);
-		while(rs.next()) {
-			String s = rs.getString(1);
-		
-		for(int i = 10000; s == null && i < 100000; i++) { 
-			Bolean unique = null;
-			String number = String.valueOf(i);
-			String tmpID = ("C" + number);
-			for(Course tmpCourse : courseList) {
-				for(WrittenExam tmpExam : tmpCourse.examList) {
-					if(tmpExam.getExamID() != null) {
-						if(tmpExam.getExamID().equals(tmpID)) {
-							unique = 1;
-						}
-					}
-				}
-				if(unique == 0) {
-					newWrittenExam.setExamID(tmpID);
-				}
-			}
-		}
-		}
-	}
-*/
-	public String generateCourseId() throws SQLException {
-		con = dbc.getConnection();
-		String newID = null;
-
 		try {
-			
-			String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
 			rs = con.createStatement().executeQuery(generate);
-			
-			while(rs.next()) {
-			String s = rs.getString(1);
-				char charAt1 = s.charAt(1);
-				char charAt2 = s.charAt(2);
-				int number = (Character.getNumericValue(charAt1) + Character.getNumericValue(charAt2));
 
-				if(s != null) {
-					number++;
+			String tmpID = new String();
+
+			while(rs.next()) {
+				String s = rs.getString(1);
+
+				for(int i = 10000; s ==null && i < 100000; i++) { 
+					Boolean unique = null;
+					String number = String.valueOf(i);
+					tmpID = ("C" + number);
+				}
+			}
+			return tmpID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		}
+*/
+		public String generateCourseId() throws SQLException {
+			con = dbc.getConnection();
+			String newID = null;
+
+			try {
+
+				String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
+				rs = con.createStatement().executeQuery(generate);
+
+				while(rs.next()) {
+					String s = rs.getString(1);
+					char charAt1 = s.charAt(1);
+					char charAt2 = s.charAt(2);
+					int number = (Character.getNumericValue(charAt1) + Character.getNumericValue(charAt2));
+
+					if(s != null) {
+						number++;
+
+					}
+					String newString = (Integer.toString(number));
+					StringBuilder sb = new StringBuilder();
+					sb.append(s.charAt(0));
+					sb.append(newString);
+					newID = sb.toString();
 
 				}
-				String newString = (Integer.toString(number));
-				StringBuilder sb = new StringBuilder();
-				sb.append(s.charAt(0));
-				sb.append(newString);
-				newID = sb.toString();
+				return  newID;
 
+			}catch(SQLException e) {
+				throw e;
 			}
-			return  newID;
-
-		}catch(SQLException e) {
-			throw e;
 		}
 	}
-}
