@@ -236,19 +236,42 @@ public class DALS {
 			rs = con.createStatement().executeQuery(generate);
 			
 			while(rs.next()) {
-			String s = rs.getString(1);
-				char charAt1 = s.charAt(1);
-				int number = Character.getNumericValue(charAt1);
+				String s = rs.getString(1);
+				
+				/*if( s.charAt(2) != '\0') {
+					StringBuilder sb = new StringBuilder();
+					sb.append(s.charAt(1));
+					sb.append(s.charAt(2));
+					String charString = sb.toString();
 
-				if(s != null) {
-					number++;
+					int number = Integer.parseInt(charString);
 
+					if(s != null) {
+						number++;
+
+					}
+					String newString = Integer.toString(number);
+					StringBuilder newSb = new StringBuilder();
+					newSb.append(s.charAt(0));
+					newSb.append(newString);
+					newID = newSb.toString();
+			
 				}
-				char newChar = (char) (number + '0');
-				StringBuilder sb = new StringBuilder();
-				sb.append(s.charAt(0));
-				sb.append(newChar);
-				newID = sb.toString();
+				else if(s.charAt(2) == '\0') {*/
+					char newC = s.charAt(1);
+					int number = Character.getNumericValue(newC);
+
+					if(s != null) {
+						number++;
+
+					}
+					char newChar = (char) (number + '0');
+					StringBuilder newSb = new StringBuilder();
+					newSb.append(s.charAt(0));
+					newSb.append(newChar);
+					newID = newSb.toString();
+					
+				//}
 
 			}
 			return  newID;

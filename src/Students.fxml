@@ -20,9 +20,9 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0">
          <children>
-            <ButtonBar prefHeight="54.0" prefWidth="754.0" style="-fx-background-color: grey;">
+            <ButtonBar prefHeight="54.0" prefWidth="754.0" style="-fx-background-color: #5D6D7E;">
                <buttons>
-                  <Button fx:id="btnCourseView" mnemonicParsing="false" onAction="#showCourseView" style="-fx-background-color: transparent;" text="Course" textFill="WHITE" underline="true">
+                  <Button fx:id="btnCourseView" mnemonicParsing="false" onAction="#showCourseView" style="-fx-background-color: transparent;" text="Course" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
