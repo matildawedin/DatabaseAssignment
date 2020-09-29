@@ -37,7 +37,7 @@ public class CourseController implements Initializable{
 	private HasStudied hasStudied;
 	private DbConnection dbcon; 
 	private Connection con;
-	private CourseDAL dal = new CourseDAL();
+	private DAL dal = new DAL();
 
 	public Course getCourse() {
 		return course;
