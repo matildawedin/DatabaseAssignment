@@ -243,7 +243,6 @@ public class DALS {
 					sb.append(s.charAt(1));
 					sb.append(s.charAt(2));
 					String charString = sb.toString();
-
 					int number = Integer.parseInt(charString);
 
 					if(s != null) {
