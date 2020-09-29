@@ -334,6 +334,7 @@ public class StudentController implements Initializable {
 	@FXML
 	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
 		
+		//get student id from selected student
 		String sID = selectStudent(null);
 		
 		
@@ -366,7 +367,7 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public void btnAddStudent(ActionEvent event) throws SQLException {
-		
+		String name = textStudentName.getText();
 		
 
 		if(textStudentName.getText().isEmpty()) {
@@ -385,15 +386,15 @@ public class StudentController implements Initializable {
 					lblResponseStudent.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
 				}
 			}
+			populateStudentTable();
+			textStudentName.clear();
+			populateCmbStudentID();
+			
 		}
 		
-		populateStudentTable();
-		textStudentName.clear();
-		populateCmbStudentID();
+	
 		
-		
-}
-
+	
 	
 	
 	
@@ -430,8 +431,9 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		//populateActiveCourseTable(s.getStudentID()); // syns även om course table är disable, ändra?
-		
+		populateActiveCourseTable(s.getStudentID()); // syns även om course table är disable, ändra?
+		//rbtnActive.setSelected(true);
+		tableCourse.setDisable(false);
 		
 		
 	}
