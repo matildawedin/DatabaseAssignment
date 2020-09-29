@@ -230,57 +230,47 @@ public class CourseDAL {
 		ps.executeUpdate();
 		con.close();
 	}
-	public String generateExamID() throws SQLException {
-		String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
-		String tmpID = new String();
-		try {
-			rs = con.createStatement().executeQuery(generate);
 
+	public String generateCourseId() throws SQLException {
+		con = dbc.getConnection();
+		String newID = null;
+
+		try {
+			
+			String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
+			rs = con.createStatement().executeQuery(generate);
+			
 			while(rs.next()) {
 				String s = rs.getString(1);
-
-				for(int i = 100; s ==null && i < 1000; i++) { 
-					String number = String.valueOf(i);
-					tmpID = number;
-				}
 				
-			}
-
-		} catch (SQLException e) {
-			throw e;
-		}
-		return tmpID;
-		}
-
-		public String generateCourseId() throws SQLException {
-			con = dbc.getConnection();
-			String newID = null;
-
-			try {
-
-				String generate = "SELECT TOP 1 courseID  FROM Course ORDER BY courseID DESC";
-				rs = con.createStatement().executeQuery(generate);
-
-				while(rs.next()) {
-					String s = rs.getString(1);
-					char charAt1 = s.charAt(1);
-					char charAt2 = s.charAt(2);
-					int number = (Character.getNumericValue(charAt1) + Character.getNumericValue(charAt2));
+				if( s.length() == 5) {
+					StringBuilder sb = new StringBuilder();
+					sb.append(s.charAt(1));
+					sb.append(s.charAt(2));
+					sb.append(s.charAt(3));
+					sb.append(s.charAt(4));
+					
+					
+					String charString = sb.toString();
+					int number = Integer.parseInt(charString);
 
 					if(s != null) {
 						number++;
+
 					}
-					String newString = (Integer.toString(number));
-					StringBuilder sb = new StringBuilder();
-					sb.append(s.charAt(0));
-					sb.append(newString);
-					newID = sb.toString();
-
+					String newString = Integer.toString(number);
+					StringBuilder newSb = new StringBuilder();
+					newSb.append(s.charAt(0));
+					newSb.append(newString);
+					newID = newSb.toString();
+			
 				}
-				return  newID;
 
-			}catch(SQLException e) {
-				throw e;
 			}
+			return  newID;
+
+		}catch(SQLException e) {
+			throw e;
 		}
+	}
 	}
