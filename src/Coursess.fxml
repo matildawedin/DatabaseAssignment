@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <ButtonBar prefHeight="54.0" prefWidth="754.0" style="-fx-background-color: grey;">
         <buttons>
@@ -56,11 +56,12 @@
                         <Button fx:id="btnRemoveCourse" disable="true" layoutX="109.0" layoutY="442.0" mnemonicParsing="false" onAction="#btnRemoveCourse_Click" prefHeight="35.0" prefWidth="148.0" text="Remove Course" />
                         <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
                         <Separator layoutX="359.0" layoutY="370.0" orientation="VERTICAL" prefHeight="149.0" prefWidth="5.0" />
-                        <Label layoutX="407.0" layoutY="399.0" prefHeight="29.0" prefWidth="130.0" text="Add Participant">
+                        <Label layoutX="399.0" layoutY="378.0" prefHeight="29.0" prefWidth="130.0" text="Add Participant">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <Label fx:id="lblAddParticipantAnswer" layoutX="399.0" layoutY="407.0" prefHeight="30.0" prefWidth="348.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -93,11 +94,12 @@
                         <Separator layoutX="13.0" layoutY="367.0" prefHeight="6.0" prefWidth="729.0" />
                         <Separator layoutX="359.0" layoutY="370.0" orientation="VERTICAL" prefHeight="149.0" prefWidth="5.0" />
                         <ComboBox fx:id="cmbGrade" layoutX="402.0" layoutY="449.0" prefWidth="150.0" promptText="Grade" />
-                        <Label layoutX="402.0" layoutY="396.0" prefHeight="39.0" prefWidth="223.0" text="Insert grade for student">
+                        <Label layoutX="402.0" layoutY="373.0" prefHeight="39.0" prefWidth="223.0" text="Insert grade for student">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <Label fx:id="lblGradeStudentAnswer" layoutX="402.0" layoutY="412.0" prefHeight="30.0" prefWidth="338.0" />
                      </children>
                   </AnchorPane>
             </content>

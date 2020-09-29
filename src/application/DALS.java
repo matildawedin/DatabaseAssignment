@@ -15,6 +15,10 @@ public class DALS {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
+	
+	//--------------------------------Select methods-------------------------------------------
+	
+	// Receive an list of all the students in the database
 	public ObservableList<Student> selectAllStudent() throws SQLException{
 		
 		con = dbc.getConnection();
@@ -35,7 +39,7 @@ public class DALS {
 		}
 		
 	}
-	// get all courses in studies class from a selected student
+	// Receive all courses from Studies tabel based on a specific student id
 	public ObservableList<Course> selectStudies(String studentID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistC = FXCollections.observableArrayList();
@@ -55,7 +59,7 @@ public class DALS {
 		}
 	}
 	
-	// get all courses in Hasstudied class from a selected student
+	// Receive all courses from HasStudied tabel based on a specific student id
 	public ObservableList<Course> selectHasStudied(String studentID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistC = FXCollections.observableArrayList();
@@ -76,7 +80,7 @@ public class DALS {
 		
 	}
 	
-	// get grade for selected HasStudied course
+	// Receive an list of grade from HasStudied tabel based on a specific student id
 	public ObservableList<HasStudied> selectGrade(String studentID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
@@ -95,7 +99,7 @@ public class DALS {
 		}
 		
 	}
-	
+	//Receive an list of all courseCodes from Course table
 	public ObservableList<String> selectAllCourseCode() throws SQLException{
 
 		con = dbc.getConnection();
@@ -116,7 +120,7 @@ public class DALS {
 		}
 
 	}
-	
+	//Receive an list of all studentIDs from Student table
 	public ObservableList<String> selectAllStudentID() throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<String> oblistSID = FXCollections.observableArrayList();
@@ -136,25 +140,7 @@ public class DALS {
 		}
 	}
 	
-	public ObservableList<String> selectAllStudentName() throws SQLException{
-		con = dbc.getConnection();
-		ObservableList<String> oblistSN = FXCollections.observableArrayList();
-		
-		try {
-		String selectN = "SELECT studentName FROM Student";
-		rs = con.createStatement().executeQuery(selectN);
-		
-		while(rs.next()) {
-			oblistSN.add(new String(rs.getString(1)));
-			
-		}
-		return oblistSN;
-		}
-		catch(SQLException e) {
-			throw e;
-		}
-	}
-	
+	//Receive an list of Students from Student table based on a specific student id
 	public ObservableList<Student> selectStudentbyID(String studentID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Student> oblistS = FXCollections.observableArrayList();
@@ -175,6 +161,7 @@ public class DALS {
 		
 	}
 	
+	//Receive an list of Students from Student table based on a specific student name
 	public ObservableList<Student> selectStudentbyName(String name) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Student> oblistS = FXCollections.observableArrayList();
@@ -195,7 +182,7 @@ public class DALS {
 		
 	}
 	
-	
+	//--------------------------------Insert methods-------------------------------------------
 	
 	// insert student values 
 	public void insertStudent(String studentID, String name) throws SQLException {
@@ -224,11 +211,8 @@ public class DALS {
 
 	}
 	
-	
+	//--------------------------------Remove method-------------------------------------------
 
-	
-	
-	// Ej prio men fungerar ej att ta bort objekt som lagts till i databas
 	public void removeStudent(String studentID) throws SQLException {
 		con = dbc.getConnection();
 		String remove = "DELETE FROM Studies WHERE studentID = '" + studentID + "'\n"
@@ -240,14 +224,41 @@ public class DALS {
 		con.close();
 	}
 	
-	/* EJ GJORT ÄN
-	public void generateStudentId() {
-		con = dbc.getConnection();
-		
-		String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
-		
-	}
-	*/
 	
+	
+	// Funkar ej
+	public String generateStudentId() throws SQLException {
+		con = dbc.getConnection();
+		String newID = null;
+
+		try {
+			//Denna kopling funknar ej
+			String generate = "SELECT TOP 1 studentID  FROM Student ORDER BY studentID DESC";
+			rs = con.createStatement().executeQuery(generate);
+
+
+			if(rs != null) {
+
+				//String generate = "C6";
+				char charAt1 = generate.charAt(1);
+				int number = Character.getNumericValue(charAt1);
+
+				if(generate != null) {
+					number++;
+
+				}
+				char newChar = (char) (number + '0');
+				StringBuilder sb = new StringBuilder();
+				sb.append(generate.charAt(0));
+				sb.append(newChar);
+				newID = sb.toString();
+
+			}
+			return  newID;
+
+		}catch(SQLException e) {
+			throw e;
+		}
+	}
 
 }
