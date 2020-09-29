@@ -454,7 +454,6 @@ public class CourseController implements Initializable{
 		try {
 			dal.insertStudentToCourse(sID, cID);
 			populateTableStudentCourse();
-			
 		} catch (SQLException e) {		
 			if (e.getErrorCode() == 2627) {
 				lblAddParticipantAnswer.setText("The selected student is already part of the selected course");
@@ -470,7 +469,6 @@ public class CourseController implements Initializable{
 		else {
 			lblAddParticipantAnswer.setText("Please select a studentID");
 		}
-		
 	}
 	@FXML
 	public void btnAddGrade_Click(ActionEvent event) {
