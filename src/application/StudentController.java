@@ -449,7 +449,7 @@ public class StudentController implements Initializable {
 			
 		}
 		else if(name.isEmpty( )){ 
-			lblFindStudentAnswer.setText("Error!\nPlease fill in field");
+			lblFindStudentAnswer.setText("Please pick a student ID or\nenter a Student Name");
 			
 		}
 		else if(!name.matches("^[a-zA-Z]+$")) {
@@ -457,6 +457,9 @@ public class StudentController implements Initializable {
 		}
 		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
+		}
+		else {
+			lblFindStudentAnswer.setText("No student with that name exists");
 		}
 		
 		
