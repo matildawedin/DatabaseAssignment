@@ -370,16 +370,10 @@ public class StudentController implements Initializable {
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		String name = textStudentName.getText();
 		
-
-		if(textStudentName.getText().isEmpty()) {
-			lblResponseStudent.setText("Error!\nPlease fill out the field");
-		}
-		else if(!textStudentName.getText().matches("^[a-zA-Z]+$")) {
-			lblResponseStudent.setText("Error!\nName can only contain letters");
-			
-		}
+		if(!name.isEmpty() && name.matches("^[a-zA-Z]+$")) {
+		
 			try {
-				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());
+				dal.insertStudent(dal.generateStudentId(),name);
 				lblResponseStudent.setText( "Student is added!");
 				
 			} catch (SQLException e) {
@@ -392,6 +386,15 @@ public class StudentController implements Initializable {
 			populateCmbStudentID();
 			
 		}
+		else if(name.isEmpty()) {
+			lblResponseStudent.setText("Error!\nPlease fill out the field");
+		}
+		else if(!name.matches("^[a-zA-Z]+$")) {
+			lblResponseStudent.setText("Error!\nName can only contain letters");
+			
+		}
+	}
+		
 	
 	
 	@FXML
