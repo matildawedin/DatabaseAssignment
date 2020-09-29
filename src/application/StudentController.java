@@ -369,7 +369,7 @@ public class StudentController implements Initializable {
 		
 		
 
-		if(!textStudentName.getText().isEmpty()&& textStudentName.getText().matches("^[a-zåäöA-ZÅÄÖ]+$")) {
+		if(!textStudentName.getText().isEmpty()&& textStudentName.getText().matches("^[a-zA-Z]+$")) {
 
 			try {
 				dal.insertStudent(dal.generateStudentId(),textStudentName.getText());

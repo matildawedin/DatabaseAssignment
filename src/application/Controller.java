@@ -380,7 +380,7 @@ public class Controller implements Initializable{
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
 		if (!cName.isEmpty() && !cCredit.isEmpty() 
-			  && cName.matches("^[a-zÂ‰ˆA-Z≈ƒ÷]+$") && cCredit.matches("^[0-9]+$")) {		
+			  && cName.matches("^[a-zA-Z]+$") && cCredit.matches("^[0-9]+$")) {		
 			try {
 
 				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
@@ -495,12 +495,12 @@ public class Controller implements Initializable{
 		if(cID != null ) {
 			populateTableFindCourse(cID);
 		}
-		else if(!name.isEmpty()&& name.matches("^[a-zA-ZÂ‰ˆ≈ƒ÷]+$")) {
+		else if(!name.isEmpty()&& name.matches("^[a-zA-Z]+$")) {
 
 			populateTableFindCourse(name);
 		}
 		else {
-			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters");
+			lblAnswerFindCourse.setText("Please select a course Code \nor enter a name that only \ncontains letters a-z, A-Z");
 		}
 
 		tableFindCourse.setDisable(false);
