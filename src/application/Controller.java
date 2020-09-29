@@ -408,7 +408,9 @@ public class Controller implements Initializable{
 		}
 		textCourseName.clear();
 		textCredit.clear();
+		} 
 		}
+		
 	}
 
 	@FXML
