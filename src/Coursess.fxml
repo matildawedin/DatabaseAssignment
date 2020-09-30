@@ -147,7 +147,7 @@
                            </columns>
                         </TableView>
                         <ComboBox fx:id="cmbCourseID" layoutX="69.0" layoutY="126.0" prefHeight="27.0" prefWidth="158.0" promptText="Course Code" />
-                        <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" onAction="#findCourse" prefHeight="27.0" prefWidth="59.0" text="Find" />
+                        <Button fx:id="btnFindCourse" layoutX="119.0" layoutY="262.0" mnemonicParsing="false" onAction="#btnFindCourse_Click" prefHeight="27.0" prefWidth="59.0" text="Find" />
                         <Label layoutX="119.0" layoutY="176.0" prefHeight="17.0" prefWidth="59.0" text="--OR--" />
                         <Separator layoutX="13.0" layoutY="431.0" prefHeight="6.0" prefWidth="729.0" />
                         <Label fx:id="lblAnswerFindCourse" layoutX="66.0" layoutY="299.0" prefHeight="98.0" prefWidth="229.0" />
