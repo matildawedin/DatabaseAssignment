@@ -26,7 +26,7 @@ public class Course {
 	public void setCredits(String credits) {
 		this.credits = credits;
 	}
-	
+
 	//Constructor
 	public Course(String courseCode, String name, String credits) {
 		super();//vad glör denna? den genererades automatisk 
@@ -34,5 +34,5 @@ public class Course {
 		this.name = name;
 		this.credits = credits;
 	}
-	
+
 }
