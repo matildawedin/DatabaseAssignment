@@ -288,13 +288,23 @@ public class CourseController implements Initializable{
 		try {
 			if(tabActiveCourse.isSelected()) {
 				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
+				if(tempC != null) {
 				tableActiveStudent.getItems().clear();
 				tableActiveStudent.setItems(dal.selectAllFromStudies(tempC.getCourseID()));
+				} 
+				else {
+					lblAddParticipantAnswer.setText(" ");
+				}
 			}
 			if(tabFinishedCourse.isSelected()) {
-				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
+				if(tempC != null) {
 				tableFinishedStudent.getItems().clear();
 				tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseID()));
+				}
+				else {
+					lblGradeStudentAnswer.setText(" ");
+				}
 			}
 		}
 		catch(SQLException e) {
@@ -305,8 +315,13 @@ public class CourseController implements Initializable{
 	private void populateTableGrade() {
 		tableFinishedGrade.getItems().clear();
 		try {
-			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();		
+			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+			if(tempC != null) {
 			tableFinishedGrade.setItems(dal.selectAllFromGrade(tempC.getCourseID()));
+			}
+			else{
+				lblGradeStudentAnswer.setText(" ");
+			}
 		}
 		catch(SQLException e) {
 			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
