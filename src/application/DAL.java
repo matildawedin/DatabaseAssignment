@@ -10,10 +10,12 @@ import javafx.collections.ObservableList;
 
 public class DAL {
 
+	//Declare new objects 
 	private DbConnection dbc = new DbConnection();
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
+	
 	//--------------------------------Select all-methods-------------------------------------------\\
 
 	//Receive a list of all courses that are not present in the HasStudied table.
@@ -80,7 +82,7 @@ public class DAL {
 	//--------------------------------Populate comboboxes methods-------------------------------------------\\
 
 	//Receive a list of all studentIDs from the Student table
-	public ObservableList<String> selectAllStudentID() throws SQLException{ //check
+	public ObservableList<String> selectAllStudentID() throws SQLException{ 
 		con = dbc.getConnection();
 		ObservableList<String> oblistString = FXCollections.observableArrayList();
 		try {
@@ -98,7 +100,7 @@ public class DAL {
 	}
 
 	//Receive a list of all courseCodes from the Course table
-	public ObservableList<String> selectAllCourseID() throws SQLException{ //check
+	public ObservableList<String> selectAllCourseID() throws SQLException{ 
 
 		con = dbc.getConnection();
 		ObservableList<String> oblistString = FXCollections.observableArrayList();
@@ -121,7 +123,7 @@ public class DAL {
 	//--------------------------------Specific select methods-------------------------------------------\\
 
 	//Receive an list of Courses from Course table based on a specific course id
-	public ObservableList<Course> selectCourseByID(String courseID) throws SQLException{//check
+	public ObservableList<Course> selectCourseByID(String courseID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
@@ -139,7 +141,7 @@ public class DAL {
 		}
 	}
 	//Receive an list of Students from Student table based on a specific student id
-	public ObservableList<Student> selectStudentbyID(String studentID) throws SQLException{//check
+	public ObservableList<Student> selectStudentbyID(String studentID) throws SQLException{
 		con = dbc.getConnection();
 		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 
@@ -195,7 +197,7 @@ public class DAL {
 	}
 
 	//Receive a list of Courses from Course table based on a specific course name
-	public ObservableList<Course> selectCoursebyName(String name) throws SQLException{ //check
+	public ObservableList<Course> selectCoursebyName(String name) throws SQLException{ 
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
@@ -213,8 +215,9 @@ public class DAL {
 			throw e;
 		}
 	}
+	
 	//Receive a list of students who's name contain characters matching the in-value. 
-	public ObservableList<Student> selectStudentbyName(String name) throws SQLException{ //check
+	public ObservableList<Student> selectStudentbyName(String name) throws SQLException{ 
 		con = dbc.getConnection();
 		ObservableList<Student> oblistStudent = FXCollections.observableArrayList();
 
@@ -235,7 +238,7 @@ public class DAL {
 	}
 
 	// Receive list of all courses from Studies table based on a specific student id
-	public ObservableList<Course> selectStudies(String studentID) throws SQLException{ //check
+	public ObservableList<Course> selectStudies(String studentID) throws SQLException{ 
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
@@ -254,7 +257,7 @@ public class DAL {
 		}
 	}
 	// Receive list of all courses from HasStudied tabel based on a specific student id
-	public ObservableList<Course> selectHasStudied(String studentID) throws SQLException{ //check
+	public ObservableList<Course> selectHasStudied(String studentID) throws SQLException{ 
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
@@ -293,7 +296,7 @@ public class DAL {
 	}
 
 	// Receive an list of grade from HasStudied tabel based on a specific student id
-	public ObservableList<HasStudied> selectGrade(String studentID) throws SQLException{ //check
+	public ObservableList<HasStudied> selectGrade(String studentID) throws SQLException{ 
 		con = dbc.getConnection();
 		ObservableList<HasStudied> oblistHs = FXCollections.observableArrayList();
 
@@ -326,6 +329,7 @@ public class DAL {
 		con.close();
 
 	}
+	
 	//create new course with the values presented.
 	public void insertCourse(String cCode, String cName, String cCredit) throws SQLException {
 		con = dbc.getConnection();
@@ -335,6 +339,7 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
+	
 	//insert student to a course by adding them to the Studies table. 
 	public void insertStudentToCourse(String studentID, String courseID) throws SQLException {
 		con = dbc.getConnection();
@@ -344,6 +349,7 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
+	
 	//--------------------------------Remove method-------------------------------------------
 
 

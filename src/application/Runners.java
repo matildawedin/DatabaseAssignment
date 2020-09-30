@@ -14,20 +14,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
-// lägger till extends för att göra det till en java fx projekt 
+
 public class Runners extends Application{	
 	
+	//Start method that connects to the fxml file
 	public void start(Stage primaryStage) throws Exception{
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Coursess.fxml"));
 		
 			Parent root = (Parent) loader.load();
 			
-			// koppla till controller 
-			
 			loader.getController();
 				
-		    // vad används detta för?
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.setResizable(false);
@@ -39,10 +37,7 @@ public class Runners extends Application{
 	    	e.printStackTrace();
 	    }
 	}
-	
-	
-	
-/*Note: all kod här borde inte vara i main, utan ska delas upp*/
+	// Main method that launch the program
 	public static void main(String[] args) {
 		
 		launch(args);

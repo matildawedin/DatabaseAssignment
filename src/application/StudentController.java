@@ -183,8 +183,6 @@ public class StudentController implements Initializable {
 					
 			window.setScene(ExamViewScene);
 
-			
-
 		} catch (IOException e) {
 			e.printStackTrace();
 
@@ -322,18 +320,13 @@ public class StudentController implements Initializable {
 	
 	//
 	@FXML
-	public String selectStudent(MouseEvent event) {
+	public void selectStudent(MouseEvent event) {
 
 		Student s = tableStudent.getSelectionModel().getSelectedItem();
-		String sID = s.getStudentID();
-		
-		
-		
+	
 		if(s != null) {
 			
 			lblResponseStudent.setText("Student selected");
-			
-			
 		} 
 		
 		// behövs alla dessa????
@@ -352,34 +345,26 @@ public class StudentController implements Initializable {
 		populateCmbCourse();
 		lblAddCourseResponse.setText(null);
 		lblResponseStudent.setText(null);
-		
-		
-		
-		return sID;
-		
 	}
+	
 	@FXML
 	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
 		
-		//get student id from selected student
-		String sID = selectStudent(null);
-		
-		
+		Student tempS = tableStudent.getSelectionModel().getSelectedItem();
+		String sID = tempS.getStudentID();
 		
 		if(rbtnActive.isSelected()) {
 			populateActiveCourseTable(sID);
 			rbtnActive.setSelected(false);
-			
-			
 		}
+		
 		else if(rbtnCompleted.isSelected()) {
 			populatecompletedCourseTable(sID);
 			tabelGrade.setDisable(false);
 			populateGradeTable(sID);
 			rbtnCompleted.setSelected(false);
-			
-			
 		}
+		
 		tableCourse.setDisable(false);
 		
 	}
@@ -401,13 +386,15 @@ public class StudentController implements Initializable {
 			try {
 				dal.insertStudent(dal.generateStudentId(),name);
 				lblResponseStudent.setText( "Student is added!");
+				populateStudentTable();
+				
 				
 			} catch (SQLException e) {
+				e.printStackTrace();
 				if(e.getErrorCode() == 0) {
 					lblResponseStudent.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
 				}
 			}
-			populateStudentTable();
 			textStudentName.clear();
 			populateCmbStudentID();
 			
@@ -427,14 +414,14 @@ public class StudentController implements Initializable {
 	public void addCourse(ActionEvent event) {
 		
 		String cc = cmbCourseID.getValue();
-		Student s = tableStudent.getSelectionModel().getSelectedItem();
+		Student tempS = tableStudent.getSelectionModel().getSelectedItem();
 		
 		lblAddCourseResponse.setText(null);
 		
 		
 		try {
 			if(cmbCourseID.getValue() != null) {
-			dal.insertStudentToCourse(s.getStudentID(), cc);
+			dal.insertStudentToCourse(tempS.getStudentID(), cc);
 			lblAddCourseResponse.setText("New course added!");
 			
 			}
@@ -443,8 +430,9 @@ public class StudentController implements Initializable {
 				
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			if(e.getErrorCode() == 2627) {
-				lblAddCourseResponse.setText("Error!\n" + s.getName() + " already studies/has studied that course!\nPlease choose another course!");
+				lblAddCourseResponse.setText("Error!\n" + tempS.getName() + " already studies/has studied that course!\nPlease choose another course!");
 				}
 				else if(e.getErrorCode() == 0) {
 					lblAddCourseResponse.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection.");
@@ -453,8 +441,7 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		populateActiveCourseTable(s.getStudentID()); // syns även om course table är disable, ändra?
-		//rbtnActive.setSelected(true);
+		populateActiveCourseTable(tempS.getStudentID()); // syns även om course table är disable, ändra?
 		tableCourse.setDisable(false);
 		
 		
@@ -483,8 +470,6 @@ public class StudentController implements Initializable {
 		else {
 			lblFindStudentResponse.setText("No student with that name exists");
 		}
-		
-		
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
 		textName.clear();
@@ -512,12 +497,12 @@ public class StudentController implements Initializable {
 
 			}
 			catch (SQLException e) {
+				e.printStackTrace();
 				if(e.getErrorCode() == 0) {
 					lblResponseStudent.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection.");
 				} 
 			}
 		}
-		
 		populateStudentTable();
 		btnRemoveStudent.setDisable(true);
 		cmbCourseID.setDisable(true);
