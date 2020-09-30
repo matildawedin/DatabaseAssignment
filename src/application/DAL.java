@@ -129,7 +129,9 @@ public class DAL {
 
 		try{
 			String queryFindCourse = "SELECT * FROM Course WHERE courseID = '" + courseID + "'";
-			rs = con.createStatement().executeQuery(queryFindCourse);
+			ps = con.prepareStatement(queryFindCourse);
+			rs = ps.executeQuery();
+					
 
 			while(rs.next()) {
 				oblistCourse.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
@@ -148,7 +150,8 @@ public class DAL {
 		try {
 			String queryFindStudent = "SELECT * FROM Student WHERE studentID = '" + studentID + "'";
 
-			rs = con.createStatement().executeQuery(queryFindStudent);
+			ps = con.prepareStatement(queryFindStudent);
+			rs = ps.executeQuery();
 
 			while(rs.next()) {
 				oblistStudent.add(new Student(rs.getString(1), rs.getString(2)));
@@ -167,7 +170,8 @@ public class DAL {
 
 		try {
 			String queryFindHasStudied = "SELECT DISTINCT s1.studentID, s2.studentName FROM HasStudied s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID='" + courseID+ "'";
-			rs = con.createStatement().executeQuery(queryFindHasStudied); 
+			ps = con.prepareStatement(queryFindHasStudied);
+			rs = ps.executeQuery(); 
 
 			while(rs.next()) {
 				oblistStudent.add(new Student(rs.getString(1), rs.getString(2)));
@@ -185,7 +189,8 @@ public class DAL {
 
 		try {
 			String queryFindStudies = "SELECT DISTINCT s1.studentID, s2.studentName FROM Studies s1 JOIN Student s2 ON s1.studentID = s2.studentID WHERE s1.courseID ='" + courseID +"'"; 
-			rs = con.createStatement().executeQuery(queryFindStudies); 
+			ps = con.prepareStatement(queryFindStudies);
+			rs = ps.executeQuery(); 
 			while(rs.next()) {
 				oblistStudent.add(new Student(rs.getString(1), rs.getString(2)));
 			}
@@ -204,7 +209,8 @@ public class DAL {
 		try {
 			String querySelectCourse = "SELECT * FROM Course WHERE courseName LIKE '%" + name + "%'";
 
-			rs = con.createStatement().executeQuery(querySelectCourse);
+			ps = con.prepareStatement(querySelectCourse);
+			rs = ps.executeQuery(); 
 
 			while(rs.next()) {
 				oblistCourse.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
@@ -224,7 +230,8 @@ public class DAL {
 		try {
 			String querySelectStudent = "SELECT * FROM Student WHERE studentName LIKE '%" + name + "%'";
 
-			rs = con.createStatement().executeQuery(querySelectStudent);
+			ps = con.prepareStatement(querySelectStudent);
+			rs = ps.executeQuery();
 
 			while(rs.next()) {
 				oblistStudent.add(new Student(rs.getString(1), rs.getString(2)));
@@ -245,7 +252,8 @@ public class DAL {
 		try {
 			String querySelectCourse = "SELECT * FROM Course WHERE courseID IN (SELECT courseID FROM Studies WHERE studentID = '" + studentID + "')";
 
-			rs = con.createStatement().executeQuery(querySelectCourse);
+			ps = con.prepareStatement(querySelectCourse);
+			rs = ps.executeQuery();
 
 			while(rs.next()) {
 				oblistCourse.add(new Course(rs.getString(1), rs.getString(2),rs.getString(3)));
@@ -264,7 +272,8 @@ public class DAL {
 		try {
 			String querySelectCourse = "SELECT * FROM Course WHERE courseID IN (SELECT courseID FROM HasStudied WHERE studentID = '" + studentID + "')";
 
-			rs = con.createStatement().executeQuery(querySelectCourse);
+			ps = con.prepareStatement(querySelectCourse);
+			rs = ps.executeQuery();
 
 			while(rs.next()) {
 				oblistCourse.add(new Course(rs.getString(1), rs.getString(2),rs.getString(3)));
@@ -283,7 +292,9 @@ public class DAL {
 
 		try {
 			String queryGrade = "SELECT hs.grade FROM HasStudied hs JOIN Student s ON s.studentID = hs.studentID WHERE hs.courseID ='"+courseID +"'";		
-			ResultSet rs = con.createStatement().executeQuery(queryGrade); 	
+			ps = con.prepareStatement(queryGrade);
+			rs = ps.executeQuery();
+				
 			while(rs.next()) {
 				HasStudied tmpHasStudied = new HasStudied(rs.getString(1));
 				oblistGrade.add(tmpHasStudied);
@@ -302,7 +313,9 @@ public class DAL {
 
 		try {
 			String querySelectGrade = "SELECT grade FROM HasStudied WHERE studentID = '" + studentID + "'";
-			rs = con.createStatement().executeQuery(querySelectGrade);
+			ps = con.prepareStatement(querySelectGrade);
+			rs = ps.executeQuery();
+			
 			while(rs.next()) {
 				oblistHs.add(new HasStudied(rs.getString(1)));
 			}
