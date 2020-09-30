@@ -418,7 +418,7 @@ public class CourseController implements Initializable{
 
 	//Activate the addGrade method at selected student. 
 	@FXML
-	public void selectStudent(MouseEvent event) { //Denna metod selectar inget? behövs den?
+	public void selectStudent(MouseEvent event) { 
 		cmbGrade.setDisable(false);
 		btnAddGrade.setDisable(false);
 	}
