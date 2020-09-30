@@ -220,6 +220,7 @@ public class CourseController implements Initializable{
 					populateTableRegCourse();
 				}
 				else if(newTab.equals(tabFindCourse)) {
+					btnFindCourse.setDisable(true);
 					populateCmbCourseID();
 				}
 			}
