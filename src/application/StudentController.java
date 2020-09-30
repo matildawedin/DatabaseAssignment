@@ -223,7 +223,7 @@ public class StudentController implements Initializable {
 	}
 	
 	// Add all completed courses to the course table based on a specific student id
-	public void populatecompletedCourseTable(String studentID) {
+	public void populateFinishedCourseTable(String studentID) {
 
 		try {
 			tableCourse.setItems(dal.selectHasStudied(studentID));
@@ -356,7 +356,7 @@ public class StudentController implements Initializable {
 		}
 		
 		else if(rbtnCompleted.isSelected()) {
-			populatecompletedCourseTable(sID);
+			populateFinishedCourseTable(sID);
 			tabelGrade.setDisable(false);
 			populateGradeTable(sID);
 			rbtnCompleted.setSelected(false);
