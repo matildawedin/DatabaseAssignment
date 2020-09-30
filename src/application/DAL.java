@@ -15,12 +15,12 @@ public class DAL {
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	
+
 	//--------------------------------Select all-methods-------------------------------------------\\
 
 	//Receive a list of all courses that are not present in the HasStudied table.
 	public ObservableList<Course> selectAllActiveCourses() throws SQLException{
-		
+
 		con = dbc.getConnection();
 		ObservableList<Course> oblistCourse = FXCollections.observableArrayList();
 
@@ -37,7 +37,7 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	//Receive a list of all courses that are present in the HasStudied table.
 	public ObservableList<Course> selectAllFinishedCourses() throws SQLException{
 		con = dbc.getConnection();
@@ -57,7 +57,7 @@ public class DAL {
 			throw e;
 		}
 	}	
-	
+
 	// Receive an list of all the students in the database.
 	public ObservableList<Student> selectAllStudent() throws SQLException{
 
@@ -215,7 +215,7 @@ public class DAL {
 			throw e;
 		}
 	}
-	
+
 	//Receive a list of students who's name contain characters matching the in-value. 
 	public ObservableList<Student> selectStudentbyName(String name) throws SQLException{ 
 		con = dbc.getConnection();
@@ -329,7 +329,7 @@ public class DAL {
 		con.close();
 
 	}
-	
+
 	//create new course with the values presented.
 	public void insertCourse(String cCode, String cName, String cCredit) throws SQLException {
 		con = dbc.getConnection();
@@ -339,7 +339,7 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
-	
+
 	//insert student to a course by adding them to the Studies table. 
 	public void insertStudentToCourse(String studentID, String courseID) throws SQLException {
 		con = dbc.getConnection();
@@ -349,7 +349,7 @@ public class DAL {
 		ps.executeUpdate();
 		con.close();
 	}
-	
+
 	//--------------------------------Remove method-------------------------------------------
 
 

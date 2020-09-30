@@ -26,12 +26,12 @@ public class Course {
 	public void setCredits(String credits) {
 		this.credits = credits;
 	}
-	
+
 	//Constructor
 	public Course(String courseCode, String name, String credits) {
 		this.courseID = courseCode;
 		this.name = name;
 		this.credits = credits;
 	}
-	
+
 }

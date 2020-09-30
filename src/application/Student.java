@@ -1,16 +1,13 @@
 package application;
 
-
-import java.util.HashMap;
-
 public class Student {
-	
+
 	// Declare attribut
 	private String studentID;
 	private String name;
-	
+
 	//Getter and Setters for the attribute 
-	
+
 	public Student(String studentID, String studentName) {
 		super();
 		this.studentID = studentID;

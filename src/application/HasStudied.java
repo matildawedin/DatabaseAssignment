@@ -6,8 +6,8 @@ public class HasStudied {
 	private Student student;
 	private Course course;
 	private String grade;
-	
-	
+
+
 
 	public String getGrade() {
 		return grade;
@@ -45,8 +45,8 @@ public class HasStudied {
 		this.grade = newGrade;
 
 	}
-		
 
 
-	
+
+
 }

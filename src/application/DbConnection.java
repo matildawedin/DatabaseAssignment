@@ -7,28 +7,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DbConnection extends UrlLogin {
-	
+
 	Connection dbcon;
-	
-	
+
+
 	public Connection getConnection() {
-		
-	
+
+
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
 
 			dbcon = DriverManager.getConnection(url, user, password);
-			
-			
+
+
 		} 
 		catch(ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			
+			e.printStackTrace();
+
 		}
 		return dbcon;
-		
+
 	}
-	
+
 
 }
