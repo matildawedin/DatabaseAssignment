@@ -251,7 +251,7 @@ public class CourseController implements Initializable{
 		}
 	}
 	
-	@FXML
+	
 	public void populateTableActiveCourse() {
 		tableActiveCourse.getItems().clear();
 		try {
@@ -261,7 +261,7 @@ public class CourseController implements Initializable{
 			e.printStackTrace();
 		}	
 	}
-	@FXML
+	
 	private void populateTableFinishedCourse() {
 		tableFinishedCourse.getItems().clear();
 		try {	
@@ -271,7 +271,7 @@ public class CourseController implements Initializable{
 			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	@FXML
+	
 	public void populateTableRegCourse() {
 		tableRegCourse.getItems().clear();
 		try {
@@ -279,10 +279,11 @@ public class CourseController implements Initializable{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+			
 		}	
 	}
 
-	@FXML
+	
 	public void populateTableStudentCourse() {
 		
 		try {
@@ -311,7 +312,7 @@ public class CourseController implements Initializable{
 			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	@FXML
+	
 	private void populateTableGrade() {
 		tableFinishedGrade.getItems().clear();
 		try {
@@ -328,7 +329,7 @@ public class CourseController implements Initializable{
 		}
 	}
 
-	@FXML
+	
 	private void populateCmbStudentID() {	
 			cmbStudentID.getItems().clear();
 		try {
@@ -339,7 +340,7 @@ public class CourseController implements Initializable{
 		}
 	}
 	
-	@FXML
+	
 	private void populateCmbCourseID() {
 		cmbCourseID.getItems().clear();
 		try {
@@ -350,7 +351,7 @@ public class CourseController implements Initializable{
 		}
 	}
 	
-	@FXML
+	
 	public void populateTableFindCourse(String c) {
 
 		try {
