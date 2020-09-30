@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 
 public class CourseController implements Initializable{
 	
+	//Declare new objects 
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;

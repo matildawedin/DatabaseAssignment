@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 public class StudentController implements Initializable {
 	
-	//Attribute 
+	//Declare new objects 
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;
@@ -65,7 +65,7 @@ public class StudentController implements Initializable {
 		this.dbcon = dbcon;
 	}
 	
-	// 
+	// FXML Objects
 	@FXML private Button btnCourseView;
 
 	@FXML private Button btnStudentView;
@@ -136,8 +136,6 @@ public class StudentController implements Initializable {
 	
 	
 	
-	
-	
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
 		// set columns in tableview
@@ -150,15 +148,16 @@ public class StudentController implements Initializable {
 		cStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		cStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-		
-		
+		//get connection to database
 		dbcon = new DbConnection();
 		con = dbcon.getConnection();
 		
+		//populate tabel
 		populateStudentTable();
 		populateCmbStudentID();
 		populateCmbCourse();
 		
+		//Add listerner that observs active changes
 		textName.textProperty().addListener((observable) -> cmbStudentID.setDisable(true));
 		cmbStudentID.valueProperty().addListener((observable) -> textName.setDisable(true));
 		cmbStudentID.valueProperty().addListener((observable) -> btnFindStudent.setDisable(false));
@@ -315,7 +314,7 @@ public class StudentController implements Initializable {
 	//--------------------------------Select methods-------------------------------------------
 	
 	
-	//
+	// Mouse event that enable buttons and populate combobox
 	@FXML
 	public void selectStudent(MouseEvent event) {
 
@@ -344,6 +343,7 @@ public class StudentController implements Initializable {
 		lblResponseStudent.setText(null);
 	}
 	
+	// Action event that populate the course table and grade table depending on which radio button that is selected
 	@FXML
 	public void selectTypeOfCourse(ActionEvent event) throws SQLException {
 		
@@ -372,8 +372,7 @@ public class StudentController implements Initializable {
 
 
 
-	//get the value from the TextField then use insertstudent to add the student
-	
+	// Create new student with the name value given in textfield
 	@FXML
 	public void btnAddStudent(ActionEvent event) throws SQLException {
 		String name = textStudentName.getText();
@@ -406,7 +405,7 @@ public class StudentController implements Initializable {
 	}
 		
 	
-	
+	// Add a new active course to the selected student
 	@FXML
 	public void addCourse(ActionEvent event) {
 		
@@ -444,6 +443,7 @@ public class StudentController implements Initializable {
 		
 	}
 	
+	// Show student on the student table matching to the value in the given fields/combobox
 	@FXML
 	public void findStudent(ActionEvent event)  {
 		lblFindStudentResponse.setText(null);
@@ -477,7 +477,7 @@ public class StudentController implements Initializable {
 		
 	}
 	
-	
+	// Remove the selected student and then update the student table 
 	@FXML
 	public void btnRemoveStudent(ActionEvent event) {
 		
