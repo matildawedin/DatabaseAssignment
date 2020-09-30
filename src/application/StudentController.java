@@ -457,7 +457,7 @@ public class StudentController implements Initializable {
 			populateFindStudentTable(sID);
 
 		}
-		else if(name.isEmpty( )){ 
+		else if(name.isEmpty() && sID == null){ 
 			lblFindStudentResponse.setText("Please pick a student ID or\nenter a Student Name");
 
 		}
@@ -467,9 +467,7 @@ public class StudentController implements Initializable {
 		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
 		}
-		else {
-			lblFindStudentResponse.setText("No student with that name exists");
-		}
+		
 		tabelFindStudent.setDisable(false);
 		cmbStudentID.getItems().clear();
 		textName.clear();
