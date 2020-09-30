@@ -416,7 +416,7 @@ public class StudentController implements Initializable {
 		
 		
 		try {
-			if(cmbCourseID.getValue() != null) {
+			if(cc != null) {
 			dal.insertStudentToCourse(tempS.getStudentID(), cc);
 			lblAddCourseResponse.setText("New course added!");
 			
