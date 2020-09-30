@@ -379,11 +379,7 @@ public class CourseController implements Initializable{
 		String cName = textCourseName.getText();
 		String cCredit = textCredit.getText(); 
 
-		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
-
-		if (!cName.isEmpty() && !cCredit.isEmpty() /////Dublett? Ta bort?  /Matilda
-
-			  && cName.matches("^[a-zA-Z]+$") && cCredit.matches("^[0-9]+$")) {		
+		if (!cName.isEmpty() && !cCredit.isEmpty()&& cName.matches("^[a-zA-Z]+$") && cCredit.matches("^[0-9]+$")) {		
 
 			try {
 				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
@@ -406,7 +402,7 @@ public class CourseController implements Initializable{
 		textCourseName.clear();
 		textCredit.clear();
 		}
-	}
+	
 
 	@FXML
 	public void btnMoveCourse_Click(ActionEvent event) {
