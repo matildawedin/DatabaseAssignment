@@ -130,7 +130,7 @@
                                     <TextField fx:id="textName" layoutX="2.0" layoutY="118.0" prefHeight="3.0" prefWidth="146.0" promptText="Student Name" />
                                  </children>
                               </Group>
-                              <Label fx:id="lblFindStudentAnswer" layoutX="102.0" layoutY="354.0" prefHeight="98.0" prefWidth="184.0" />
+                              <Label fx:id="lblFindStudentResponse" layoutX="102.0" layoutY="354.0" prefHeight="98.0" prefWidth="184.0" />
                            </children></AnchorPane>
                   </content>
                 </Tab>

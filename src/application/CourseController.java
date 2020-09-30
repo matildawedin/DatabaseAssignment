@@ -251,7 +251,7 @@ public class CourseController implements Initializable{
 		}
 	}
 	
-	@FXML
+	
 	public void populateTableActiveCourse() {
 		tableActiveCourse.getItems().clear();
 		try {
@@ -264,7 +264,7 @@ public class CourseController implements Initializable{
 		}
 		}
 	}
-	@FXML
+	
 	private void populateTableFinishedCourse() {
 		tableFinishedCourse.getItems().clear();
 		try {	
@@ -277,7 +277,7 @@ public class CourseController implements Initializable{
 		}
 		}
 	}
-	@FXML
+	
 	public void populateTableRegCourse() {
 		tableRegCourse.getItems().clear();
 		try {
@@ -287,23 +287,37 @@ public class CourseController implements Initializable{
 			if (e.getErrorCode() == 0) {
 				tableRegCourse.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
 			e.printStackTrace();
-		}
-		}
-	}
 
-	@FXML
+		}
+		}
+
+			
+		}	
+
+
+	
 	public void populateTableStudentCourse() {
 		
 		try {
 			if(tabActiveCourse.isSelected()) {
 				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
+				if(tempC != null) {
 				tableActiveStudent.getItems().clear();
 				tableActiveStudent.setItems(dal.selectAllFromStudies(tempC.getCourseID()));
+				} 
+				else {
+					lblAddParticipantAnswer.setText(" ");
+				}
 			}
 			if(tabFinishedCourse.isSelected()) {
-				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+				Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();
+				if(tempC != null) {
 				tableFinishedStudent.getItems().clear();
 				tableFinishedStudent.setItems(dal.selectAllFromHasStudied(tempC.getCourseID()));
+				}
+				else {
+					lblGradeStudentAnswer.setText(" ");
+				}
 			}
 		}
 		catch(SQLException e) {
@@ -313,12 +327,17 @@ public class CourseController implements Initializable{
 		}
 		}
 	}
-	@FXML
+	
 	private void populateTableGrade() {
 		tableFinishedGrade.getItems().clear();
 		try {
-			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();		
+			Course tempC = tableFinishedCourse.getSelectionModel().getSelectedItem();	
+			if(tempC != null) {
 			tableFinishedGrade.setItems(dal.selectAllFromGrade(tempC.getCourseID()));
+			}
+			else{
+				lblGradeStudentAnswer.setText(" ");
+			}
 		}
 		catch(SQLException e) {
 			if (e.getErrorCode() == 0) {
@@ -328,7 +347,7 @@ public class CourseController implements Initializable{
 		}
 	}
 
-	@FXML
+	
 	private void populateCmbStudentID() {	
 			cmbStudentID.getItems().clear();
 		try {
@@ -342,7 +361,7 @@ public class CourseController implements Initializable{
 		}
 	}
 	
-	@FXML
+	
 	private void populateCmbCourseID() {
 		cmbCourseID.getItems().clear();
 		try {
@@ -356,7 +375,7 @@ public class CourseController implements Initializable{
 		}
 	}
 	
-	@FXML
+	
 	public void populateTableFindCourse(String c) {
 
 		try {

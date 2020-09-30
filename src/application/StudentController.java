@@ -134,10 +134,7 @@ public class StudentController implements Initializable {
 	
 	@FXML private Label lblAddCourseResponse;
 	
-	@FXML private Label lblFindStudentAnswer;
-	
-	//används denna?
-	@FXML private Group studentGroup;
+	@FXML private Label lblFindStudentResponse;
 	
 	
 	
@@ -190,13 +187,14 @@ public class StudentController implements Initializable {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+
 		}
 	}
 
 	//--------------------------------Populate methods-------------------------------------------
 
     // Add all the current student to the studentTable
-	@FXML
+	
 	public void populateStudentTable() {
 		
 		try {
@@ -205,20 +203,28 @@ public class StudentController implements Initializable {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+
+			if(e.getErrorCode() == 0) {
+				tableStudent.setAccessibleText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 		}
 		
 	}
 	
 	// Add all active courses to the course table based on a specific student id
 	public void populateActiveCourseTable(String studentID) {
-		
+
 		try {
-			
+
 			tableCourse.setItems(dal.selectStudies(studentID));
-			
+
 		}
 		catch(SQLException e) {
-		e.printStackTrace();
+			e.printStackTrace();
+
+			if(e.getErrorCode() == 0) {
+				tableCourse.setAccessibleText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 		}
 	}
 	
@@ -231,6 +237,10 @@ public class StudentController implements Initializable {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+
+			if(e.getErrorCode() == 0) {
+				tableCourse.setAccessibleText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 		}
 	}
 	
@@ -243,6 +253,10 @@ public class StudentController implements Initializable {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+
+			if(e.getErrorCode() == 0) {
+				tabelGrade.setAccessibleText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 		}
 		
 	}
@@ -254,7 +268,11 @@ public class StudentController implements Initializable {
 			cmbCourseID.getItems().addAll(dal.selectAllCourseID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			e.printStackTrace();
+
+			if(e.getErrorCode() == 0) {
+				lblAddCourseResponse.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 
 
 		}
@@ -267,7 +285,11 @@ public class StudentController implements Initializable {
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			e.printStackTrace();
+
+			if(e.getErrorCode() == 0) {
+				lblFindStudentResponse.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 		}
 
 		
@@ -287,6 +309,10 @@ public class StudentController implements Initializable {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			if(e.getErrorCode() == 0) {
+				tabelFindStudent.setAccessibleText("Error!\nThere was a problem connecting to the database\nPlease check your connection");
+			}
 		}
 
 	}
@@ -436,7 +462,7 @@ public class StudentController implements Initializable {
 	
 	@FXML
 	public void findStudent(ActionEvent event)  {
-		lblFindStudentAnswer.setText(null);
+		lblFindStudentResponse.setText(null);
 		String sID = cmbStudentID.getValue();
 		String name = textName.getText();
 		
@@ -445,17 +471,17 @@ public class StudentController implements Initializable {
 			
 		}
 		else if(name.isEmpty( )){ 
-			lblFindStudentAnswer.setText("Please pick a student ID or\nenter a Student Name");
+			lblFindStudentResponse.setText("Please pick a student ID or\nenter a Student Name");
 			
 		}
 		else if(!name.matches("^[a-zA-Z]+$")) {
-			lblFindStudentAnswer.setText("Error!\nKeep in mind that\nStudent name can only contain \nletters");
+			lblFindStudentResponse.setText("Error!\nKeep in mind that\nStudent name can only contain \nletters");
 		}
 		else if(!name.isEmpty( )&& name.matches("^[a-zA-Z]+$")) {
 			populateFindStudentTable(name);
 		}
 		else {
-			lblFindStudentAnswer.setText("No student with that name exists");
+			lblFindStudentResponse.setText("No student with that name exists");
 		}
 		
 		
@@ -486,7 +512,9 @@ public class StudentController implements Initializable {
 
 			}
 			catch (SQLException e) {
-			e.printStackTrace();
+				if(e.getErrorCode() == 0) {
+					lblResponseStudent.setText("Error!\nThere was a problem connecting to the database\nPlease check your connection.");
+				} 
 			}
 		}
 		
