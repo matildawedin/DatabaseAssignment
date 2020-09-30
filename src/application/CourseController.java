@@ -258,8 +258,11 @@ public class CourseController implements Initializable{
 			tableActiveCourse.setItems(dal.selectAllActiveCourses());	
 		}
 		catch(SQLException e) {
+			if (e.getErrorCode() == 0) {
+				tableActiveCourse.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
 			e.printStackTrace();
-		}	
+		}
+		}
 	}
 	@FXML
 	private void populateTableFinishedCourse() {
@@ -268,7 +271,10 @@ public class CourseController implements Initializable{
 			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			if (e.getErrorCode() == 0) {
+				tableFinishedCourse.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
+			e.printStackTrace();
+		}
 		}
 	}
 	@FXML
@@ -278,8 +284,11 @@ public class CourseController implements Initializable{
 			tableRegCourse.setItems(dal.selectAllActiveCourses());
 		}
 		catch(SQLException e) {
+			if (e.getErrorCode() == 0) {
+				tableRegCourse.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
 			e.printStackTrace();
-		}	
+		}
+		}
 	}
 
 	@FXML
@@ -298,7 +307,10 @@ public class CourseController implements Initializable{
 			}
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			if (e.getErrorCode() == 0) {
+				tableFinishedStudent.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
+			e.printStackTrace();
+		}
 		}
 	}
 	@FXML
@@ -309,7 +321,10 @@ public class CourseController implements Initializable{
 			tableFinishedGrade.setItems(dal.selectAllFromGrade(tempC.getCourseID()));
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			if (e.getErrorCode() == 0) {
+				tableFinishedGrade.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
+			e.printStackTrace();
+		}
 		}
 	}
 
@@ -320,7 +335,10 @@ public class CourseController implements Initializable{
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			if (e.getErrorCode() == 0) {
+				lblAddParticipantAnswer.setText("There was a problem conecting to the database, please check your interntet connection");
+			e.printStackTrace();
+		}
 		}
 	}
 	
@@ -331,7 +349,10 @@ public class CourseController implements Initializable{
 			cmbCourseID.getItems().addAll(dal.selectAllCourseID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
+			if (e.getErrorCode() == 0) {
+				lblAnswerFindCourse.setText("There was a problem conecting to the database, please check your interntet connection");
+			e.printStackTrace();
+		}
 		}
 	}
 	
@@ -347,7 +368,9 @@ public class CourseController implements Initializable{
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (e.getErrorCode() == 0) {
+				tableFindCourse.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
+		}
 		}
 	}
 	
@@ -371,6 +394,10 @@ public class CourseController implements Initializable{
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
+		
+		 if (e.getErrorCode() == 0) {
+			lblAnswercCourseReg.setText("There was a problem conecting to the database, please check your interntet connection");
+		 }
 		}
 	}
 
@@ -387,12 +414,15 @@ public class CourseController implements Initializable{
 				populateTableRegCourse();
 				populateCmbCourseID();
 			} 
-			catch (SQLException SQLException) {		
-				if ( SQLException.getErrorCode() == 2627) {
+			catch (SQLException e) {	
+				
+				if ( e.getErrorCode() == 2627) {
 					lblAnswercCourseReg.setText("That coursecode already exists");
 				}
-				else if (SQLException.getErrorCode() == 0) {
+				
+				else if (e.getErrorCode() == 0) {
 					lblAnswercCourseReg.setText("There was a problem conecting to the database, please check your interntet connection");
+					e.printStackTrace();
 				}
 			}
 		}
