@@ -406,7 +406,7 @@ public class CourseController implements Initializable{
 	@FXML
 	public void selectCourse(MouseEvent event) {		
 
-
+	
 		if(tabActiveCourse.isSelected()) {	
 			btnRemoveActiveCourse.setDisable(false);
 			btnMoveCourse.setDisable(false);
@@ -422,13 +422,10 @@ public class CourseController implements Initializable{
 			populateTableGrade();	
 			populateTableStudentCourse();
 
-		} catch (SQLException e) {
-			if (e.getErrorCode() == 0) {
-				tableFindCourse.setAccessibleText("There was a problem conecting to the database, please check your interntet connection");
 		}
 
 		}
-	}
+	
 	//Activate the addGrade method at selected student. 
 	@FXML
 	public void selectStudent(MouseEvent event) { //Denna metod selectar inget? behövs den?
