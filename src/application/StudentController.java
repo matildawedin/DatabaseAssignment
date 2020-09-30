@@ -312,7 +312,6 @@ public class StudentController implements Initializable {
 			lblResponseStudent.setText("Student selected");
 		} 
 
-		// behövs alla dessa????
 		cmbCourseID.getItems().clear();
 		tableCourse.getItems().clear();
 		tabelGrade.getItems().clear();
@@ -427,7 +426,7 @@ public class StudentController implements Initializable {
 		}
 		cmbCourseID.getItems().clear();
 		populateCmbCourse();
-		populateActiveCourseTable(tempS.getStudentID()); // syns även om course table är disable, ändra?
+		populateActiveCourseTable(tempS.getStudentID()); 
 		tableCourse.setDisable(false);
 
 
