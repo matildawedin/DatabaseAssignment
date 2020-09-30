@@ -34,8 +34,6 @@ public class CourseController implements Initializable{
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;
-	private DbConnection dbcon; 
-	private Connection con;
 	private DAL dal = new DAL();
 
 	// Getter and Setters
@@ -56,13 +54,6 @@ public class CourseController implements Initializable{
 	}
 	public void setHasStudied(HasStudied hasStudied) {
 		this.hasStudied = hasStudied;
-	}
-
-	public DbConnection getDbcon() {
-		return dbcon;
-	}
-	public void setDbcon(DbConnection dbcon) {
-		this.dbcon = dbcon;
 	}
 
 	// FXML Objects
@@ -196,8 +187,6 @@ public class CourseController implements Initializable{
 		cmbGrade.getItems().add("E");
 		cmbGrade.getItems().add("F");
 
-		dbcon = new DbConnection();
-		con = dbcon.getConnection();
 
 		// ChangeListerner for TabPane with actions for changed tabselection. 
 		tabPaneCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() { 

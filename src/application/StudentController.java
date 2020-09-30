@@ -31,10 +31,9 @@ public class StudentController implements Initializable {
 	private Course course;
 	private Student student;
 	private HasStudied hasStudied;
-	private DbConnection dbcon; 
+	
 	private DAL dal = new DAL();
 
-	private Connection con;
 
 
 	// Getter and Setters
@@ -56,13 +55,6 @@ public class StudentController implements Initializable {
 	}
 	public void setHasStudied(HasStudied hasStudied) {
 		this.hasStudied = hasStudied;
-	}
-
-	public DbConnection getDbcon() {
-		return dbcon;
-	}
-	public void setDbcon(DbConnection dbcon) {
-		this.dbcon = dbcon;
 	}
 
 	// FXML Objects
@@ -147,10 +139,6 @@ public class StudentController implements Initializable {
 		columnGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
 		cStudentID.setCellValueFactory(new PropertyValueFactory<>("studentID"));
 		cStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-		//get connection to database
-		dbcon = new DbConnection();
-		con = dbcon.getConnection();
 
 		//populate tabel
 		populateStudentTable();
