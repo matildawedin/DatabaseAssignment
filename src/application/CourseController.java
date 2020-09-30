@@ -30,7 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class Controller implements Initializable{
+public class CourseController implements Initializable{
 	
 	private Course course;
 	private Student student;
@@ -123,8 +123,6 @@ public class Controller implements Initializable{
 	@FXML private TableColumn<Student, String> columnFinishedStudentID;
 
 	@FXML private TableColumn<Student, String> columnFinishedStudentName;
-
-	//@FXML private TextField textCourseID;
 
 	@FXML private TextField textCourseName;
 
@@ -270,7 +268,7 @@ public class Controller implements Initializable{
 			tableFinishedCourse.setItems(dal.selectAllFinishedCourses());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	@FXML
@@ -286,6 +284,7 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void populateTableStudentCourse() {
+		
 		try {
 			if(tabActiveCourse.isSelected()) {
 				Course tempC = tableActiveCourse.getSelectionModel().getSelectedItem();
@@ -299,7 +298,7 @@ public class Controller implements Initializable{
 			}
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	@FXML
@@ -310,7 +309,7 @@ public class Controller implements Initializable{
 			tableFinishedGrade.setItems(dal.selectAllFromGrade(tempC.getCourseID()));
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -321,7 +320,7 @@ public class Controller implements Initializable{
 			cmbStudentID.getItems().addAll(dal.selectAllStudentID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	
@@ -332,7 +331,7 @@ public class Controller implements Initializable{
 			cmbCourseID.getItems().addAll(dal.selectAllCourseID());
 		}
 		catch(SQLException e) {
-			Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(CourseController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	
@@ -341,7 +340,7 @@ public class Controller implements Initializable{
 
 		try {
 			if(cmbCourseID.getValue() != null ) {
-				tableFindCourse.setItems(dal.selectCourseByCode(c));
+				tableFindCourse.setItems(dal.selectCourseByID(c));
 			}
 			else if(textFindCourse.getText() != null) {
 				tableFindCourse.setItems(dal.selectCoursebyName(c));	
@@ -382,12 +381,12 @@ public class Controller implements Initializable{
 
 		if (!cName.isEmpty() && !cCredit.isEmpty()) {	
 
-		if (!cName.isEmpty() && !cCredit.isEmpty() 
+		if (!cName.isEmpty() && !cCredit.isEmpty() /////Dublett? Ta bort?  /Matilda
 
 			  && cName.matches("^[a-zA-Z]+$") && cCredit.matches("^[0-9]+$")) {		
 
 			try {
-				dal.insertCourse(dal.generateExamID(), cName, cCredit);
+				dal.insertCourse(dal.generateCourseId(), cName, cCredit);
 				lblAnswercCourseReg.setText("Course: "+cName+" added.");
 				populateTableRegCourse();
 				populateCmbCourseID();
@@ -443,7 +442,7 @@ public class Controller implements Initializable{
 		}
 	}
 	@FXML
-	public void selectStudent(MouseEvent event) {
+	public void selectStudent(MouseEvent event) { //Denna metod selectar inget? behövs den?
 		cmbGrade.setDisable(false);
 		btnAddGrade.setDisable(false);
 	}
@@ -456,6 +455,7 @@ public class Controller implements Initializable{
 		try {
 			dal.insertStudentToCourse(sID, cID);
 			populateTableStudentCourse();
+			
 		} catch (SQLException e) {		
 			if (e.getErrorCode() == 2627) {
 				lblAddParticipantAnswer.setText("The selected student is already part of the selected course");
@@ -471,6 +471,7 @@ public class Controller implements Initializable{
 		else {
 			lblAddParticipantAnswer.setText("Please select a studentID");
 		}
+		
 	}
 	@FXML
 	public void btnAddGrade_Click(ActionEvent event) {

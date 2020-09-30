@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CourseController">
    <children>
       <ButtonBar prefHeight="54.0" prefWidth="754.0" style="-fx-background-color: grey;">
         <buttons>
@@ -108,12 +108,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField layoutX="44.0" layoutY="69.0" prefHeight="33.0" prefWidth="191.0" style="-fx-background-color: transparent;" text="Register new course">
+                        <TextField layoutX="37.0" layoutY="122.0" prefHeight="33.0" prefWidth="191.0" style="-fx-background-color: transparent;" text="Register new course">
                            <font>
                               <Font name="Helvetica Neue" size="18.0" />
                            </font>
                         </TextField>
-                        <TextField layoutX="55.0" layoutY="133.0" prefHeight="27.0" prefWidth="148.0" promptText="Course code*" />
                         <TextField fx:id="textCourseName" layoutX="55.0" layoutY="189.0" prefHeight="27.0" prefWidth="148.0" promptText="Course Name*" />
                         <TextField fx:id="textCredit" layoutX="55.0" layoutY="248.0" prefHeight="27.0" prefWidth="148.0" promptText="Credit*" />
                         <Button fx:id="btnAddCourse" layoutX="58.0" layoutY="301.0" mnemonicParsing="false" onAction="#btnAddCourse_Click" prefHeight="27.0" prefWidth="148.0" text="Add" />
