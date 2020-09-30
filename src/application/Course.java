@@ -29,7 +29,6 @@ public class Course {
 
 	//Constructor
 	public Course(String courseCode, String name, String credits) {
-		super();//vad glör denna? den genererades automatisk 
 		this.courseID = courseCode;
 		this.name = name;
 		this.credits = credits;

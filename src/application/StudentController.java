@@ -416,10 +416,13 @@ public class StudentController implements Initializable {
 
 
 		try {
-			if(cmbCourseID.getValue() != null) {
-				dal.insertStudentToCourse(tempS.getStudentID(), cc);
-				lblAddCourseResponse.setText("New course added!");
 
+if(cc != null) {
+			dal.insertStudentToCourse(tempS.getStudentID(), cc);
+			lblAddCourseResponse.setText("New course added!");
+			
+
+			
 			}
 			else {
 				lblAddCourseResponse.setText("Error!\nPlease select a course");
